@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_222437) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_223004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -34,6 +34,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_222437) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_people_on_user_id"
+  end
+
+  create_table "people_memories", force: :cascade do |t|
+    t.bigint "memory_id", null: false
+    t.bigint "people_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["memory_id"], name: "index_people_memories_on_memory_id"
+    t.index ["people_id"], name: "index_people_memories_on_people_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -62,4 +71,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_222437) do
 
   add_foreign_key "memories", "users", column: "author_id"
   add_foreign_key "people", "users"
+  add_foreign_key "people_memories", "memories"
+  add_foreign_key "people_memories", "people", column: "people_id"
 end

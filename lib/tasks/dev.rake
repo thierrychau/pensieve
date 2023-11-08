@@ -51,5 +51,15 @@ unless Rails.env.production?
       end 
     end
 
+    task add_people_memories: :environment do
+      puts "adding people_memories..."
+      Memory.all.each do |memory|
+        pm = PeopleMemory.create(
+          memory_id: memory.id,
+          person_id: Person.all.sample.id,
+        )
+      end 
+    end
+
   end
 end

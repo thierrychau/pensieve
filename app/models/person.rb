@@ -11,7 +11,8 @@
 #
 # Indexes
 #
-#  index_people_on_user_id  (user_id)
+#  index_people_on_first_name_and_last_name  (first_name,last_name) UNIQUE
+#  index_people_on_user_id                   (user_id)
 #
 # Foreign Keys
 #

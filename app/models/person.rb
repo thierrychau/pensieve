@@ -26,6 +26,7 @@ class Person < ApplicationRecord
   before_save :capitalize_name
 
   belongs_to :user
+  has_many :people_memories
 
   def capitalize_name
     self.first_name = self.first_name.capitalize

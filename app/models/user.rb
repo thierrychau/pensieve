@@ -34,5 +34,17 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :email, :uniqueness => true, :presence => true, :format => { :with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
+  # validates :password, :presence => true
+  validate :password_complexity, :if => :password
+  validates_length_of :password, :minimum => 8, :if => :password
+
   has_many :memories, foreign_key: "author_id"
+  has_one :person
+
+  def password_complexity
+    if password.present? and not password.match(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/x)
+      errors.add(:password, 'must include at least one lowercase letter, one uppercase letter, one digit, and one special character')
+    end
+  end
 end

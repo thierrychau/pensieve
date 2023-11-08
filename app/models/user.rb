@@ -36,7 +36,8 @@ class User < ApplicationRecord
 
   validates :email, :presence => true, :format => { :with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
   validates :password, :presence => true
-  validate :password_complexity
+  validate :password_complexity, :if => :password
+  validates_length_of :password, :minimum => 8, :if => :password
 
   has_many :memories, foreign_key: "author_id"
   has_one :people

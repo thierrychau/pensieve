@@ -3,8 +3,8 @@
 # Table name: people
 #
 #  id         :bigint           not null, primary key
-#  first_name :string
-#  last_name  :string
+#  first_name :string           not null
+#  last_name  :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint

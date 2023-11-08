@@ -14,7 +14,8 @@ unless Rails.env.production?
       :environment, 
       "dev:add_users",
       "dev:add_memories",
-      "add_people"] do
+      "dev:add_people",
+      "dev:add_people_memories"] do
       puts "done"
     end
 

@@ -19,6 +19,9 @@
 #  fk_rails_...  (people_id => people.id)
 #
 class PeopleMemory < ApplicationRecord
+  validates :memory_id, :presence => true
+  validates :people_id, :presence => true
+
   belongs_to :memory
   belongs_to :people
 end

@@ -18,5 +18,16 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Person < ApplicationRecord
+  validates :first_name, :presence => true
+  validates :last_name, :presence => true
+  validates :first_name, uniqueness: { scope: :last_name }
+
+  before_save :capitalize_name
+
   belongs_to :user
+
+  def capitalize_name
+    self.first_name = self.first_name.capitalize
+    self.last_name = self.last_name.capitalize
+  end
 end

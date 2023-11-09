@@ -31,6 +31,8 @@ class Memory < ApplicationRecord
   scope :by_date, -> { order(date: :desc) }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["description"]
+    [
+      "description"
+    ]
   end
 end

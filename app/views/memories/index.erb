@@ -1,15 +1,15 @@
 <div class="col-md-12 d-flex align-items-center">
   <h1>Dashboard</h1>
 
-  <%= search_form_for @q do |f| %>
-    <div>
-    <%= f.text_field :description_cont, :placeholder => "Search" %>
-    </div>
-    <%= f.submit :class => "btn btn-primary btn-block" %>
-    <a href="/memories">Clear</a>
-  <% end %>
+  <div class="ms-auto">
+
+  </div>
 
   <div class="ms-auto">
+    <%= search_form_for @q do |f| %>
+      <%= f.text_field :description_cont, :placeholder => "Enter a few characters" %>
+      <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
+    <% end %>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-memory">Add a memory</button>
   </div>
 </div> 
@@ -19,6 +19,10 @@
     <%#= render "memories/memory", memory: memory %>
   <%# end %>
 <!--</div>-->
+
+ 
+
+
 
 <table class="table table-hover table-striped table-bordered">
   <thead>

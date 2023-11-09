@@ -27,6 +27,7 @@ class Person < ApplicationRecord
 
   belongs_to :user, optional: true
   has_many :people_memories
+  has_many :memories, through: :people_memories
 
   def capitalize_name
     self.first_name = self.first_name.capitalize

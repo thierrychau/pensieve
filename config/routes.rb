@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  resources :people
-  resources :memories
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
   root "memories#index"
+
+  devise_for :users
+
+  resources :people, except: [:index]
+  resources :memories, except: [:index]
+
+  # get "/dashboard" => "users#dashboard", as: :dashboard
 end

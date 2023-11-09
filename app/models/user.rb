@@ -39,7 +39,7 @@ class User < ApplicationRecord
   validate :password_complexity, :if => :password
   validates_length_of :password, :minimum => 8, :if => :password
 
-  has_many :memories, foreign_key: "author_id"
+  has_many :memories, foreign_key: "author_id", counter_cache: true
   has_one :person
 
   def password_complexity

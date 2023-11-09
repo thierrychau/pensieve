@@ -1,6 +1,14 @@
 <div class="col-md-12 d-flex align-items-center">
   <h1>Dashboard</h1>
 
+  <%= search_form_for @q do |f| %>
+    <div>
+    <%= f.text_field :description_cont, :placeholder => "Search" %>
+    </div>
+    <%= f.submit :class => "btn btn-primary btn-block" %>
+    <a href="/memories">Clear</a>
+  <% end %>
+
   <div class="ms-auto">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-memory">Add a memory</button>
   </div>
@@ -17,14 +25,16 @@
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Description</th>
+      <th scope="col">Author</th>
       <th scope="col">See</th>
     </tr>
   </thead>
   <tbody>
-    <% current_user.memories.by_date.each do |memory| %>
+    <% @memories.each do |memory| %>
       <tr>
         <td><%= memory.date %></td>
         <td><%= memory.description %></td>
+        <td><%= memory.author.email %></td>
         <td><%= link_to "See", memory %></td>
       </tr>
     <% end %>

@@ -3,7 +3,7 @@ class MemoriesController < ApplicationController
 
   # GET /memories or /memories.json
   def index
-    @q = Memory.ransack(params[:q])
+    @q = current_user.memories.ransack(params[:q])
     @memories = @q.result
     @memory = Memory.new
   end

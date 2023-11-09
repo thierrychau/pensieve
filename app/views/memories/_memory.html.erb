@@ -1,32 +1,24 @@
-<div id="<%= dom_id memory %>">
-  <p>
-    <strong>Date:</strong>
-    <%= memory.date %>
-  </p>
-
-  <p>
-    <strong>Location:</strong>
-    <%= memory.location %>
-  </p>
-
-  <p>
-    <strong>Latitude:</strong>
-    <%= memory.latitude %>
-  </p>
-
-  <p>
-    <strong>Longitude:</strong>
-    <%= memory.longitude %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= memory.description %>
-  </p>
-
-  <p>
-    <strong>Author:</strong>
-    <%= memory.author_id %>
-  </p>
-
+<div class="col">
+      <div id="<%= dom_id memory %>" class="card">
+        <%#= image_tag memory.image, class: "card-img-top" %>
+        <div class="card-body">
+          <h5 class="card-title"><%= memory.date %></h5>
+          <p class="card-text"><%= memory.description %></p>
+          <p class="card-text"><%= memory.location %></p>
+          <% memory.people.each do |person| %>
+            <p class="card-text"><%= person.first_name %> <%= person.last_name %></p>
+          <% end %>
+        </div>
+        <!--<ul class="list-group list-group-flush">-->
+          <%# memory.comments.each do |comment| %>
+<!--            <li class="list-group-item">-->
+              <%#= comment.body %>
+<!--            </li>-->
+          <%# end %>
+<!--        </ul>-->
+        <div class="card-body">
+          <a href="#" class="card-link">Another link</a>
+          <%= link_to "Show this memory", memory, class: "card-link" %>
+        </div>
+      </div>
 </div>

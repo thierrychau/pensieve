@@ -6,6 +6,9 @@
           <h5 class="card-title"><%= memory.date %></h5>
           <p class="card-text"><%= memory.description %></p>
           <p class="card-text"><%= memory.location %></p>
+          <% memory.people.each do |person| %>
+            <p class="card-text"><%= person.first_name %> <%= person.last_name %></p>
+          <% end %>
         </div>
         <!--<ul class="list-group list-group-flush">-->
           <%# memory.comments.each do |comment| %>

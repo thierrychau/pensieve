@@ -26,6 +26,7 @@ class Memory < ApplicationRecord
   
   belongs_to :author, class_name: "User"
   has_many :people_memories
+  has_many :people, through: :people_memories
 
   scope :by_date, -> { order(date: :desc) }
 end

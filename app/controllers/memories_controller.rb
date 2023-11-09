@@ -22,10 +22,11 @@ class MemoriesController < ApplicationController
   # POST /memories or /memories.json
   def create
     @memory = Memory.new(memory_params)
+    @memory.author = current_user
 
     respond_to do |format|
       if @memory.save
-        format.html { redirect_to memory_url(@memory), notice: "Memory was successfully created." }
+        format.html { redirect_back(fallback_location: root_path, notice: "Memory was successfully created.") }
         format.json { render :show, status: :created, location: @memory }
       else
         format.html { render :new, status: :unprocessable_entity }

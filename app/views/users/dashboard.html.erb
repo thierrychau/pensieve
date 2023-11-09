@@ -1,5 +1,33 @@
 <h1>Dashboard</h1>
 
-<% current_user.memories.by_date.each do |memory| %>
-  <%= render "memories/memory", memory: memory %>
-<% end %>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-memory">
+  Add a memory
+</button>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  <% current_user.memories.by_date.each do |memory| %>
+    <%= render "memories/memory", memory: memory %>
+  <% end %>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="add-memory" tabindex="-1" aria-labelledby="add-memory-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="add-memory-label">Add a memory</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render "memories/form", memory: @memory %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

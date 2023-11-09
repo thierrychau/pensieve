@@ -7,3 +7,9 @@
 <div>
   <%= link_to "Back to memories", memories_path %>
 </div>
+
+<turbo-frame id="new_memory">
+  <%= form_with(model: @memory, local: false) do |form| %>
+    <%= render "form", memory: @memory %> 
+  <% end %>
+</turbo-frame>

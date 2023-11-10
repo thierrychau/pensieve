@@ -2,6 +2,14 @@
   <h1>Dashboard</h1>
 
   <div class="ms-auto">
+
+  </div>
+
+  <div class="ms-auto">
+    <%= search_form_for @q do |f| %>
+      <%= f.text_field :description_cont, :placeholder => "Enter a few characters" %>
+      <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
+    <% end %>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-memory">Add a memory</button>
   </div>
 </div> 
@@ -12,19 +20,25 @@
   <%# end %>
 <!--</div>-->
 
+ 
+
+
+
 <table class="table table-hover table-striped table-bordered">
   <thead>
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Description</th>
+      <th scope="col">Author</th>
       <th scope="col">See</th>
     </tr>
   </thead>
   <tbody>
-    <% current_user.memories.by_date.each do |memory| %>
+    <% @memories.each do |memory| %>
       <tr>
         <td><%= memory.date %></td>
         <td><%= memory.description %></td>
+        <td><%= memory.author.email %></td>
         <td><%= link_to "See", memory %></td>
       </tr>
     <% end %>

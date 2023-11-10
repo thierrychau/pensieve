@@ -29,4 +29,10 @@ class Memory < ApplicationRecord
   has_many :people, through: :people_memories
 
   scope :by_date, -> { order(date: :desc) }
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "description"
+    ]
+  end
 end

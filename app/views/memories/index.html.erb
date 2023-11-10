@@ -2,11 +2,16 @@
   <h1>Dashboard</h1>
     <div class="ms-auto">
       <%= search_form_for @q do |f| %>
-        <%= f.text_field :description_cont, :placeholder => "Enter a few characters" %>
+        <%= f.text_field :description_cont, :placeholder => "Search" %>
         <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
       <% end %>
     </div>
-    <%= link_to 'text', "memories/new" %>
+   <!-- Button trigger modal -->
+    <div class="ms-4">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add a memory
+      </button>
+    </div>
 </div> 
 
 <table class="table table-hover table-striped table-bordered">
@@ -14,6 +19,7 @@
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Description</th>
+      <th scope="col">Location</th>
       <th scope="col">Author</th>
       <th scope="col">See</th>
     </tr>
@@ -23,6 +29,7 @@
       <tr>
         <td><%= memory.date %></td>
         <td><%= memory.description %></td>
+        <td><%= memory.location %></td>
         <td><%= memory.author.email %></td>
         <td><%= link_to "See", memory %></td>
       </tr>
@@ -35,3 +42,20 @@
     <%#= render "memories/memory", memory: memory %>
   <%# end %>
 <!--</div>-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a memory</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render "form", memory: @memory %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

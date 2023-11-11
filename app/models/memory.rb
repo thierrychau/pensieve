@@ -32,7 +32,7 @@ class Memory < ApplicationRecord
 
   def self.ransackable_attributes(auth_object = nil)
     [
-      "description"
+      "description", "date", "location", "author"
     ]
   end
 end

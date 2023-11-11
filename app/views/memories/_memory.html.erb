@@ -5,6 +5,8 @@
           <h5 class="card-title"><%= memory.date %></h5>
           <p class="card-text"><%= memory.description %></p>
           <p class="card-text"><%= memory.location %></p>
+          <p class="card-text"><%= memory.latitude %></p>
+          <p class="card-text"><%= memory.longitude %></p>
           <% memory.people.each do |person| %>
             <p class="card-text"><%= person.first_name %> <%= person.last_name %></p>
           <% end %>

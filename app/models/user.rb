@@ -47,4 +47,10 @@ class User < ApplicationRecord
       errors.add(:password, 'must include at least one lowercase letter, one uppercase letter, one digit, and one special character')
     end
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "email"
+    ]
+  end
 end

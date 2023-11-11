@@ -1,34 +1,25 @@
 <div class="col-md-12 d-flex align-items-center">
   <h1>Dashboard</h1>
-
-  <div class="ms-auto">
-
-  </div>
-
-  <div class="ms-auto">
-    <%= search_form_for @q do |f| %>
-      <%= f.text_field :description_cont, :placeholder => "Enter a few characters" %>
-      <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
-    <% end %>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-memory">Add a memory</button>
-  </div>
+    <div class="ms-auto">
+      <%= search_form_for @q do |f| %>
+        <%= f.text_field :description_cont, :placeholder => "Search" %>
+        <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
+      <% end %>
+    </div>
+   <!-- Button trigger modal -->
+    <div class="ms-4">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add a memory
+      </button>
+    </div>
 </div> 
-
-<!--<div class="row row-cols-1 row-cols-md-2 g-4">-->
-  <%# current_user.memories.by_date.each do |memory| %>
-    <%#= render "memories/memory", memory: memory %>
-  <%# end %>
-<!--</div>-->
-
- 
-
-
 
 <table class="table table-hover table-striped table-bordered">
   <thead>
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Description</th>
+      <th scope="col">Location</th>
       <th scope="col">Author</th>
       <th scope="col">See</th>
     </tr>
@@ -38,6 +29,7 @@
       <tr>
         <td><%= memory.date %></td>
         <td><%= memory.description %></td>
+        <td><%= memory.location %></td>
         <td><%= memory.author.email %></td>
         <td><%= link_to "See", memory %></td>
       </tr>
@@ -45,21 +37,24 @@
   </tbody>
 </table>
 
+<!--<div class="row row-cols-1 row-cols-md-2 g-4">-->
+  <%# current_user.memories.by_date.each do |memory| %>
+    <%#= render "memories/memory", memory: memory %>
+  <%# end %>
+<!--</div>-->
 
-<!-- Modal -->
-<div class="modal fade" id="add-memory" tabindex="-1" aria-labelledby="add-memory-label" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="add-memory-label">Add a memory</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a memory</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%= render "memories/form", memory: @memory %>
+        <%= render "form", memory: @memory %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@ class GeocodingService
   end
 
   def call
-    raw_response = HTTP.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{@location}&key=#{GMAPS_API_KEY}")
+    raw_response = HTTP.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(@location)}&key=#{ENV["GMAPS_KEY"]}")
     parsed_response = JSON.parse(raw_response)
 
     if parsed_response["status"] == "OK"

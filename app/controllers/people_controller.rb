@@ -22,6 +22,7 @@ class PeopleController < ApplicationController
   # POST /people or /people.json
   def create
     @person = Person.new(person_params)
+    @person.user = current_user # not the intended use but will do for now
 
     respond_to do |format|
       if @person.save

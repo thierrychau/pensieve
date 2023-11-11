@@ -5,6 +5,7 @@ class MemoriesController < ApplicationController
   def index
     @q = Memory.ransack(params[:q])
     @memories = @q.result
+    @person = Person.new
     @memory = Memory.new
   end
 

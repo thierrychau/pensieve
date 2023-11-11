@@ -40,7 +40,7 @@ class User < ApplicationRecord
   validates_length_of :password, :minimum => 8, :if => :password
 
   has_many :memories, foreign_key: "author_id", counter_cache: true
-  has_one :person
+  has_many :person
 
   def password_complexity
     if password.present? and not password.match(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/x)

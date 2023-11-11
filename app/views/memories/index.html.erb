@@ -36,7 +36,7 @@
         <td><%= memory.date %></td>
         <td><%= memory.description %></td>
         <td><% memory.people.each do |person| %>
-          <%= person.first_name + " " + person.last_name %>
+          <%= person.firstlast_name %>
           <% end %>
         </td>
         <td><%= memory.location %></td>
@@ -64,35 +64,14 @@
   </div>
 </div>
 
-<div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="addPersonModalLabel">Add a person</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%= render "people/form", person: @person %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="addMemoryModal" tabindex="-1" aria-labelledby="addMemoryModalLabel" aria-hidden="true">
 <div class="modal fade" id="addMemoryModal" tabindex="-1" aria-labelledby="addMemoryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="addMemoryModalLabel">Add a memory</h1>
-        <h1 class="modal-title fs-5" id="addMemoryModalLabel">Add a memory</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%= render "memories/form", memory: @memory %>
         <%= render "memories/form", memory: @memory %>
       </div>
       <div class="modal-footer">

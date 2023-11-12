@@ -33,4 +33,8 @@ class Person < ApplicationRecord
     self.first_name = self.first_name.capitalize
     self.last_name = self.last_name.capitalize
   end
+
+  def firstlast_name
+    "#{self.first_name} #{last_name}" 
+  end
 end

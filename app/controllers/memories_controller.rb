@@ -6,6 +6,7 @@ class MemoriesController < ApplicationController
     @q = Memory.ransack(params[:q])
     @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
     @memories = @q.result
+    @person = Person.new
     @memory = Memory.new
   end
 

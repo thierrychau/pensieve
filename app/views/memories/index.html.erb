@@ -8,7 +8,12 @@
     </div>
    <!-- Button trigger modal -->
     <div class="ms-4">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPersonModal">
+        Add a person
+      </button>
+    </div>
+    <div class="ms-4">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemoryModal">
         Add a memory
       </button>
     </div>
@@ -19,8 +24,9 @@
     <tr>
       <th scope="col"><%= sort_link(@q, :date, "Date") %></th>
       <th scope="col">Description</th>
+      <th scope="col">People</th>
       <th scope="col"><%= sort_link(@q, :location, "Location") %></th>
-      <th scope="col"><%= sort_link(@q, :author, "Author") %></th>
+      <th scope="col"><%= sort_link(@q, :author_email, "Author") %></th>
       <th scope="col">Show</th>
     </tr>
   </thead>
@@ -29,6 +35,10 @@
       <tr>
         <td><%= memory.date %></td>
         <td><%= memory.description %></td>
+        <td><% memory.people.each do |person| %>
+          <%= person.firstlast_name %>
+          <% end %>
+        </td>
         <td><%= memory.location %></td>
         <td><%= memory.author.email %></td>
         <td><%= link_to "See", memory %></td>
@@ -37,21 +47,32 @@
   </tbody>
 </table>
 
-<!--<div class="row row-cols-1 row-cols-md-2 g-4">-->
-  <%# current_user.memories.by_date.each do |memory| %>
-    <%#= render "memories/memory", memory: memory %>
-  <%# end %>
-<!--</div>-->
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a memory</h1>
+        <h1 class="modal-title fs-5" id="addPersonModalLabel">Add a person</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%= render "form", memory: @memory %>
+        <%= render "people/form", person: @person %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addMemoryModal" tabindex="-1" aria-labelledby="addMemoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addMemoryModalLabel">Add a memory</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render "memories/form", memory: @memory %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

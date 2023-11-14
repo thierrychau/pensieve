@@ -32,11 +32,8 @@ class MemoriesController < ApplicationController
 
     respond_to do |format|
       if @memory.save
-         # fetch "people" from the params to create a new PeopleMemory for each person
         people_ids = params.fetch("people")
-        people_ids.each do |id|
-          PeopleMemory.create(:memory_id => @memory.id, :person_id => id)
-        end
+        @memory.update_people(people_ids)
 
         format.html { redirect_back(fallback_location: root_path, notice: "Memory was successfully created.") }
         format.json { render :show, status: :created, location: @memory }
@@ -52,14 +49,8 @@ class MemoriesController < ApplicationController
 
     respond_to do |format|
       if @memory.update(memory_params.except(:people))
-        # Delete old PeopleMemory records
-        PeopleMemory.where({ :memory_id => @memory.id }).destroy_all
-
-        # Create new PeopleMemory records
         people_ids = params.fetch("people")
-        people_ids.each do |id|
-          PeopleMemory.create(:memory_id => @memory.id, :person_id => id)
-        end
+        @memory.update_people(people_ids)
 
         format.html { redirect_to memory_url(@memory), notice: "Memory was successfully updated." }
         format.json { render :show, status: :ok, location: @memory }

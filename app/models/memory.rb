@@ -44,6 +44,14 @@ class Memory < ApplicationRecord
     ]
   end
 
+  def update_people(people_ids)
+    PeopleMemory.where({ :memory_id => self.id }).destroy_all
+
+    people_ids.each do |id|
+      PeopleMemory.create({ :memory_id => self.id, :person_id => id })
+    end
+  end
+
   def memory_coordinates
     geocoding_service = GeocodingService.new(self.location)
     coordinates = geocoding_service.call

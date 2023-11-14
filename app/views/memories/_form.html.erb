@@ -22,13 +22,13 @@
   </div>
 
   <div class="mb-3">
-    <%= form.label :description %>
+    <%= form.label :description, class: "form-label" %>
     <%= form.text_area :description, class: "form-control" %>
   </div>
 
   <div class="mb-3">
     <%= form.label :people, class: "form-label" %>
-    <%= select_tag :people, options_from_collection_for_select(people.order(:last_name, :first_name), :id, :firstlast_name), {multiple: true, size: 5, class: "form-control"} %>
+    <%= select_tag :people, options_from_collection_for_select(people.order(:last_name, :first_name), :id, :firstlast_name), {multiple: true, size: 5, class: "form-select"} %>
   </div>
 
   <div>

@@ -1,6 +1,6 @@
 class MemoriesController < ApplicationController
   before_action :set_memory, only: %i[ show edit update destroy ]
-  before_action :set_people, only: %i[ create index edit ]
+  before_action :set_people, only: %i[ create new index edit ]
 
   # GET /memories or /memories.json
   def index

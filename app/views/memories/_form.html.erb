@@ -11,24 +11,24 @@
     </div>
   <% end %>
 
-  <div class="form-floating">
-    <%= form.date_field :date, class: "form-label" %>
-    <%= form.label :date, style: "display: block"%>
+  <div class="form-floating mb-3">
+    <%= form.date_field :date, class: "form-control" %>
+    <%= form.label :date, class: "form-label" %>
   </div>
 
-  <div class="form-floating">
+  <div class="form-floating mb-3">
     <%= form.text_field :location, class: "form-control"%>
-    <%= form.label :location, style: "display: block", class: "form-label" %>
+    <%= form.label :location, class: "form-label" %>
   </div>
 
-  <div class="form-floating">
+  <div class="form-floating mb-3">
     <%= form.text_area :description, class: "form-control" %>
-    <%= form.label :description, style: "display: block" %>
+    <%= form.label :description %>
   </div>
 
-  <div class="form-floating">
-    <%= select_tag :people, options_from_collection_for_select(@people.order(:last_name, :first_name), :id, :firstlast_name), {multiple: true, size: 5, class: "form-control"} %>
-    <%= form.label :people, style: "display: block", class: "form-label"  %>
+  <div class="form-floating mb-3">
+    <%= select_tag :people, options_from_collection_for_select(@people.order(:last_name, :first_name), :id, :firstlast_name), {multiple: true, style: "height: 150px", class: "form-control"} %>
+    <%= form.label :people, class: "form-label" %>
   </div>
 
   <div>

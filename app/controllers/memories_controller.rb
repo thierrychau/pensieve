@@ -1,5 +1,6 @@
 class MemoriesController < ApplicationController
   before_action :set_memory, only: %i[ show edit update destroy ]
+  before_action :set_people, only: %i[ create index edit ]
 
   # GET /memories or /memories.json
   def index
@@ -8,7 +9,6 @@ class MemoriesController < ApplicationController
     @memories = @q.result
     @person = Person.new
     @memory = Memory.new
-    @people = Person.all
   end
   
   # GET /memories/1 or /memories/1.json
@@ -22,12 +22,11 @@ class MemoriesController < ApplicationController
   
   # GET /memories/1/edit
   def edit
-    @people = Person.all
   end
 
   # POST /memories or /memories.json
   def create
-    @memory = Memory.new(memory_params.except(:people))
+    @memory = Memory.new(memory_params)
     @memory.author = current_user
 
     respond_to do |format|
@@ -48,7 +47,7 @@ class MemoriesController < ApplicationController
   def update
 
     respond_to do |format|
-      if @memory.update(memory_params.except(:people))
+      if @memory.update(memory_params)
         people_ids = params.fetch("people")
         @memory.update_people(people_ids)
 
@@ -75,6 +74,10 @@ class MemoriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_memory
       @memory = Memory.find(params[:id])
+    end
+
+    def set_people
+      @people = Person.all
     end
 
     # Only allow a list of trusted parameters through.

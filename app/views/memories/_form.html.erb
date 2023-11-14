@@ -27,6 +27,11 @@
   </div>
 
   <div>
+    <%= form.label :people, style: "display: block" %>
+    <%= select_tag :people, options_from_collection_for_select(@people.order(:last_name, :first_name), :id, :firstlast_name), {multiple: true, size: 5} %>
+  </div>
+
+  <div>
     <%= form.submit :class => "btn btn-primary" %>
   </div>
 <% end %>

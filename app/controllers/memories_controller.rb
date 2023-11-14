@@ -8,28 +8,36 @@ class MemoriesController < ApplicationController
     @memories = @q.result
     @person = Person.new
     @memory = Memory.new
+    @people = Person.all
   end
-
+  
   # GET /memories/1 or /memories/1.json
   def show
   end
-
+  
   # GET /memories/new
   def new
     @memory = Memory.new
   end
-
+  
   # GET /memories/1/edit
   def edit
+    @people = Person.all
   end
 
   # POST /memories or /memories.json
   def create
-    @memory = Memory.new(memory_params)
+    @memory = Memory.new(memory_params.except(:people))
     @memory.author = current_user
 
     respond_to do |format|
       if @memory.save
+         # fetch "people" from the params to create a new PeopleMemory for each person
+        people_ids = params.fetch("people")
+        people_ids.each do |id|
+          PeopleMemory.create(:memory_id => @memory.id, :person_id => id)
+        end
+
         format.html { redirect_back(fallback_location: root_path, notice: "Memory was successfully created.") }
         format.json { render :show, status: :created, location: @memory }
       else
@@ -41,8 +49,18 @@ class MemoriesController < ApplicationController
 
   # PATCH/PUT /memories/1 or /memories/1.json
   def update
+
     respond_to do |format|
-      if @memory.update(memory_params)
+      if @memory.update(memory_params.except(:people))
+        # Delete old PeopleMemory records
+        PeopleMemory.where({ :memory_id => @memory.id }).destroy_all
+
+        # Create new PeopleMemory records
+        people_ids = params.fetch("people")
+        people_ids.each do |id|
+          PeopleMemory.create(:memory_id => @memory.id, :person_id => id)
+        end
+
         format.html { redirect_to memory_url(@memory), notice: "Memory was successfully updated." }
         format.json { render :show, status: :ok, location: @memory }
       else
@@ -70,6 +88,6 @@ class MemoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def memory_params
-      params.require(:memory).permit(:date, :location, :latitude, :longitude, :description, :author_id)
+      params.require(:memory).permit(:date, :location, :latitude, :longitude, :description)
     end
 end

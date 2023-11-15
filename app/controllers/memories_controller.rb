@@ -5,7 +5,8 @@ class MemoriesController < ApplicationController
   # GET /memories or /memories.json
   def index
     @q = Memory.ransack(params[:q])
-    @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
+    # @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
+    @q.sorts = ['date desc'] if @q.sorts.empty?
     @memories = @q.result
     @person = Person.new
     @memory = Memory.new

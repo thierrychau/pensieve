@@ -7,7 +7,8 @@ unless Rails.env.production?
       "db:drop",
       "db:create",
       "db:migrate",
-      "dev:sample_data"]
+      # "dev:sample_data"
+    ]
     
     desc "Adds sample data for development environment"
     task sample_data: [

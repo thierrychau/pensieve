@@ -5,20 +5,20 @@
 #  id          :bigint           not null, primary key
 #  date        :date
 #  description :text
-#  latitude    :decimal(, )
-#  location    :string
-#  longitude   :decimal(, )
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  address_id  :bigint
 #  author_id   :bigint           not null
 #
 # Indexes
 #
-#  index_memories_on_author_id  (author_id)
+#  index_memories_on_address_id  (address_id)
+#  index_memories_on_author_id   (author_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (address_id => addresses.id)
 #  fk_rails_...  (author_id => users.id)
 #
 class Memory < ApplicationRecord

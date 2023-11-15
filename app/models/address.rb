@@ -7,8 +7,8 @@
 #  country              :string
 #  country_code_alpha_3 :string
 #  full_address         :string
-#  lat                  :string
-#  lng                  :string
+#  lat                  :decimal(10, 8)
+#  lng                  :decimal(11, 8)
 #  name                 :string
 #  place_formatted      :string
 #  postcode             :string

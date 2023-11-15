@@ -11,29 +11,38 @@
     </div>
   <% end %>
 
-  <div class="mb-3">
-    <%= form.label :date, class: "form-label" %>
-    <%= form.date_field :date, class: "form-control" %>
-  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="mb-3">
+          <%= form.label :date, class: "form-label" %>
+          <%= form.date_field :date, class: "form-control" %>
+        </div>
 
-  <div class="mb-3">
-    <%= form.label :location, class:  "form-label" %>
-    <%= form.text_field :location, class: "form-control"%>
-  </div>
+        <div class="mb-3">
+          <%= form.label :location, class:  "form-label" %>
+          <%= form.text_field :location, class: "form-control", id: "location-input"%>
+        </div>
 
-  <div class="mb-3">
-    <%= form.label :title, class: "form-label" %>
-    <%= form.text_field :title, class: "form-control" %>
-  </div>
+        <div class="mb-3">
+          <%= form.label :title, class: "form-label" %>
+          <%= form.text_field :title, class: "form-control", placeholder: "Enter a title" %>
+        </div>
 
-  <div class="mb-3">
-    <%= form.label :description, class: "form-label" %>
-    <%= form.text_area :description, class: "form-control" %>
-  </div>
+        <div class="mb-3">
+          <%= form.label :description, class: "form-label" %>
+          <%= form.text_area :description, class: "form-control" %>
+        </div>
 
-  <div class="mb-3">
-    <%= form.label :people, class: "form-label" %>
-    <%= select_tag :people, options_from_collection_for_select(people.order(:last_name, :first_name), :id, :firstlast_name), {multiple: true, size: 5, class: "form-select"} %>
+        <div class="mb-3">
+          <%= form.label :people, class: "form-label" %>
+          <%= select_tag :people, options_from_collection_for_select(people.order(:last_name, :first_name), :id, :firstlast_name), {multiple: true, size: 5, class: "form-select"} %>
+        </div>
+      </div>
+      <div class="col">
+        <%= render "auto_address" %>
+      </div>
+    </div>
   </div>
 
   <div>

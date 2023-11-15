@@ -38,6 +38,7 @@ unless Rails.env.production?
           author_id: User.all.sample.id,
           date: Faker::Date.backward(days: 40*365),
           description: Faker::TvShows::Spongebob.quote,
+          location: Faker::Address.city,
         )
       end
     end

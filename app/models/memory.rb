@@ -25,9 +25,10 @@ class Memory < ApplicationRecord
   validates :date, :presence => true
   validates :author_id, :presence => true
 
-  before_save :memory_coordinates
+  # before_save :memory_coordinates
   
   belongs_to :author, class_name: "User"
+  belongs_to :address, optional: true
   has_many :people_memories
   has_many :people, through: :people_memories
 
@@ -50,16 +51,6 @@ class Memory < ApplicationRecord
 
     people_ids.each do |id|
       PeopleMemory.create({ :memory_id => self.id, :person_id => id })
-    end
-  end
-
-  def memory_coordinates
-    geocoding_service = GeocodingService.new(self.location)
-    coordinates = geocoding_service.call
-
-    if coordinates
-      self.latitude = coordinates.fetch(:latitude)
-      self.longitude = coordinates.fetch(:longitude)
     end
   end
 end

@@ -5,10 +5,12 @@ class MemoriesController < ApplicationController
   # GET /memories or /memories.json
   def index
     @q = Memory.ransack(params[:q])
-    @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
+    # @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
+    @q.sorts = ['date desc'] if @q.sorts.empty?
     @memories = @q.result
-    @person = Person.new
     @memory = Memory.new
+    @memory.build_address
+    @person = Person.new
   end
   
   # GET /memories/1 or /memories/1.json
@@ -18,6 +20,7 @@ class MemoriesController < ApplicationController
   # GET /memories/new
   def new
     @memory = Memory.new
+    @memory.build_address
   end
   
   # GET /memories/1/edit
@@ -31,9 +34,6 @@ class MemoriesController < ApplicationController
 
     respond_to do |format|
       if @memory.save
-        people_ids = params.fetch("people")
-        @memory.update_people(people_ids)
-
         format.html { redirect_back(fallback_location: root_path, notice: "Memory was successfully created.") }
         format.json { render :show, status: :created, location: @memory }
       else
@@ -45,12 +45,8 @@ class MemoriesController < ApplicationController
 
   # PATCH/PUT /memories/1 or /memories/1.json
   def update
-
     respond_to do |format|
       if @memory.update(memory_params)
-        people_ids = params.fetch("people")
-        @memory.update_people(people_ids)
-
         format.html { redirect_to memory_url(@memory), notice: "Memory was successfully updated." }
         format.json { render :show, status: :ok, location: @memory }
       else
@@ -82,6 +78,12 @@ class MemoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def memory_params
-      params.require(:memory).permit(:date, :location, :latitude, :longitude, :description)
+      params.require(:memory).permit(
+        :title,
+        :description,
+        :date,
+        address_attributes: [:name],
+        people_memories_attributes: [:id, :person_id, :_destroy]
+        )
     end
 end

@@ -14,6 +14,7 @@ unless Rails.env.production?
     task sample_data: [
       :environment, 
       "dev:add_users",
+      "dev:add_addresses",
       "dev:add_memories",
       "dev:add_people",
       "dev:add_people_memories"] do
@@ -32,6 +33,15 @@ unless Rails.env.production?
       end 
     end
 
+    task add_addresses: :environment do 
+      puts "adding addresses..."
+      25.times do
+        Address.create(
+          name: Faker::Address.city,
+        )
+      end
+    end
+
     task add_memories: :environment do 
       puts "adding memories..."
       25.times do
@@ -39,7 +49,7 @@ unless Rails.env.production?
           author_id: User.all.sample.id,
           date: Faker::Date.backward(days: 40*365),
           description: Faker::TvShows::Spongebob.quote,
-          location: Faker::Address.city,
+          address_id: Address.all.sample.id,
         )
       end
     end

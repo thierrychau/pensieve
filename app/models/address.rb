@@ -19,6 +19,8 @@
 class Address < ApplicationRecord
   has_many :memories
 
+  # after_create :fetch_coordinates_and_components
+
   ADDRESS_COMPONENTS_FIELDS = %i[country country_code_alpha_3 full_address address place_formatted postcode region].freeze
 
   def fetch_coordinates_and_components

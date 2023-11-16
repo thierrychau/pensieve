@@ -8,8 +8,9 @@ class MemoriesController < ApplicationController
     # @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
     @q.sorts = ['date desc'] if @q.sorts.empty?
     @memories = @q.result
-    @person = Person.new
     @memory = Memory.new
+    @memory.build_address
+    @person = Person.new
   end
   
   # GET /memories/1 or /memories/1.json
@@ -19,6 +20,7 @@ class MemoriesController < ApplicationController
   # GET /memories/new
   def new
     @memory = Memory.new
+    @memory.build_address
   end
   
   # GET /memories/1/edit
@@ -32,10 +34,6 @@ class MemoriesController < ApplicationController
 
     respond_to do |format|
       if @memory.save
-        people_ids = params.fetch("people")
-        @memory.update_people(people_ids)
-        handle_address_association # if @memory.save
-
         format.html { redirect_back(fallback_location: root_path, notice: "Memory was successfully created.") }
         format.json { render :show, status: :created, location: @memory }
       else
@@ -49,10 +47,6 @@ class MemoriesController < ApplicationController
   def update
     respond_to do |format|
       if @memory.update(memory_params)
-        people_ids = params.fetch("people")
-        @memory.update_people(people_ids)
-        handle_address_association # if memory.save
-
         format.html { redirect_to memory_url(@memory), notice: "Memory was successfully updated." }
         format.json { render :show, status: :ok, location: @memory }
       else
@@ -82,15 +76,14 @@ class MemoriesController < ApplicationController
       @people = Person.all
     end
 
-    def handle_address_association
-      address_name = params[:location] # Assuming the address name is sent from the form
-      address = Address.find_or_create_by(name: address_name)
-      @memory.update(address_id: address.id)
-      address.fetch_coordinates_and_components if address.persisted?
-    end
-
     # Only allow a list of trusted parameters through.
     def memory_params
-      params.require(:memory).permit(:title, :date, :description)
+      params.require(:memory).permit(
+        :title,
+        :description,
+        :date,
+        address_attributes: [:name],
+        people_memories_attributes: [:id, :person_id, :_destroy]
+        )
     end
 end

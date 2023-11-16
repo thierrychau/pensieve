@@ -2,11 +2,12 @@
       <div id="<%= dom_id memory %>" class="card">
         <%#= image_tag memory.image, class: "card-img-top" %>
         <div class="card-body">
-          <h5 class="card-title"><%= memory.date %></h5>
-          <p class="card-text"><%= memory.description %></p>
-          <p class="card-text"><%= memory.location %></p>
-          <p class="card-text"><%= memory.latitude %></p>
-          <p class="card-text"><%= memory.longitude %></p>
+          <h5 class="card-title">Date: <%= memory.date %></h5>
+          <p class="card-text">Title:<%= memory.title %></p>
+          <p class="card-text">Description: <%= memory.description %></p>
+          <p class="card-text">Address: <%= memory.address.name %></p>
+          <p class="card-text">Lat: <%= memory.address.lat %></p>
+          <p class="card-text">Lng: <%= memory.address.lng %></p>
           <% memory.people.each do |person| %>
             <p class="badge rounded-pill text-bg-secondary"><%= person.firstlast_name %></p>
           <% end %>

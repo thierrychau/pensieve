@@ -1,66 +1,26 @@
-<%= form_with(model: memory) do |form| %>
-  <% if memory.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(memory.errors.count, "error") %> prohibited this memory from being saved:</h2>
+<% if memory.errors.any? %>
+  <div style="color: red">
+    <h2><%= pluralize(memory.errors.count, "error") %> prohibited this memory from being saved:</h2>
 
-      <ul>
-        <% memory.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="mb-3">
-          <%= form.label :date, class: "form-label" %>
-          <%= form.date_field :date, class: "form-control" %>
-        </div>
-
-        <div class="mb-3">
-          <%= form.label :location, class:  "form-label" %>
-          <%= text_tag :location, class: "form-control", id: "location-input"%>
-        </div>
-
-        <div class="mb-3">
-          <%= form.label :title, class: "form-label" %>
-          <%= form.text_field :title, class: "form-control", placeholder: "Enter a title" %>
-        </div>
-
-        <div class="mb-3">
-          <%= form.label :description, class: "form-label" %>
-          <%= form.text_area :description, class: "form-control" %>
-        </div>
-
-        <div class="mb-3">
-          <%= form.label :people, class: "form-label" %>
-          <%= select_tag :people, options_from_collection_for_select(people.order(:last_name, :first_name), :id, :firstlast_name), {multiple: true, size: 5, class: "form-select"} %>
-        </div>
-      </div>
-      <div class="col">
-        <%= render "auto_address" %>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <%= form.submit :class => "btn btn-primary" %>
+    <ul>
+      <% memory.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
 
 <!--updating form-->
-<%= form_with(model: [@memory, @address, @people_memory]) do |form| %>
+<%= form_with(model: memory) do |form| %>
   <div class="mb-3">
     <%= form.label :date, class: "form-label" %>
     <%= form.date_field :date, class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.fields_for @address do |address_fields| %>
-      <%= address_fields.label :location, class: "form-label" %>
-      <%= address_fields.text_field :location, class: "form-control", id: "location-input" %>
+    <%= form.fields_for :address do |address_fields| %>
+      <%= address_fields.label :name, class: "form-label" %>
+      <%= address_fields.text_field :name, class: "form-control" %>
     <% end %>
   </div>
 
@@ -74,13 +34,39 @@
     <%= form.text_area :description, class: "form-control" %>
   </div>
 
-  <div class="mb-3">
-    <%= form.fields_for @people_memory do |people_fields| %>
-      <%= people_fields.label :people, class: "form-label" %>
-      <%= select_tag :people, options_from_collection_for_select(@people.order(:last_name, :first_name), :id, :firstlast_name), { multiple: true, size: 5, class: "form-select" } %>
+  <!--<div class="mb-3">-->
+    <%#= form.fields_for :people_memories_attributes, @memory.people_memories.to_a do |people_memories_fields| %>
+    <%# @people.each do |person| %>
+        <%#= people_memories_fields.check_box :person_id, {}, people_memories_fields.object.person_id, nil %>
+        <%#= people_memories_fields.label :person_id, person.firstlast_name, class: "form-label" %> <br>
+      <%# end %>
+    <%# end %>
+<!--  </div>-->
+
+<!--  <div class="mb-3">-->
+    <%#= form.fields_for :people_memories_attributes, @memory.people_memories.to_a do |people_memories_fields| %>
+    <%#= people_memories_fields.collection_check_boxes :person_id, @people, :id, :firstlast_name do |b| %>
+        <%#= b.check_box %>
+        <%#= b.label %>
+    <%# end %>
+  <%# end %>
+<!--  </div>-->
+
+<%# @people.each do |person| %>
+<!--  <div class="mb-3">-->
+    <%#= check_box_tag 'memory[people_memories_attributes][][person_id]', person.id, @memory.people.include?(person) %>
+    <%#= label_tag "memory_people_memories_attributes_#{person.id}_person_id", person.firstlast_name %>
+<!--  </div>-->
+<%# end %>
+
+  <% @people.each do |person| %>
+    <%= form.fields_for :people_memories, @memory.people_memories.build(person_id: person.id) do |people_memory_fields| %>
+      <div class="mb-3">
+        <%= people_memory_fields.check_box :person_id, { class: "btn btn-check", :checked => false }, person.id, nil %>
+        <%= people_memory_fields.label :person_id, person.firstlast_name, class: "btn btn-outline-secondary badge rounded-pill text-black"%>
+      </div>
     <% end %>
-  </div>
+  <% end %>
 
-  <%= form.submit %>
+  <%= form.submit 'Create Memory' %>
 <% end %>
-

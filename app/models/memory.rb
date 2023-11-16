@@ -25,15 +25,13 @@ class Memory < ApplicationRecord
   validates :date, :presence => true
   validates :author_id, :presence => true
 
-  # before_save :memory_coordinates
-  
   belongs_to :author, class_name: "User"
   belongs_to :address, optional: true
-  has_many :people_memories
+  has_many :people_memories, inverse_of: :memory
   has_many :people, through: :people_memories
 
-  accepts_nested_attributes_for :address
   accepts_nested_attributes_for :people_memories
+  accepts_nested_attributes_for :address, reject_if: :address_exists?
 
   scope :by_date, -> { order(date: :desc) }
 
@@ -49,11 +47,15 @@ class Memory < ApplicationRecord
     ]
   end
 
-  def update_people(people_ids)
-    PeopleMemory.where({ :memory_id => self.id }).destroy_all
+  private
 
-    people_ids.each do |id|
-      PeopleMemory.create({ :memory_id => self.id, :person_id => id })
-    end
+  def address_exists?(attributes)
+    address_name = attributes['name']
+    return false if address_name.blank?
+
+    address = Address.find_or_create_by(name: address_name)
+    update(address_id: address.id)
+    # address.fetch_coordinates_and_components if address.persisted?
+    true
   end
 end

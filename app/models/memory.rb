@@ -27,7 +27,7 @@ class Memory < ApplicationRecord
 
   belongs_to :author, class_name: "User"
   belongs_to :address, optional: true
-  has_many :people_memories, inverse_of: :memory
+  has_many :people_memories, inverse_of: :memory, dependent: :destroy
   has_many :people, through: :people_memories
 
   accepts_nested_attributes_for :people_memories

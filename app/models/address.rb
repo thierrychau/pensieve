@@ -17,7 +17,7 @@
 #  updated_at           :datetime         not null
 #
 class Address < ApplicationRecord
-  belongs_to :memory
+  has_many :memories
 
   ADDRESS_COMPONENTS_FIELDS = %i[country country_code_alpha_3 full_address address place_formatted postcode region].freeze
 

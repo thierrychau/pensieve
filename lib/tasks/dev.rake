@@ -7,7 +7,7 @@ unless Rails.env.production?
       "db:drop",
       "db:create",
       "db:migrate",
-      # "dev:sample_data"
+      "dev:sample_data"
     ]
     
     desc "Adds sample data for development environment"
@@ -59,7 +59,8 @@ unless Rails.env.production?
       25.times do
         Person.create(
           first_name: Faker::Name.first_name,
-          last_name: Faker::Name.last_name 
+          last_name: Faker::Name.last_name,
+          user_id: User.all.sample.id
         )
       end 
     end
@@ -69,7 +70,7 @@ unless Rails.env.production?
       Memory.all.each do |memory|
         pm = PeopleMemory.create(
           memory_id: memory.id,
-          person_id: Person.all.sample.id,
+          person_id: memory.author.people.sample.id,
         )
       end 
     end

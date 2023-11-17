@@ -9,7 +9,7 @@
 #  full_address         :string
 #  lat                  :decimal(10, 8)
 #  lng                  :decimal(11, 8)
-#  name                 :string
+#  location             :string
 #  place_formatted      :string
 #  postcode             :string
 #  region               :string

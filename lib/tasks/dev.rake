@@ -37,7 +37,7 @@ unless Rails.env.production?
       puts "adding addresses..."
       25.times do
         Address.create(
-          name: Faker::Address.city,
+          location: Faker::Address.city,
         )
       end
     end

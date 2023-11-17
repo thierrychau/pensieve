@@ -41,7 +41,7 @@
           <span class="badge rounded-pill text-bg-secondary"><%= person.firstlast_name %></span>
           <% end %>
         </td>
-        <td><%= memory.address.name if memory.address %></td>
+        <td><%= memory.address.location if memory.address %></td>
         <td><%= memory.author.email %></td>
         <td><%= link_to "See", memory %></td>
       </tr>

@@ -1,17 +1,6 @@
 class MemoriesController < ApplicationController
   before_action :set_memory, only: %i[ show edit update destroy ]
-  before_action :set_people, only: %i[ create new index edit ]
-
-  # GET /memories or /memories.json
-  def index
-    @q = Memory.ransack(params[:q])
-    # @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
-    @q.sorts = ['date desc'] if @q.sorts.empty?
-    @memories = @q.result
-    @memory = Memory.new
-    @memory.build_address
-    @person = Person.new
-  end
+  before_action :set_people, only: %i[ create new edit update ]
   
   # GET /memories/1 or /memories/1.json
   def show
@@ -61,7 +50,7 @@ class MemoriesController < ApplicationController
     @memory.destroy
 
     respond_to do |format|
-      format.html { redirect_to memories_url, notice: "Memory was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "Memory was successfully destroyed." }
       format.json { head :no_content }
     end
   end

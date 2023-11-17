@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_17_162949) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_17_193242) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -24,8 +24,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_17_162949) do
     t.string "country_code_alpha_3"
     t.string "region"
     t.string "postcode"
-    t.decimal "lat", precision: 10, scale: 8
-    t.decimal "lng", precision: 11, scale: 8
+    t.decimal "lat", precision: 12, scale: 8
+    t.decimal "lng", precision: 12, scale: 8
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

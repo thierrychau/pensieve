@@ -34,39 +34,14 @@
     <%= form.text_area :description, class: "form-control" %>
   </div>
 
-  <!--<div class="mb-3">-->
-    <%#= form.fields_for :people_memories_attributes, @memory.people_memories.to_a do |people_memories_fields| %>
-    <%# @people.each do |person| %>
-        <%#= people_memories_fields.check_box :person_id, {}, people_memories_fields.object.person_id, nil %>
-        <%#= people_memories_fields.label :person_id, person.firstlast_name, class: "form-label" %> <br>
-      <%# end %>
-    <%# end %>
-<!--  </div>-->
-
-<!--  <div class="mb-3">-->
-    <%#= form.fields_for :people_memories_attributes, @memory.people_memories.to_a do |people_memories_fields| %>
-    <%#= people_memories_fields.collection_check_boxes :person_id, @people, :id, :firstlast_name do |b| %>
-        <%#= b.check_box %>
-        <%#= b.label %>
-    <%# end %>
-  <%# end %>
-<!--  </div>-->
-
-<%# @people.each do |person| %>
-<!--  <div class="mb-3">-->
-    <%#= check_box_tag 'memory[people_memories_attributes][][person_id]', person.id, @memory.people.include?(person) %>
-    <%#= label_tag "memory_people_memories_attributes_#{person.id}_person_id", person.firstlast_name %>
-<!--  </div>-->
-<%# end %>
-
-  <% @people.each do |person| %>
-    <%= form.fields_for :people_memories, @memory.people_memories.build(person_id: person.id) do |people_memory_fields| %>
-      <div class="mb-3">
-        <%= people_memory_fields.check_box :person_id, { class: "btn btn-check", :checked => false }, person.id, nil %>
-        <%= people_memory_fields.label :person_id, person.firstlast_name, class: "btn btn-outline-secondary badge rounded-pill text-black"%>
-      </div>
+  <div class="mb-3">
+    <% @people.each do |person| %>
+      <%= form.fields_for :people_memories, @memory.people_memories.build(person_id: person.id) do |people_memory_fields| %>
+          <%= people_memory_fields.check_box :person_id, { class: "btn-check", :checked => false }, person.id, nil %>
+          <%= people_memory_fields.label :person_id, person.firstlast_name, { class: "btn btn-outline-secondary sm", id: "btn-check-2-outlined" } %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 
-  <%= form.submit 'Create Memory' %>
+  <%= form.submit 'Create Memory', class: "btn btn-primary" %>
 <% end %>

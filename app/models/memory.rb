@@ -30,7 +30,7 @@ class Memory < ApplicationRecord
   has_many :people_memories, inverse_of: :memory, dependent: :destroy
   has_many :people, through: :people_memories
 
-  accepts_nested_attributes_for :people_memories
+  accepts_nested_attributes_for :people_memories, allow_destroy: true
   accepts_nested_attributes_for :address, reject_if: :address_exists?
 
   scope :by_date, -> { order(date: :desc) }

@@ -1,10 +1,11 @@
 <div class="col-md-12 d-flex align-items-center">
   <h1>Dashboard</h1>
     <div class="ms-auto">
-      <%= search_form_for @q do |f| %>
-        <%= f.text_field :description_cont, :placeholder => "Search" %>
-        <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
-      <% end %>
+    <!--not working yet-->
+      <%#= search_form_for @q do |f| %>
+        <%#= f.text_field :description_cont, :placeholder => "Search" %>
+        <%#= f.submit :class => "btn btn-primary btn-block", hidden: true%>
+      <%# end %>
     </div>
    <!-- Button trigger modal -->
     <div class="ms-4">
@@ -27,7 +28,6 @@
       <th scope="col">Description</th>
       <th scope="col">People</th>
       <th scope="col"><%= sort_link(@q, :address_location, "Location") %></th>
-      <th scope="col"><%= sort_link(@q, :author_email, "Author") %></th>
       <th scope="col">Show</th>
     </tr>
   </thead>
@@ -42,7 +42,6 @@
           <% end %>
         </td>
         <td><%= memory.address.location if memory.address %></td>
-        <td><%= memory.author.email %></td>
         <td><%= link_to "See", memory %></td>
       </tr>
     <% end %>

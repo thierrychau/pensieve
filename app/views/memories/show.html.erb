@@ -2,7 +2,7 @@
 
 <div>
   <%= link_to "Edit this memory", edit_memory_path(@memory) %> |
-  <%= link_to "Back to memories", memories_path %>
+  <%= link_to "Back to memories", root_path %>
 
-  <%= button_to "Destroy this memory", @memory, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+  <%= button_to "Destroy this memory", @memory, class: "btn btn-danger", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
 </div>

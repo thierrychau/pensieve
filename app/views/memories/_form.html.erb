@@ -14,13 +14,17 @@
 <%= form_with(model: memory, multipart: true) do |form| %>
   <div class="mb-3">
     <%= form.label :date, class: "form-label" %>
-    <%= form.date_field :date, class: "form-control" %>
+    <% if memory.new_record? %>
+      <%= form.date_field :date, class: "form-control", value: Date.today %>
+    <% else %>
+      <%= form.date_field :date, class: "form-control" %>
+    <% end %>
   </div>
 
   <div class="mb-3">
     <%= form.fields_for :address do |address_fields| %>
       <%= address_fields.label :location, class: "form-label" %>
-      <%= address_fields.text_field :location, class: "form-control" %>
+      <%= address_fields.text_field :location, class: "form-control", placeholder: "Enter a location" %>
     <% end %>
   </div>
 
@@ -31,7 +35,7 @@
 
   <div class="mb-3">
     <%= form.label :description, class: "form-label" %>
-    <%= form.text_area :description, class: "form-control" %>
+    <%= form.text_area :description, class: "form-control", placeholder: "Enter a description" %>
   </div>
 
   <div class="mb-3">

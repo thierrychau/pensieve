@@ -2,6 +2,7 @@
       <div id="<%= dom_id memory %>" class="card">
         <%#= image_tag memory.image, class: "card-img-top" %>
         <div class="card-body">
+          <img src="<%= memory.media.first.url %>" class="img-thumbnail">
           <h5 class="card-title">Date: <%= memory.date %></h5>
           <p class="card-text">Title:<%= memory.title %></p>
           <p class="card-text">Description: <%= memory.description %></p>

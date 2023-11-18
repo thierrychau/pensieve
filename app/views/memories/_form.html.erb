@@ -11,7 +11,7 @@
 <% end %>
 
 <!--updating form-->
-<%= form_with(model: memory) do |form| %>
+<%= form_with(model: memory, multipart: true) do |form| %>
   <div class="mb-3">
     <%= form.label :date, class: "form-label" %>
     <%= form.date_field :date, class: "form-control" %>
@@ -43,5 +43,11 @@
     <% end %>
   </div>
 
+  <div class="mb-3">
+    <%= form.fields_for :media, form.object.media.build do |medium_fields| %>
+      <%= medium_fields.file_field :url, { class: "form-control" } %>
+    <% end %>
+  </div>
+  
   <%= form.submit class: "btn btn-primary" %>
 <% end %>

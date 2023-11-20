@@ -21,7 +21,7 @@ class OpenAiService
   end
 
   private
-
+#to update to only add one message
   def add_message(content, role: "user")
     @messages << { role: role, content: content }
   end

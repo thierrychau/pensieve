@@ -37,11 +37,8 @@ class MemoriesController < ApplicationController
     @memory.assign_attributes(memory_params)
     if @memory.valid?
       # Delete unchecked people_memories
-      checked_people_ids = params.fetch("memory").fetch("people_memories_attributes").values.map { |attributes| attributes.fetch("person_id", attributes.fetch("id", nil)) }.uniq
-      existing_people_ids = @memory.people_memories.pluck(:person_id)
-  
-      unchecked_people_ids = existing_people_ids - checked_people_ids
-      @memory.people_memories.where({ :person_id => unchecked_people_ids }).each(&:destroy)  
+      to_destroy_ids = params.fetch("memory").fetch("people_memories_attributes").values.select { |attributes| attributes.fetch("_destroy") == "1" }.map { |attributes| attributes.fetch("person_id") }
+      @memory.people_memories.where({ :id => to_destroy_ids }).each(&:destroy) 
     end
     respond_to do |format|
       if @memory.save

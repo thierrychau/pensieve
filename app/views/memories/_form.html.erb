@@ -40,9 +40,10 @@
 
   <div class="mb-3">
     <% @people.each do |person| %>
-      <%= form.fields_for :people_memories, @memory.people_memories.build(person_id: person.id) do |people_memory_fields| %>
-          <%= people_memory_fields.check_box :person_id, { class: "btn-check", :checked => false }, person.id, nil %>
-          <%= people_memory_fields.label :person_id, person.firstlast_name, { class: "btn btn-outline-secondary sm", id: "btn-check-2-outlined" } %>
+      <% people_memory = @memory.people_memories.where({ :person_id => person.id }).at(0) || @memory.people_memories.build({ :person_id => person.id }) %>
+      <%= form.fields_for :people_memories, people_memory do |people_memory_fields| %>
+        <%= people_memory_fields.check_box :person_id, { :class => "btn-check", :checked => people_memory.persisted? }, person.id, nil %>
+        <%= people_memory_fields.label :person_id, person.firstlast_name, { :class => "btn btn-outline-secondary sm", :id => "btn-check-2-outlined" } %>
       <% end %>
     <% end %>
   </div>

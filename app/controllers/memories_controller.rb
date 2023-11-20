@@ -72,7 +72,8 @@ class MemoriesController < ApplicationController
         :description,
         :date,
         address_attributes: [:location],
-        people_memories_attributes: [:id, :person_id, :_destroy]
+        people_memories_attributes: [:id, :person_id, :_destroy],
+        media_attributes: [:url]
         )
     end
 end

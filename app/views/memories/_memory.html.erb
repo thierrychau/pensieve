@@ -1,26 +1,32 @@
 <div class="col">
-      <div id="<%= dom_id memory %>" class="card">
-        <%#= image_tag memory.image, class: "card-img-top" %>
-        <div class="card-body">
-          <h5 class="card-title">Date: <%= memory.date %></h5>
-          <p class="card-text">Title:<%= memory.title %></p>
-          <p class="card-text">Description: <%= memory.description %></p>
-          <p class="card-text">Address: <%= memory.address.location %></p>
-          <p class="card-text">Lat: <%= memory.address.lat %></p>
-          <p class="card-text">Lng: <%= memory.address.lng %></p>
-          <% memory.people.each do |person| %>
-            <p class="badge rounded-pill text-bg-secondary"><%= person.firstlast_name %></p>
-          <% end %>
+  <div id="<%= dom_id memory %>" class="card">
+    <div class="card-body">
+      <% if memory.media.present? %>
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <% memory.media.each do |medium| %>
+              <div class="carousel-item active">
+                <img src="<%= medium.url %>" class="d-block w-100" alt="...">
+              </div>
+            <% end %>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-        <!--<ul class="list-group list-group-flush">-->
-          <%# memory.comments.each do |comment| %>
-<!--            <li class="list-group-item">-->
-              <%#= comment.body %>
-<!--            </li>-->
-          <%# end %>
-<!--        </ul>-->
-        <div class="card-body">
-          <%= link_to "Show this memory", memory, class: "card-link" %>
-        </div>
-      </div>
+      <% end %>
+      <h5 class="card-text"><%= memory.title %></h5>
+      <p class="card-title"><%= memory.date.strftime("%D") %></p>
+      <p class="card-text"><%= memory.address.location %></p>
+      <p class="card-text"><%= memory.description %></p>
+      <% memory.people.each do |person| %>
+        <p class="badge rounded-pill text-bg-secondary"><%= person.firstlast_name %></p>
+      <% end %>
+    </div>
+  </div>
 </div>

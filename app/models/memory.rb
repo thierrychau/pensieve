@@ -29,9 +29,11 @@ class Memory < ApplicationRecord
   belongs_to :address, optional: true
   has_many :people_memories, inverse_of: :memory, dependent: :destroy
   has_many :people, through: :people_memories
+  has_many :media, inverse_of: :memory, dependent: :destroy
 
   accepts_nested_attributes_for :people_memories, allow_destroy: true
-  accepts_nested_attributes_for :address, reject_if: :address_exists?
+  accepts_nested_attributes_for :address#, reject_if: :address_exists?
+  accepts_nested_attributes_for :media, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }
 
@@ -49,13 +51,13 @@ class Memory < ApplicationRecord
 
   private
 
-  def address_exists?(attributes)
-    address_name = attributes['name']
-    return false if address_name.blank?
+  # def address_exists?(attributes)
+  #   address_name = attributes['location']
+  #   return false if address_name.blank?
 
-    address = Address.find_or_create_by(name: address_name)
-    update(address_id: address.id)
-    # address.fetch_coordinates_and_components if address.persisted?
-    true
-  end
+  #   address = Address.find_or_create_by(name: address_name)
+  #   update(address_id: address.id)
+  #   address.fetch_coordinates_and_components if address.persisted?
+  #   true
+  # end
 end

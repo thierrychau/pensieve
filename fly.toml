@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for pensieve-v2 on 2023-11-20T20:49:55Z
+# fly.toml app configuration file generated for pensieve on 2023-11-21T06:00:43Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "pensieve-v2"
+app = "pensieve"
 primary_region = "ord"
 console_command = "/rails/bin/rails console"
 

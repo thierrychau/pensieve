@@ -20,33 +20,40 @@
     </div>
 </div> 
 
-<table class="table table-hover table-striped table-bordered">
-  <thead>
-    <tr>
-      <th scope="col"><%= sort_link(@q, :date, "Date") %></th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">People</th>
-      <th scope="col"><%= sort_link(@q, :address_location, "Location") %></th>
-      <th scope="col">Show</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @memories.each do |memory| %>
+<div class="table-responsive ">
+  <table class="table align-middle table-hover table-striped table-bordered">
+    <thead>
       <tr>
-        <td><%= memory.date %></td>
-        <td><%= memory.title %></td>
-        <td><%= memory.description %></td>
-        <td><% memory.people.each do |person| %>
-          <span class="badge rounded-pill text-bg-secondary"><%= person.firstlast_name %></span>
-          <% end %>
-        </td>
-        <td><%= memory.address.location if memory.address %></td>
-        <td><%= link_to "See", memory %></td>
+        <th scope="col"><%= sort_link(@q, :date, "Date") %></th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">People</th>
+        <th scope="col"><%= sort_link(@q, :address_location, "Location") %></th>
+        <th scope="col">Show</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @memories.each do |memory| %>
+        <tr>
+          <td><%= memory.date.strftime("%m/%d/%y") %></td>
+          <td><%= memory.title %></td>
+          <td><%= memory.description.truncate(100, separator: /\s/) %></td>
+          <td><% memory.people.each do |person| %>
+            <span class="badge rounded-pill text-bg-secondary">
+              <%= person.first_name %>
+              <span class="d-none d-xxl-inline"> <%= person.last_name %></span>
+              <span class="d-inline d-xxl-none"> <%= person.last_name[0] %></span>
+            </span>
+          <% end %></td>
+          <td><%= memory.address.location if memory.address %></td>
+          <td class="text-center"><%= link_to memory do %>
+            <i class="fa-solid fa-chevron-right"></i>
+          <% end %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
   <div class="modal-dialog">

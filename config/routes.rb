@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   resources :memories, except: [:index]
 
   get "/dashboard" => "users#dashboard", as: :dashboard
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end

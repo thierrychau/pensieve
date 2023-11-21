@@ -1,6 +1,9 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # Setting up mailer
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.perform_deliveries = true
   # Default URL options for devise
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # Allow server to be hosted on any URL

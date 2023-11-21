@@ -3,6 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
+# Pundit for authorization
+gem "pundit"
+
 # Uploading images and files 
 gem "carrierwave"
 gem "cloudinary"

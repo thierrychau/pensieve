@@ -34,8 +34,14 @@ class MemoriesController < ApplicationController
 
   # PATCH/PUT /memories/1 or /memories/1.json
   def update
+    @memory.assign_attributes(memory_params)
+    if @memory.valid?
+      # Delete unchecked people_memories
+      to_destroy_ids = params.fetch("memory").fetch("people_memories_attributes").values.select { |attributes| attributes.fetch("_destroy") == "1" }.map { |attributes| attributes.fetch("person_id") }
+      @memory.people_memories.where({ :id => to_destroy_ids }).each(&:destroy) 
+    end
     respond_to do |format|
-      if @memory.update(memory_params)
+      if @memory.save
         format.html { redirect_to memory_url(@memory), notice: "Memory was successfully updated." }
         format.json { render :show, status: :ok, location: @memory }
       else

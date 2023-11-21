@@ -1,6 +1,4 @@
-<div class="offset-md-3 col-md-6">
-  <h2 class="mb-5">Sign in to Your Account</h2>
-  
+<% content_for :card_content do %>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="mb-3">
       <%= f.label :email, class: "form-label"%>
@@ -19,12 +17,10 @@
       </div>
     <% end %>
 
-    <div class="mb-3">
-      <%= render "devise/shared/links" %>
-    </div>
-
     <div class="d-grid gap-2 mb-3">
-      <%= f.submit "Log in", :class => "btn btn-primary"%>
+      <%= f.submit "Log in", :class => "btn btn-outline-primary"%>
     </div>
   <% end %>
-</div>
+<% end %>
+
+<%= render "devise/shared/card_structure", title: "Sign in to Your Account" %>

@@ -52,7 +52,7 @@ class Memory < ApplicationRecord
   private
 
   def address_exists?(attributes)
-    address_name = attributes['input']
+    address_name = attributes['input'].titleize
     return false if address_name.blank?
 
     address = Address.find_or_create_by(input: address_name)

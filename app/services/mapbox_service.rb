@@ -26,7 +26,6 @@ class MapboxService
         postcode = nil
         region = nil
         place = nil
-        place_formatted = nil 
 
         # Define suffixes to handle variations in keys
         suffixes = {
@@ -62,7 +61,6 @@ class MapboxService
           full_address: first_feature['place_name'],
           address: first_feature.dig('text'),
           place: place,
-          place_formatted: first_feature.dig('place_type', 0),
           postcode: postcode,
           region: region
         }.transform_values(&:presence)

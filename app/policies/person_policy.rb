@@ -1,4 +1,4 @@
-class PeoplePolicy < ApplicationPolicy
+class PersonPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # def resolve
@@ -7,15 +7,7 @@ class PeoplePolicy < ApplicationPolicy
   end
 
   def show?
-    true
-  end
-
-  def new?
-    true
-  end
-
-  def edit?
-    true
+    owner?
   end
 
   def create?
@@ -23,10 +15,16 @@ class PeoplePolicy < ApplicationPolicy
   end
 
   def update?
-    true
+    owner?
   end
 
   def destroy?
-    true
+    owner?
+  end
+
+  private
+  
+  def owner?
+    record.user == user
   end
 end

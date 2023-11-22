@@ -7,15 +7,7 @@ class MemoryPolicy < ApplicationPolicy
   end
 
   def show?
-    true
-  end
-
-  def new?
-    true
-  end
-
-  def edit?
-    true
+    owner?
   end
 
   def create?
@@ -23,10 +15,16 @@ class MemoryPolicy < ApplicationPolicy
   end
 
   def update?
-    true
+    owner?
   end
 
   def destroy?
-    true
+    owner?
+  end
+
+  private
+
+  def owner?
+    record.author == user
   end
 end

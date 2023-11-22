@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_22_175939) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_22_181659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -18,9 +18,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_175939) do
   create_table "addresses", force: :cascade do |t|
     t.string "input"
     t.string "address"
-    t.string "place_formatted"
+    t.string "full_address"
     t.string "country"
-    t.string "country_code_alpha_3"
+    t.string "country_code"
     t.string "region"
     t.string "postcode"
     t.decimal "lat", precision: 12, scale: 8

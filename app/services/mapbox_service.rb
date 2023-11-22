@@ -4,8 +4,8 @@ require "json"
 class MapboxService
   MAPBOX_ACCESS_TOKEN = ENV["MAPBOX_API_KEY"].freeze
 
-  def initialize(location)
-    @location = location
+  def initialize(input)
+    @location = input
       end
 
   def call
@@ -21,7 +21,7 @@ class MapboxService
         place_name = first_feature['place_name']
         address = first_feature['text']
         country = nil
-        country_code_alpha_3 = nil
+        country_code = nil
         full_address = nil
         postcode = nil
         region = nil
@@ -41,7 +41,7 @@ class MapboxService
               case key
               when 'country'
                 country = context['text']
-                country_code_alpha_3 = context['short_code'].upcase if context.key?('short_code')
+                country_code = context['short_code'].upcase if context.key?('short_code')
               when 'postcode'
                 postcode = context['text']
               when 'region'
@@ -57,7 +57,7 @@ class MapboxService
         coordinates: first_feature.dig('geometry', 'coordinates'),
         address_components: {
           country: country,
-          country_code_alpha_3: country_code_alpha_3,
+          country_code: country_code,
           full_address: first_feature['place_name'],
           address: first_feature.dig('text'),
           place: place,

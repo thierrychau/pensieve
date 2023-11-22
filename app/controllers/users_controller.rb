@@ -5,8 +5,11 @@ class UsersController < ApplicationController
   before_action { authorize current_user }
 
   def dashboard
+    if params[:person_id]
+      @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
+    end
     @q = @user_memories.ransack(params[:q])
-    @q.sorts = ['date desc'] if @q.sorts.empty?
+    @q.sorts = ['date desc', 'address_location asc'] if @q.sorts.empty?
     @memories = @q.result
     @memory = Memory.new # for nested form
     @person = Person.new # for nested form

@@ -22,7 +22,13 @@ class Address < ApplicationRecord
   after_create :fetch_coordinates_and_components
 
   ADDRESS_COMPONENTS_FIELDS = %i[country country_code_alpha_3 full_address address place_formatted postcode region].freeze
-  
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "location"
+    ]
+  end
+
   private
 
   def fetch_coordinates_and_components

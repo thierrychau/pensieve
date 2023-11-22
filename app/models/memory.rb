@@ -39,13 +39,13 @@ class Memory < ApplicationRecord
 
   def self.ransackable_attributes(auth_object = nil)
     [
-      "description", "date", "location"
+      "description", "date",
     ]
   end
 
   def self.ransackable_associations(auth_object = nil)
     [
-      "author"
+      "author", "address"
     ]
   end
 

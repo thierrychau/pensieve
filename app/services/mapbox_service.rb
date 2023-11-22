@@ -6,7 +6,7 @@ class MapboxService
 
   def initialize(location)
     @location = location
-  end
+      end
 
   def call
     begin
@@ -16,22 +16,61 @@ class MapboxService
       data = JSON.parse(response.body)
       return nil unless data['features'].present?
 
-      first_feature = data['features'].first
+      if data['features'] && !data['features'].empty?
+        first_feature = data['features'].first
+        place_name = first_feature['place_name']
+        address = first_feature['text']
+        country = nil
+        country_code_alpha_3 = nil
+        full_address = nil
+        postcode = nil
+        region = nil
+        place = nil
+        place_formatted = nil 
+
+        # Define suffixes to handle variations in keys
+        suffixes = {
+          'postcode' => /postcode\.\d+/,
+          'region' => /region\.\d+/,
+          'place' => /place\.\d+/,
+          'country' => /country\.\d+/
+        }
+
+        first_feature['context'].each do |context|
+          suffixes.each do |key, regex|
+            if context['id'] =~ regex
+              case key
+              when 'country'
+                country = context['text']
+                country_code_alpha_3 = context['short_code'].upcase if context.key?('short_code')
+              when 'postcode'
+                postcode = context['text']
+              when 'region'
+                region = context['text']
+              when 'place'
+                place = context['text']
+              end
+            end
+          end
+        end
 
       {
         coordinates: first_feature.dig('geometry', 'coordinates'),
         address_components: {
-          country: first_feature.dig('context', -1, 'text'),
-          country_code_alpha_3: first_feature.dig('context', -1, 'short_code'),
+          country: country,
+          country_code_alpha_3: country_code_alpha_3,
           full_address: first_feature['place_name'],
           address: first_feature.dig('text'),
+          place: place,
           place_formatted: first_feature.dig('place_type', 0),
-          postcode: first_feature.dig('context', -2, 'text'),
-          region: first_feature.dig('context', -2, 'text')
+          postcode: postcode,
+          region: region
         }.transform_values(&:presence)
       }
+      end
+
     rescue StandardError => e
-      # Log the error or handle it accordingly
+      # Log the error
       Rails.logger.error("Error fetching Mapbox data: #{e.message}")
       nil
     end

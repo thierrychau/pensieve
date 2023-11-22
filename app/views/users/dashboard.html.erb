@@ -20,6 +20,17 @@
     </div>
 </div> 
 
+<div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+mapboxgl.accessToken = '<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>';
+const map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+    center: [-74.5, 40], // starting position [lng, lat]
+    zoom: 9, // starting zoom
+});
+</script>
+
 <div class="table-responsive ">
   <table class="table align-middle table-hover table-striped table-bordered">
     <thead>
@@ -39,11 +50,14 @@
           <td><%= memory.title %></td>
           <td><%= memory.description.truncate(100, separator: /\s/) %></td>
           <td><% memory.people.each do |person| %>
-            <%= link_to dashboard_path(person_id: person.id) do %>
+            <%= link_to dashboard_path(person_id: person.id), style: "text-decoration: none;" do %>
               <span class="badge rounded-pill text-bg-secondary">
                 <%= person.first_name %>
-                <span class="d-none d-xxl-inline"> <%= person.last_name %></span>
-                <span class="d-inline d-xxl-none"> <%= person.last_name[0] %></span>
+                <span aria-label="<%= person.last_name %>">
+                  <span aria-hidden="true">
+                    <%= person.last_name[0] %><span class="d-none d-xxl-inline"><%= person.last_name[1..] %></span>
+                  </span>
+                </span>
               </span>
             <% end %>
           <% end %></td>

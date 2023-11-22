@@ -10,6 +10,7 @@
 #  lat                  :decimal(12, 8)
 #  lng                  :decimal(12, 8)
 #  location             :string
+#  place                :string
 #  place_formatted      :string
 #  postcode             :string
 #  region               :string

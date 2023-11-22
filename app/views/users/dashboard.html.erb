@@ -2,10 +2,10 @@
   <h1>Dashboard</h1>
     <div class="ms-auto">
     <!--not working yet-->
-      <%#= search_form_for @q do |f| %>
-        <%#= f.text_field :description_cont, :placeholder => "Search" %>
-        <%#= f.submit :class => "btn btn-primary btn-block", hidden: true%>
-      <%# end %>
+      <%= search_form_for @q, url: dashboard_path do |f| %>
+        <%= f.text_field :description_cont, :placeholder => "Search" %>
+        <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
+      <% end %>
     </div>
    <!-- Button trigger modal -->
     <div class="ms-4">
@@ -39,11 +39,13 @@
           <td><%= memory.title %></td>
           <td><%= memory.description.truncate(100, separator: /\s/) %></td>
           <td><% memory.people.each do |person| %>
-            <span class="badge rounded-pill text-bg-secondary">
-              <%= person.first_name %>
-              <span class="d-none d-xxl-inline"> <%= person.last_name %></span>
-              <span class="d-inline d-xxl-none"> <%= person.last_name[0] %></span>
-            </span>
+            <%= link_to dashboard_path(person_id: person.id) do %>
+              <span class="badge rounded-pill text-bg-secondary">
+                <%= person.first_name %>
+                <span class="d-none d-xxl-inline"> <%= person.last_name %></span>
+                <span class="d-inline d-xxl-none"> <%= person.last_name[0] %></span>
+              </span>
+            <% end %>
           <% end %></td>
           <td><%= memory.address.location if memory.address %></td>
           <td class="text-center"><%= link_to memory do %>

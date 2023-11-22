@@ -1,4 +1,5 @@
 require "http"
+require "json"
 
 class MapboxService
   MAPBOX_ACCESS_TOKEN = ENV["MAPBOX_API_KEY"].freeze

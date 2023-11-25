@@ -6,6 +6,10 @@ class MemoryPolicy < ApplicationPolicy
     # end
   end
 
+  def index?
+    owner?
+  end
+
   def show?
     owner?
   end

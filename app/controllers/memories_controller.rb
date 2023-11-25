@@ -1,8 +1,22 @@
 class MemoriesController < ApplicationController
   before_action :set_memory, only: %i[ show edit update destroy ]
-  before_action :set_people, only: %i[ create new edit update ]
-  before_action { authorize @memory || Memory }
+  before_action :set_people, only: %i[ index new edit update ]
+  before_action :set_memories, only: %i[ index ]
+  before_action :authorize_memory, only: %i[ show new edit create update destroy ]
   
+  def index
+    if params[:person_id]
+      @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
+    end
+    @q = @user_memories.ransack(params[:q])
+    @q.sorts = ['date desc', 'address_input asc'] if @q.sorts.empty?
+    @memories = @q.result
+    @memory = Memory.new # for nested form
+    @person = Person.new # for nested form
+    @memory.build_address # for nested form
+    authorize :dashboard, :show?
+  end
+
   # GET /memories/1 or /memories/1.json
   def show
   end
@@ -63,13 +77,20 @@ class MemoriesController < ApplicationController
   end
 
   private
+    def authorize_memory
+      authorize @memory || Memory
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_memory
       @memory = Memory.find(params[:id])
     end
 
+    def set_memories
+      @user_memories = current_user.memories.all
+    end
+    
     def set_people
-      @people = Person.all
+      @people = current_user.people.all
     end
 
     # Only allow a list of trusted parameters through.

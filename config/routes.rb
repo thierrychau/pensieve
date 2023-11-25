@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  root "users#dashboard"
+  root "dashboards#show"
 
   devise_for :users
 
   resources :people, except: [:index]
   resources :memories, except: [:index]
+  resource :dashboard, only: [:show]
 
-  get "/dashboard" => "users#dashboard", as: :dashboard
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end

@@ -1,10 +1,10 @@
 
-class UsersController < ApplicationController
-  before_action :set_people, only: %i[ dashboard search ]
-  before_action :set_memories, only: %i[ dashboard search ]
-  before_action { authorize current_user }
+class DashboardsController < ApplicationController
+  before_action :set_people, only: %i[ show search ]
+  before_action :set_memories, only: %i[ show search ]
+  before_action { authorize :dashboard, :show? }
 
-  def dashboard
+  def show
     if params[:person_id]
       @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
     end

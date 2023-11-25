@@ -12,10 +12,6 @@ class ApplicationPolicy
     false
   end
 
-  def dashboard?
-    false
-  end
-
   def show?
     false
   end

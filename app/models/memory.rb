@@ -27,6 +27,7 @@ class Memory < ApplicationRecord
 
   belongs_to :author, class_name: "User"
   belongs_to :address, optional: true
+
   has_many :people_memories, inverse_of: :memory, dependent: :destroy
   has_many :people, through: :people_memories
   has_many :media, inverse_of: :memory, dependent: :destroy
@@ -36,6 +37,17 @@ class Memory < ApplicationRecord
   accepts_nested_attributes_for :media, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }
+
+  after_save :set_title
+
+  private
+
+  def set_title
+    if self.title.blank?
+      system_message = "You are a multilingual assistant. You will respond to the user's message with a title consisting of 7 to 25 words, ideally 20 words. Your response should be in the same language as the user's message."
+      self.title = OpenAiService.new(self.description, system_message).call
+    end
+  end    
 
   def self.ransackable_attributes(auth_object = nil)
     [
@@ -48,8 +60,6 @@ class Memory < ApplicationRecord
       "author", "address"
     ]
   end
-
-  private
 
   def address_exists?(attributes)
     address_name = attributes['input'].titleize

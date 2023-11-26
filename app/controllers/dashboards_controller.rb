@@ -1,15 +1,15 @@
 
-class UsersController < ApplicationController
-  before_action :set_people, only: %i[ dashboard search ]
-  before_action :set_memories, only: %i[ dashboard search ]
-  before_action { authorize current_user }
+class DashboardsController < ApplicationController
+  before_action :set_people, only: %i[ show search ]
+  before_action :set_memories, only: %i[ show search ]
+  before_action { authorize :dashboard, :show? }
 
-  def dashboard
+  def show
     if params[:person_id]
       @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
     end
     @q = @user_memories.ransack(params[:q])
-    @q.sorts = ['date desc', 'address_location asc'] if @q.sorts.empty?
+    @q.sorts = ['date desc', 'address_input asc'] if @q.sorts.empty?
     @memories = @q.result
     @memory = Memory.new # for nested form
     @person = Person.new # for nested form

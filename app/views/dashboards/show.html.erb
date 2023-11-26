@@ -20,42 +20,26 @@
     </div>
 </div> 
 
-<div class="table-responsive ">
-  <table class="table align-middle table-hover table-striped table-bordered">
-    <thead>
-      <tr>
-        <th scope="col"><%= sort_link(@q, :date, "Date") %></th>
-        <th scope="col">Title</th>
-        <th scope="col">Description</th>
-        <th scope="col">People</th>
-        <th scope="col"><%= sort_link(@q, :address_location, "Location") %></th>
-        <th scope="col">Show</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @memories.each do |memory| %>
-        <tr>
-          <td><%= memory.date.strftime("%m/%d/%y") %></td>
-          <td><%= memory.title %></td>
-          <td><%= memory.description.truncate(100, separator: /\s/) %></td>
-          <td><% memory.people.each do |person| %>
-            <%= link_to dashboard_path(person_id: person.id) do %>
-              <span class="badge rounded-pill text-bg-secondary">
-                <%= person.first_name %>
-                <span class="d-none d-xxl-inline"> <%= person.last_name %></span>
-                <span class="d-inline d-xxl-none"> <%= person.last_name[0] %></span>
-              </span>
-            <% end %>
-          <% end %></td>
-          <td><%= memory.address.location if memory.address %></td>
-          <td class="text-center"><%= link_to memory do %>
-            <i class="fa-solid fa-chevron-right"></i>
-          <% end %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<div id='map' style='width: 900px; height: 600px;'></div>
+<script>
+mapboxgl.accessToken = '<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>';
+const map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+    center: [-87.637505, 41.879138], // starting position [lng, lat]
+    zoom: 9, // starting zoom
+});
+
+<% @memories.each do |memory| %>
+  <% if memory.address.present? && memory.address.lat.present? && memory.address.lng.present? %>
+    const marker<%= memory.id %> = new mapboxgl.Marker({})
+      .setLngLat([<%= memory.address.lat %>, <%= memory.address.lng %>])
+      .addTo(map);
+  <% end %>
+<% end %>
+</script>
+
+<%= render template: "memories/index" %>
 
 <div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
   <div class="modal-dialog">

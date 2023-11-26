@@ -23,15 +23,15 @@ class Person < ApplicationRecord
   validates :last_name, :presence => true
   validates :first_name, uniqueness: { scope: :last_name }
 
-  before_save :capitalize_name
+  before_save :titleize_name
 
   belongs_to :user, optional: true
   has_many :people_memories
   has_many :memories, through: :people_memories
 
-  def capitalize_name
-    self.first_name = self.first_name.capitalize
-    self.last_name = self.last_name.capitalize
+  def titleize_name
+    self.first_name = self.first_name.titleize
+    self.last_name = self.last_name.titleize
   end
 
   def firstlast_name

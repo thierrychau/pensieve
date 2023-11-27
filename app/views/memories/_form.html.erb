@@ -10,12 +10,11 @@
   </div>
 <% end %>
 
-<!--updating form-->
 <%= form_with(model: memory, multipart: true) do |form| %>
   <div class="mb-3">
     <%= form.label :date, class: "form-label" %>
     <% if memory.new_record? %>
-      <%= form.date_field :date, class: "form-control", value: Date.today %>
+      <%= form.date_field :date, class: "form-control" %>
     <% else %>
       <%= form.date_field :date, class: "form-control" %>
     <% end %>
@@ -35,7 +34,7 @@
 
   <div class="mb-3">
     <%= form.label :description, class: "form-label" %>
-    <%= form.text_area :description, class: "form-control", placeholder: "Enter a description" %>
+    <%= form.text_area :description, class: "form-control", style: "height: 10rem;",placeholder: "Enter a description" %>
   </div>
 
   <div class="mb-3">

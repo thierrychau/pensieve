@@ -1,36 +1,29 @@
 <div id="<%= dom_id memory %>" class="card mb-3">
-  <div class="card-header text-center"><h5 class="card-text"><%= memory.title %></h5></div>
+  <div class="card-header d-flex">
+    <h5 class="card-text"><%= memory.title %></h5>
+    <div class="ms-auto">
+      <% if policy(memory).edit? %>
+        <%= link_to edit_memory_path(memory), class: "me-3" do %><i class="fa-regular fa-pen-to-square"></i><% end %>
+      <% end %>
+      <% if policy(memory).destroy? %>
+        <%= link_to memory, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "text-danger" do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
   <div class="row g-0">
-    <div class="col-md-6">
+    <div class="col-md-6 d-flex flex-column">
       <% if memory.media.present? %>
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
-            <% memory.media.each_with_index do |medium, i| %>
-              <button type="button" data-bs-target="#carouselExampleIndicators" class="<%= "active" if i==0 %>" aria-current="<%= "true" if i==0 %>" data-bs-slide-to="<%= i %>" aria-label="Slide <%= i+1 %>"></button>
-            <% end %>
-          </div>
-          <div class="carousel-inner">
-            <% memory.media.each_with_index do |medium, i| %>
-              <div class="carousel-item <%= "active" if i==0 %>" >
-                <img src="<%= medium.url %>" class="d-block w-100" alt="...">
-              </div>
-            <% end %>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+        <div class="d-flex flex-column h-100">
+          <%= render "/media/carousel", memory: memory %>
         </div>
       <% end %>
     </div>
     <div class="col-md-6">
       <div class="card-body">
+        <p class="card-text"><%= memory.date.strftime("%A, %B %-d, %Y") %></p>
         <p class="card-text"><%= memory.address.input %></p>
-        <p class="card-text"><%= memory.date.strftime("%D") %></p>
         <p class="card-text"><%= memory.description %></p>
         <p class="card-text">
           <% memory.people.each do |person| %>
@@ -40,10 +33,10 @@
       </div>
     </div>
   </div>
-  <div class="card-footer text-center">
-    <span class="badge rounded-pill text-bg-info">Created: <%= memory.created_at.strftime("%x") %></span>
-    <span class="badge rounded-pill text-bg-info">Updated: <%= memory.updated_at.strftime("%x") %></span>
+  <div class="card-footer d-flex">
+    <p class="card-text small">Created by <%= memory.author.email %> at <%= memory.created_at.strftime("%H:%M · %x") %></p>
+    <div class="ms-auto">
+      <p class="card-text small">Last updated at <%= memory.updated_at.strftime("%H:%M · %x") %></p>
+    </div>
   </div>
 </div>
-<%= button_to "Destroy this memory", memory, class: "btn btn-danger", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
-<%= link_to "Edit this memory", edit_memory_path(@memory) %> |

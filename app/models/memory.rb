@@ -43,7 +43,7 @@ class Memory < ApplicationRecord
   private
 
   def set_title
-    if self.title.blank?
+    if self.title.blank? && !ENV['OPENAI_KEY'].nil?
       system_message = "You are a multilingual assistant. You will respond to the user's message with a title consisting of 7 to 25 words, ideally 20 words. Your response should be in the same language as the user's message."
       self.title = OpenAiService.new(self.description, system_message).call
     end

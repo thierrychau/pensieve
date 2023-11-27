@@ -3,7 +3,7 @@ require "json"
 
 class OpenAiService
   BASE_HEADER = {
-    "Authorization" => "Bearer #{ENV.fetch("OPENAI_KEY")}",
+    "Authorization" => "Bearer #{ENV["OPENAI_KEY"]}",
     "content-type" => "application/json"
   }
   BASE_URL = "https://api.openai.com/v1/chat/completions"

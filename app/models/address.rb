@@ -32,7 +32,9 @@ class Address < ApplicationRecord
 private
 
   def fetch_coordinates_and_components
-    location_data = MapboxService.new(self.input).call
+    if !ENV['MAPBOX_API_KEY'].nil?
+      location_data = MapboxService.new(self.input).call
+    end
     if location_data.present? 
       ADDRESS_COMPONENTS_FIELDS.each do |field|
         self.send("#{field}=", location_data[:address_components][field])

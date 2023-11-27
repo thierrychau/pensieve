@@ -37,7 +37,7 @@ class Memory < ApplicationRecord
 
   scope :by_date, -> { order(date: :desc) }
 
-  after_save :set_title
+  before_save :set_title
 
   private
 

@@ -6,7 +6,7 @@ class MapboxService
 
   def initialize(input)
     @location = input
-      end
+  end
 
   def call
     begin

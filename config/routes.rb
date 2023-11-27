@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :people, except: [:index]
+  resources :people
   resources :memories
   resource :dashboard, only: [:show]
 

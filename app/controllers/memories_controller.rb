@@ -2,13 +2,13 @@ class MemoriesController < ApplicationController
   before_action :set_memory, only: %i[ show edit update destroy ]
   before_action :set_people, only: %i[ index new edit update ]
   before_action :set_memories, only: %i[ index ]
-  before_action :authorize_memory, only: %i[ show new edit create update destroy ]
+  before_action { authorize (@memory || Memory) }
   
   def index
     if params[:person_id]
       @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
     end
-    @q = @user_memories.ransack(params[:q])
+    @q = policy_scope(@user_memories).ransack(params[:q])
     @q.sorts = ['date desc', 'address_input asc'] if @q.sorts.empty?
     @memories = @q.result
     @memory = Memory.new # for nested form
@@ -77,9 +77,6 @@ class MemoriesController < ApplicationController
   end
 
   private
-    def authorize_memory
-      authorize @memory || Memory
-    end
     # Use callbacks to share common setup or constraints between actions.
     def set_memory
       @memory = Memory.find(params[:id])

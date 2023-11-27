@@ -1,6 +1,11 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: %i[ show edit update destroy ]
-  before_action { authorize @person || Person }
+  before_action { authorize(@person || Person) }
+
+  # GET /people or /people.json
+  def index
+    @people = policy_scope(Person).all
+  end
 
   # GET /people/1 or /people/1.json
   def show

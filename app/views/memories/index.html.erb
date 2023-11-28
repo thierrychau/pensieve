@@ -1,39 +1,11 @@
-<div class="table-responsive ">
-  <table class="table align-middle table-hover table-striped table-bordered">
-    <thead>
-      <tr>
-        <th scope="col"><%= defined?(@q) ? sort_link(@q, :date, "Date") : "Date" %></th>
-        <th scope="col">Title</th>
-        <th scope="col">Description</th>
-        <th scope="col">People</th>
-        <th scope="col"><%= defined?(@q) ? sort_link(@q, :address_location, "Location") : "Location" %></th>
-        <th scope="col">Show</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @memories.each do |memory| %>
-        <tr>
-          <td><%= memory.date.strftime("%m/%d/%y") %></td>
-          <td><%= memory.title %></td>
-          <td><%= memory.description.truncate(100, separator: /\s/) %></td>
-          <td><% memory.people.each do |person| %>
-              <%= link_to person, style: "text-decoration: none;" do %>
-                <span class="badge rounded-pill text-bg-secondary">
-                  <%= person.first_name %>
-                  <span aria-label="<%= person.last_name %>">
-                    <span aria-hidden="true">
-                      <%= person.last_name[0] %><span class="d-none d-xxl-inline"><%= person.last_name[1..] %></span>
-                    </span>
-                  </span>
-                </span>
-              <% end %>
-            <% end %></td>
-          <td><%= memory.address.input if memory.address %></td>
-          <td class="text-center"><%= link_to memory do %>
-              <i class="fa-solid fa-chevron-right"></i>
-            <% end %></td>
-        </tr>
+<div class="col-md-12 d-flex align-items-center">
+  <h1>Memories</h1>
+    <div class="ms-auto">
+      <%= search_form_for @q do |f| %>
+        <%= f.text_field :description_cont, :placeholder => "Search" %>
+        <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
       <% end %>
-    </tbody>
-  </table>
-</div>
+    </div>
+</div> 
+
+<%= render 'memories/index_table', memories: @memories %>

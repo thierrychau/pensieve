@@ -5,4 +5,13 @@
   </p>
 </div>
 
-<%= render template: "memories/index" %>
+<div>
+  <%= link_to "Edit this person", edit_person_path(@person) %> |
+  <%= link_to "Back to people", people_path %>
+
+  <%= button_to "Destroy this person", @person, method: :delete %>
+</div>
+
+<br>
+
+<%= render 'memories/index_table', memories: @memories %>

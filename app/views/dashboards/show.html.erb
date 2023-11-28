@@ -1,7 +1,6 @@
 <div class="col-md-12 d-flex align-items-center">
   <h1>Dashboard</h1>
     <div class="ms-auto">
-    <!--not working yet-->
       <%= search_form_for @q, url: dashboard_path do |f| %>
         <%= f.text_field :description_cont, :placeholder => "Search" %>
         <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
@@ -39,7 +38,7 @@ const map = new mapboxgl.Map({
 <% end %>
 </script>
 
-<%= render template: "memories/index" %>
+<%= render "memories/index_table", memories: @memories %>
 
 <div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
   <div class="modal-dialog">

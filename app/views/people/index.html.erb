@@ -1,3 +1,7 @@
-<% @people.each do |person| %>
-   <span class="badge rounded-pill text-bg-secondary"><%= person.firstlast_name %></span><br>
-<% end %>
+<h1>My People</h1>
+
+<div id="people">
+  <% @people.each do |person| %>
+    <%= link_to person.firstlast_name, person, class: "badge rounded-pill text-bg-secondary", style: "text-decoration: none;" %><br>
+  <% end %>
+</div>

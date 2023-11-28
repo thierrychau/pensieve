@@ -9,6 +9,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1 or /people/1.json
   def show
+    @memories = policy_scope(@person.memories).by_date
   end
 
   # GET /people/new

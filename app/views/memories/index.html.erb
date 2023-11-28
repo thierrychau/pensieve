@@ -2,11 +2,11 @@
   <table class="table align-middle table-hover table-striped table-bordered">
     <thead>
       <tr>
-        <th scope="col"><%= sort_link(@q, :date, "Date") %></th>
+        <th scope="col"><%= defined?(@q) ? sort_link(@q, :date, "Date") : "Date" %></th>
         <th scope="col">Title</th>
         <th scope="col">Description</th>
         <th scope="col">People</th>
-        <th scope="col"><%= sort_link(@q, :address_location, "Location") %></th>
+        <th scope="col"><%= defined?(@q) ? sort_link(@q, :address_location, "Location") : "Location" %></th>
         <th scope="col">Show</th>
       </tr>
     </thead>
@@ -17,21 +17,21 @@
           <td><%= memory.title %></td>
           <td><%= memory.description.truncate(100, separator: /\s/) %></td>
           <td><% memory.people.each do |person| %>
-            <%= link_to dashboard_path(person_id: person.id), style: "text-decoration: none;" do %>
-              <span class="badge rounded-pill text-bg-secondary">
-                <%= person.first_name %>
-                <span aria-label="<%= person.last_name %>">
-                  <span aria-hidden="true">
-                    <%= person.last_name[0] %><span class="d-none d-xxl-inline"><%= person.last_name[1..] %></span>
+              <%= link_to person, style: "text-decoration: none;" do %>
+                <span class="badge rounded-pill text-bg-secondary">
+                  <%= person.first_name %>
+                  <span aria-label="<%= person.last_name %>">
+                    <span aria-hidden="true">
+                      <%= person.last_name[0] %><span class="d-none d-xxl-inline"><%= person.last_name[1..] %></span>
+                    </span>
                   </span>
                 </span>
-              </span>
-            <% end %>
-          <% end %></td>
+              <% end %>
+            <% end %></td>
           <td><%= memory.address.input if memory.address %></td>
           <td class="text-center"><%= link_to memory do %>
-            <i class="fa-solid fa-chevron-right"></i>
-          <% end %></td>
+              <i class="fa-solid fa-chevron-right"></i>
+            <% end %></td>
         </tr>
       <% end %>
     </tbody>

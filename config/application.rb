@@ -29,5 +29,9 @@ module RailsTemplate
 
     config.action_controller.default_protect_from_forgery = false
     config.generators.system_tests = nil
+
+    # Postmark for mail delivery
+    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.postmark_settings = { api_token: ENV["POSTMARK_API_TOKEN"] }
   end
 end

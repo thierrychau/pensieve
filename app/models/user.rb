@@ -39,6 +39,9 @@ class User < ApplicationRecord
   has_many :memories, foreign_key: "author_id", counter_cache: true
   has_many :people, counter_cache: true
 
+  # TODO: deliver_later after setting up job processing
+  after_create { UsersMailer.welcome(self).deliver_now }
+
   private
     def password_complexity
       if password.present? and not password.match(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/x)

@@ -1,11 +1,6 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # Setting up mailer
-  config.action_mailer.delivery_method = :letter_opener_web
-  config.action_mailer.perform_deliveries = true
-  # Default URL options for devise
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # Allow server to be hosted on any URL
   config.hosts.clear
   # Allow better_errors to work in online IDE
@@ -49,10 +44,15 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
-
+  
+  # Setting up mailer
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
+  # Default URL options for devise
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.

@@ -23,6 +23,7 @@
 #
 class Memory < ApplicationRecord
   validates :author_id, :presence => true
+  validates :description, :presence => true
 
   belongs_to :author, class_name: "User"
   belongs_to :address, optional: true
@@ -33,7 +34,7 @@ class Memory < ApplicationRecord
 
   accepts_nested_attributes_for :people_memories, allow_destroy: true
   accepts_nested_attributes_for :address, reject_if: :address_exists?
-  accepts_nested_attributes_for :media, allow_destroy: true
+  accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }
 

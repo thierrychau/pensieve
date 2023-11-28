@@ -13,7 +13,7 @@
     <tbody>
       <% memories.each do |memory| %>
         <tr>
-          <td><%= memory.date.strftime("%m/%d/%y") %></td>
+          <td><%= memory.date.strftime("%m/%d/%y") if !memory.date.blank? %></td>
           <td><%= memory.title %></td>
           <td><%= memory.description.truncate(100, separator: /\s/) %></td>
           <td><% memory.people.each do |person| %>

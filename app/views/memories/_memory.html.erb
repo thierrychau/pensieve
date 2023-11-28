@@ -22,7 +22,7 @@
     </div>
     <div class="col-md-6">
       <div class="card-body">
-        <p class="card-text"><%= memory.date.strftime("%A, %B %-d, %Y") %></p>
+        <p class="card-text"><%= memory.date.strftime("%A, %B %-d, %Y") if !memory.date.blank? %></p>
         <p class="card-text"><%= memory.address.input %></p>
         <p class="card-text"><%= memory.description %></p>
         <p class="card-text">

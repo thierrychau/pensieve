@@ -11,20 +11,26 @@
 <% end %>
 
 <%= form_with(model: memory, multipart: true) do |form| %>
-  <div class="form-floating mb-3">
-    <% if memory.new_record? %>
-      <%= form.date_field :date, class: "form-control" %>
-    <% else %>
-      <%= form.date_field :date, class: "form-control" %>
-    <% end %>
-    <%= form.label :date, class: "form-label" %>
-  </div>
 
-  <div class="form-floating mb-3">
-    <%= form.fields_for :address do |address_fields| %>
-      <%= address_fields.text_field :input, class: "form-control", placeholder: "Enter a location" %>
-      <%= address_fields.label :input, "Location", class: "form-label" %>
-    <% end %>
+  <div class="row g-2 mb-3">
+    <div class="col-md">
+      <div class="form-floating">
+        <% if memory.new_record? %>
+          <%= form.date_field :date, class: "form-control" %>
+        <% else %>
+          <%= form.date_field :date, class: "form-control" %>
+        <% end %>
+        <%= form.label :date, class: "form-label" %>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating">
+        <%= form.fields_for :address do |address_fields| %>
+          <%= address_fields.text_field :input, class: "form-control", placeholder: "Enter a location" %>
+          <%= address_fields.label :input, "Location", class: "form-label" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <div class="form-floating mb-3">

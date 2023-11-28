@@ -31,13 +31,14 @@ class Person < ApplicationRecord
   
   before_save :titleize_name
   
+  def firstlast_name
+    "#{self.first_name} #{last_name}" 
+  end
+  
   private
     def titleize_name
       self.first_name = self.first_name.titleize
       self.last_name = self.last_name.titleize
     end
 
-    def firstlast_name
-      "#{self.first_name} #{last_name}" 
-    end
 end

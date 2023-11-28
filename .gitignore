@@ -37,9 +37,6 @@ examples.txt
 # Ignore dotenv files
 /.env*
 
-# Ignore .yml.enc
-/.yml.enc
-
 # Un-ignore SQLite3 db
 !/db/*.sqlite3
 !/db/*.sqlite3-journal

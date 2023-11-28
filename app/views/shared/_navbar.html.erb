@@ -9,8 +9,18 @@
       </ul>
       <ul class="navbar-nav">
         <% if user_signed_in? %>
+          <li class="nav-item dropdown btn-group">
+            <%= link_to "Dashboard", dashboard_path, class: "btn btn-sm btn-primary" %>
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Memories", memories_path, class: "dropdown-item small"%></li>
+              <li><%= link_to "People", people_path, class: "dropdown-item small"%></li>
+            </ul>
+          </li>
           <li class="nav-item">
-            <%= link_to "Dashboard", dashboard_path, class: "btn btn-sm btn-outline-primary" %>
+           
           </li>
           <li class="nav-item">
             <%= link_to "Signed in as #{current_user.email}", edit_user_registration_path, class: "btn btn-sm btn-outline-primary ms-4" %>

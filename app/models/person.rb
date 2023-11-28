@@ -24,18 +24,20 @@ class Person < ApplicationRecord
   validates :first_name, uniqueness: { scope: :last_name }
   validates :user_id, :presence => true
 
-  before_save :titleize_name
-
   belongs_to :user
+  
   has_many :people_memories
   has_many :memories, through: :people_memories
+  
+  before_save :titleize_name
+  
+  private
+    def titleize_name
+      self.first_name = self.first_name.titleize
+      self.last_name = self.last_name.titleize
+    end
 
-  def titleize_name
-    self.first_name = self.first_name.titleize
-    self.last_name = self.last_name.titleize
-  end
-
-  def firstlast_name
-    "#{self.first_name} #{last_name}" 
-  end
+    def firstlast_name
+      "#{self.first_name} #{last_name}" 
+    end
 end

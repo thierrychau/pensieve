@@ -1,7 +1,18 @@
-<h1>My People</h1>
+<div class="col-md-12 d-flex align-items-center">
+  <h1>My People</h1>
+    <div class="ms-auto">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPersonModal">
+        Add a person
+      </button>
+    </div>
+</div> 
 
 <div id="people">
   <% @people.each do |person| %>
     <%= link_to person.firstlast_name, person, class: "badge rounded-pill text-bg-secondary", style: "text-decoration: none;" %><br>
   <% end %>
 </div>
+
+<%= render partial: 'shared/modal_create', locals: { model: "person" } %>
+```
+```

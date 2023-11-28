@@ -6,6 +6,13 @@
         <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
       <% end %>
     </div>
+    <div class="ms-4">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemoryModal">
+        Add a memory
+      </button>
+    </div>
 </div> 
 
 <%= render 'memories/index_table', memories: @memories %>
+
+<%= render partial: 'shared/modal_create', locals: { model: "memory", size: "modal-lg" } %>

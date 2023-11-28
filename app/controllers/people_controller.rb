@@ -5,6 +5,7 @@ class PeopleController < ApplicationController
   # GET /people or /people.json
   def index
     @people = policy_scope(Person).all
+    @person = Person.new
   end
 
   # GET /people/1 or /people/1.json

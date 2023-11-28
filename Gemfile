@@ -3,10 +3,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
-# Pundit for authorization
+# Use Postmark for sending emails
+gem 'postmark-rails'
+
+# Use Pundit for authorization
 gem "pundit"
 
-# Uploading images and files 
+# Use Cloudinary for uploading images and files 
 gem "carrierwave"
 gem "cloudinary"
 

@@ -33,10 +33,11 @@
           <li class="nav-item">
             <%= link_to "Sign in", new_user_session_path, class: "nav-link", class: "btn btn-sm btn-outline-primary ms-4" %>
           </li>
-          <li class="nav-item">
-            <%= link_to "Sign up", new_user_registration_path, class: "nav-link", class: "btn btn-sm btn-primary ms-4" %>
-          </li>
-
+          <% if devise_mapping.registerable? %>
+            <li class="nav-item">
+              <%= link_to "Sign up", new_user_registration_path, class: "nav-link", class: "btn btn-sm btn-primary ms-4" %>
+            </li>
+          <% end %>
         <% end %>
       </ul>
     </div>

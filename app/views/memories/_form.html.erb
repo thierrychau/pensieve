@@ -11,30 +11,30 @@
 <% end %>
 
 <%= form_with(model: memory, multipart: true) do |form| %>
-  <div class="mb-3">
-    <%= form.label :date, class: "form-label" %>
+  <div class="form-floating mb-3">
     <% if memory.new_record? %>
       <%= form.date_field :date, class: "form-control" %>
     <% else %>
       <%= form.date_field :date, class: "form-control" %>
     <% end %>
+    <%= form.label :date, class: "form-label" %>
   </div>
 
-  <div class="mb-3">
+  <div class="form-floating mb-3">
     <%= form.fields_for :address do |address_fields| %>
-      <%= address_fields.label :input, "Location", class: "form-label" %>
       <%= address_fields.text_field :input, class: "form-control", placeholder: "Enter a location" %>
+      <%= address_fields.label :input, "Location", class: "form-label" %>
     <% end %>
   </div>
 
-  <div class="mb-3">
-    <%= form.label :title, class: "form-label" %>
+  <div class="form-floating mb-3">
     <%= form.text_field :title, class: "form-control", placeholder: "Enter a title" %>
+    <%= form.label :title, class: "form-label" %>
   </div>
 
-  <div class="mb-3">
-    <%= form.label :description, class: "form-label" %>
+  <div class="form-floating mb-3">
     <%= form.text_area :description, class: "form-control", style: "height: 10rem;",placeholder: "Enter a description" %>
+    <%= form.label :description, class: "form-label" %>
   </div>
 
   <div class="mb-3">
@@ -54,5 +54,7 @@
     <% end %>
   </div>
   
-  <%= form.submit class: "btn btn-primary" %>
+  <div class="d-grid gap-2 mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
 <% end %>

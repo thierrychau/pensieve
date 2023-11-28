@@ -22,10 +22,11 @@ class Person < ApplicationRecord
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :first_name, uniqueness: { scope: :last_name }
+  validates :user_id, :presence => true
 
   before_save :titleize_name
 
-  belongs_to :user, optional: true
+  belongs_to :user
   has_many :people_memories
   has_many :memories, through: :people_memories
 

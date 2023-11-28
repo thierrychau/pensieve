@@ -1,17 +1,17 @@
 <div id="<%= dom_id person %>">
   <p>
-    <strong>First name:</strong>
-    <%= person.first_name %>
+    <strong>Name:</strong>
+    <%= person.firstlast_name %>
   </p>
-
-  <p>
-    <strong>Last name:</strong>
-    <%= person.last_name %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= person.user_id %>
-  </p>
-
 </div>
+
+<div>
+  <%= link_to "Edit this person", edit_person_path(@person) %> |
+  <%= link_to "Back to people", people_path %>
+
+  <%= button_to "Destroy this person", @person, method: :delete %>
+</div>
+
+<br>
+
+<%= render 'memories/index_table', memories: @memories %>

@@ -1,13 +1,16 @@
 class MemoryPolicy < ApplicationPolicy
   class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+    def resolve
+      if false #user&.admin?
+        scope.all
+      else
+        scope.where(author: user)
+      end
+    end
   end
 
   def index?
-    owner?
+    true
   end
 
   def show?

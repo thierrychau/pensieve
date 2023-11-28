@@ -5,5 +5,6 @@ Rails.application.routes.draw do
 
   resources :people
   resources :memories
+  resources :media, only: [:destroy]
   resource :dashboard, only: [:show]
 end

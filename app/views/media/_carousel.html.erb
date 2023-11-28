@@ -2,6 +2,11 @@
   <div class="carousel-indicators">
     <% memory.media.each_with_index do |medium, i| %>
       <button type="button" data-bs-target="#carouselExampleIndicators" class="<%= "active" if i==0 %>" aria-current="<%= "true" if i==0 %>" data-bs-slide-to="<%= i %>" aria-label="Slide <%= i+1 %>"></button>
+      <% if policy(medium).destroy? %>
+        <%= link_to medium, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "text-danger" do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
   <div class="carousel-inner  h-100">

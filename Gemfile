@@ -99,7 +99,7 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "draft_generators"
-  gem "letter_opener_web"
+  gem "letter_opener"
   gem "grade_runner"
   gem "pry-rails"
   gem "rails_db"

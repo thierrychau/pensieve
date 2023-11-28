@@ -22,8 +22,8 @@
 #  fk_rails_...  (author_id => users.id)
 #
 class Memory < ApplicationRecord
-  validates :author_id, :presence => true
-  validates :description, :presence => true
+  validates :author_id, presence: true
+  validates :description, presence: true
 
   belongs_to :author, class_name: "User"
   belongs_to :address, optional: true

@@ -41,31 +41,31 @@ class Memory < ApplicationRecord
 
   private
 
-  def set_title
-    if self.title.blank? && !ENV['OPENAI_KEY'].nil?
-      system_message = "You are a multilingual assistant. You will respond to the user's message with a title consisting of 7 to 25 words, ideally 20 words. Your response should be in the same language as the user's message."
-      self.title = OpenAiService.new(self.description, system_message).call
+    def set_title
+      if self.title.blank? && !ENV['OPENAI_KEY'].nil?
+        system_message = "You are a multilingual assistant. You will respond to the user's message with a title consisting of 7 to 25 words, ideally 20 words. Your response should be in the same language as the user's message."
+        self.title = OpenAiService.new(self.description, system_message).call
+      end
+    end    
+
+    def self.ransackable_attributes(auth_object = nil)
+      [
+        "description", "date",
+      ]
     end
-  end    
 
-  def self.ransackable_attributes(auth_object = nil)
-    [
-      "description", "date",
-    ]
-  end
+    def self.ransackable_associations(auth_object = nil)
+      [
+        "author", "address"
+      ]
+    end
 
-  def self.ransackable_associations(auth_object = nil)
-    [
-      "author", "address"
-    ]
-  end
+    def address_exists?(attributes)
+      address_name = attributes['input'].titleize
+      return false if address_name.blank?
 
-  def address_exists?(attributes)
-    address_name = attributes['input'].titleize
-    return false if address_name.blank?
-
-    address = Address.find_or_create_by(input: address_name)
-    update(address_id: address.id)
-    true
-  end
+      address = Address.find_or_create_by(input: address_name)
+      update(address_id: address.id)
+      true
+    end
 end

@@ -25,7 +25,7 @@ class Address < ApplicationRecord
 
   def self.ransackable_attributes(auth_object = nil)
     [
-      "location"
+      "input"
     ]
   end
 

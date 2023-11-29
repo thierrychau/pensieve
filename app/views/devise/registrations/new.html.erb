@@ -9,10 +9,13 @@
 
     <hr>
 
+     <p>Your password must be at least <%= @minimum_password_length %> characters and should include a combination of numbers, lowercase and uppercase letters, and special characters (!@#$%^&*).</p>
+
     <div class="form-floating mb-3">
       <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-      <%= f.label :password, "Password (#{@minimum_password_length} characters minimum)", class: "form-label" %>
+      <%= f.label :password, class: "form-label" %>
     </div>
+    
     <div class="form-floating mb-3">
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
       <%= f.label :password_confirmation, class: "form-label" %>

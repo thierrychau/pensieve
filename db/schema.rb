@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_29_152939) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_155211) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_152939) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_of_birth"
+    t.string "alternate_name"
     t.index ["first_name", "last_name"], name: "index_people_on_first_name_and_last_name", unique: true
     t.index ["user_id"], name: "index_people_on_user_id"
   end

@@ -4,12 +4,18 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" class="<%= "active" if i==0 %>" aria-current="<%= "true" if i==0 %>" data-bs-slide-to="<%= i %>" aria-label="Slide <%= i+1 %>"></button>
     <% end %>
   </div>
-  <div class="carousel-inner  h-100">
+  <div class="carousel-inner">
     <% memory.media.each_with_index do |medium, i| %>
-      <div class="carousel-item <%= "active" if i==0 %>" >
+      <div class="carousel-item <%= "active" if i==0 %>" id="carousel-item-<%= medium.id %>">
         <img src="<%= medium.url %>" class="d-block img-fluid" alt="<%# medium.alt %>">
       </div>
     <% end %>
+    <div class="d-flex flex-row-reverse ms-2">
+      <%= link_to memory.media.first, data: { "turbo-method": :delete, "turbo-confirm": "Delete this image?" }, 
+        class: "text-light z-2 p-2", id: "destroy-button" do %>
+          <i class="fa-solid fa-x"></i>
+      <% end %>
+    </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -19,4 +25,18 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
+
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var carousel = document.getElementById('carouselExampleIndicators');
+    var destroyButton = document.getElementById('destroy-button');
+
+    carousel.addEventListener('slid.bs.carousel', function() {
+      var activeItem = carousel.querySelector('.carousel-item.active');
+      var mediumId = activeItem.id.split('-').pop();
+      destroyButton.href = '/media/' + mediumId;
+    });
+  });
+</script>

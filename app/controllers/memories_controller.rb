@@ -1,6 +1,6 @@
 class MemoriesController < ApplicationController
   before_action :set_memory, only: %i[ show edit update destroy ]
-  before_action :set_people, only: %i[ index new edit update ]
+  before_action :set_people, only: %i[ index new edit create update ]
   before_action :set_memories, only: %i[ index ]
   before_action { authorize (@memory || Memory) }
   

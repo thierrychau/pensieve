@@ -1,42 +1,55 @@
 <div id="<%= dom_id memory %>" class="card mb-3">
-  <div class="card-header d-flex">
-    <h5 class="card-text"><%= memory.title %></h5>
-    <div class="ms-auto">
-      <% if policy(memory).edit? %>
-        <%= link_to edit_memory_path(memory), class: "me-3" do %><i class="fa-regular fa-pen-to-square"></i><% end %>
-      <% end %>
-      <% if policy(memory).destroy? %>
-        <%= link_to memory, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "text-danger" do %>
-          <i class="fa-solid fa-trash"></i>
-        <% end %>
-      <% end %>
-    </div>
+  <div class="card-header">
+    <h5 class="card-text text-center"><%= memory.title %></h5>
   </div>
+  
   <div class="row g-0">
     <div class="col-md-6 d-flex flex-column">
       <% if memory.media.present? %>
-        <div class="d-flex flex-column h-100">
+        <div class="d-flex flex-column">
           <%= render "/media/carousel", memory: memory %>
         </div>
       <% end %>
     </div>
     <div class="col-md-6">
       <div class="card-body">
-        <p class="card-text"><%= memory.date.strftime("%A, %B %-d, %Y") %></p>
-        <p class="card-text"><%= memory.address.input %></p>
+        <div class="d-flex justify-content-between">
+          <p class="card-text"><%= memory.date.strftime("%A, %B %-d, %Y") if !memory.date.blank? %></p>
+          <span>
+            <% if policy(memory).edit? %>
+              <%= link_to edit_memory_path(memory), class: "me-3" do %><i class="fa-regular fa-pen-to-square"></i><% end %>
+            <% end %>
+            <% if policy(memory).destroy? %>
+              <%= link_to memory, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "text-danger" do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            <% end %>
+          </span>
+        </div>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="card-text col-6 mb-0"><%= memory.address.input %></p>
+          <div class="text-end col-6">
+            <% memory.people.each do |person| %>
+              <%= link_to person, style: "text-decoration: none;" do %>
+                <span class="badge rounded-pill text-bg-secondary">
+                  <%= person.first_name %>
+                  <span aria-label="<%= person.last_name %>">
+                    <span aria-hidden="true">
+                      <%= person.last_name[0] %><span class="d-none d-xxl-inline"><%= person.last_name[1..] %></span>
+                    </span>
+                  </span>
+                </span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
         <p class="card-text"><%= memory.description %></p>
-        <p class="card-text">
-          <% memory.people.each do |person| %>
-            <p class="badge rounded-pill text-bg-secondary"><%= person.firstlast_name %></p>
-          <% end %>
-        </p>
       </div>
     </div>
   </div>
-  <div class="card-footer d-flex">
-    <p class="card-text small">Created by <%= memory.author.email %> at <%= memory.created_at.strftime("%H:%M · %x") %></p>
-    <div class="ms-auto">
-      <p class="card-text small">Last updated at <%= memory.updated_at.strftime("%H:%M · %x") %></p>
-    </div>
+
+  <div class="card-footer d-flex align-items-center justify-content-between">
+    <p class="card-text small text-start mb-0">Created <%= memory.created_at.strftime("%H:%M · %x") %></p>
+    <p class="card-text small text-end">Updated <%= memory.updated_at.strftime("%H:%M · %x") %></p>
   </div>
 </div>

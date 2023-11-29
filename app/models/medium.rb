@@ -18,9 +18,9 @@
 #  fk_rails_...  (memory_id => memories.id)
 #
 class Medium < ApplicationRecord
-  validates :url, :presence => true
+  validates :url, presence: true, if: :new_record?
 
-  belongs_to :memory, :inverse_of => :media
+  belongs_to :memory, inverse_of: :media
   
   mount_uploader :url, ImageUploader
 end

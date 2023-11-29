@@ -1,4 +1,9 @@
 <div id="<%= dom_id person %>">
+
+  <% if person.media.present? %>
+    <img src="<%= person.media.first.url %>" alt="Photo of <%= person.firstlast_name %>">
+  <% end %>
+
   <p>
     <strong>Name:</strong>
     <%= person.firstlast_name %>

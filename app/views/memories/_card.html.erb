@@ -14,10 +14,10 @@
     <div class="col-md-6">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <p class="card-text"><%= memory.date.strftime("%A, %B %-d, %Y") if !memory.date.blank? %></p>
+          <p class="card-text"><%= memory.date.strftime("%A, %B %-d, %Y") if memory.date.present? %></p>
         </div>
         <div class="d-flex align-items-center justify-content-between mb-3">
-          <p class="card-text col-6 mb-0"><%= memory.address.input %></p>
+          <p class="card-text col-6 mb-0"><%= memory.address.input if memory.address.present? %></p>
           <div class="text-end col-6">
             <% memory.people.each do |person| %>
               <%= link_to person, style: "text-decoration: none;" do %>

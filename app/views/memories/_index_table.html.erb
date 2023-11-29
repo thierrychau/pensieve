@@ -1,4 +1,4 @@
-<div class="table-responsive ">
+<div class="table-responsive">
   <table class="table align-middle table-hover table-striped table-bordered">
     <thead>
       <tr>
@@ -14,7 +14,7 @@
       <% memories.each do |memory| %>
         <tr>
           <td><%= memory.date.strftime("%m/%d/%y") if !memory.date.blank? %></td>
-          <td><%= memory.title %></td>
+          <td><%= memory.title.truncate(100, separator: /\s/) if !memory.title.blank? %></td>
           <td><%= memory.description.truncate(100, separator: /\s/) %></td>
           <td><% memory.people.each do |person| %>
               <%= link_to person, style: "text-decoration: none;" do %>
@@ -28,7 +28,7 @@
                 </span>
               <% end %>
             <% end %></td>
-          <td><%= memory.address.input if memory.address %></td>
+          <td><%= memory.address.input.truncate(20, separator: /\s/) if memory.address %></td>
           <td class="text-center"><%= link_to memory do %>
               <i class="fa-solid fa-chevron-right"></i>
             <% end %></td>

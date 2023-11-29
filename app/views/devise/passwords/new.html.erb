@@ -3,11 +3,13 @@
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="mb-3">
-      <%= f.label :email, "Your Email", class: "form-label" %>
+    <div class="form-floating mb-3">
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      <%= f.label :email, "Your Email", class: "form-label" %>
     </div>
 
+    <br />
+    
     <div class="d-grid gap-2 mb-3">
       <%= f.submit "Send Reset Instructions", :class => "btn btn-outline-primary" %>
     </div>

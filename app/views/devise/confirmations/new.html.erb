@@ -2,12 +2,14 @@
   <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="field">
-      <%= f.label :email, class: "form-label" %>
+    <div class="form-floating mb-3">
       <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control" %>
+      <%= f.label :email, class: "form-label" %>
     </div>
 
-    <div class="actions">
+     <br />
+     
+    <div class="d-grid gap-2 mb-3">
       <%= f.submit "Resend confirmation instructions", class: "btn btn-outline-primary" %>
     </div>
   <% end %>

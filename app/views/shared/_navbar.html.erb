@@ -1,44 +1,39 @@
-<nav class="navbar navbar-expand-lg bg-light mb-4">
-  <div class="container">
+<nav class="navbar navbar-expand-lg bg-body-tertiary ms-2">
+  <div class="container-fluid">
     <%= link_to "Pensieve.cc", root_path, class: "navbar-brand", style: "font-family: 'Permanent Marker';" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto">
-      </ul>
+      <% if user_signed_in? %>
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <%= link_to "Dashboard", root_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <li><%= link_to "Memories", memories_path, class: "nav-link"%></li>
+          </li>
+          <li class="nav-item">
+            <li><%= link_to "People", people_path, class: "nav-link"%></li>
+          </li>
+        </ul>
+      <% end %>
+      <hr/>
       <ul class="navbar-nav">
-        <% if user_signed_in? %>
-          <li class="nav-item dropdown btn-group">
-            <%= link_to "Dashboard", root_path, class: "btn btn-sm btn-primary" %>
-            <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-              <span class="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Memories", memories_path, class: "dropdown-item small"%></li>
-              <li><%= link_to "People", people_path, class: "dropdown-item small"%></li>
-            </ul>
+      <% if user_signed_in? %>
+          <li class="nav-item d-flex">
+            <%= link_to "Signed in as #{current_user.email}", edit_user_registration_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item my-auto">
+            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link" %>
+          </li>
+      <% else %>
+          <li class="nav-item">
+            <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
+            <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
           </li>
-          <% if false %>
-            <li class="nav-item">
-              <%= link_to "Signed in as #{current_user.email}", edit_user_registration_path, class: "btn btn-sm btn-outline-primary ms-4" %>
-            </li>
-          <% end %>
-          <li class="nav-item">
-            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-sm btn-outline-danger ms-4" %>
-          </li>
-
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "Sign in", new_user_session_path, class: "nav-link", class: "btn btn-sm btn-outline-primary ms-4" %>
-          </li>
-          <% if devise_mapping.registerable? %>
-            <li class="nav-item">
-              <%= link_to "Sign up", new_user_registration_path, class: "nav-link", class: "btn btn-sm btn-primary ms-4" %>
-            </li>
-          <% end %>
         <% end %>
       </ul>
     </div>

@@ -13,6 +13,6 @@ class MediumPolicy < ApplicationPolicy
   private
 
   def owner?
-    record.memory.author == user
+    record.mediumable.author == user
   end
 end

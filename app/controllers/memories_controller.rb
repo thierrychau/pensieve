@@ -11,9 +11,9 @@ class MemoriesController < ApplicationController
     @q = policy_scope(@user_memories).ransack(params[:q])
     @q.sorts = ['date desc', 'address_input asc'] if @q.sorts.empty?
     @memories = @q.result
-    @memory = Memory.new # for nested form
-    @person = Person.new # for nested form
-    @memory.build_address # for nested form
+    @memory = Memory.new # for create form
+    @person = Person.new # for nested create form
+    @memory.build_address # for nested create form
     authorize :dashboard, :show?
   end
 

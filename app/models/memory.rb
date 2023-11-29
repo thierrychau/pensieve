@@ -33,7 +33,7 @@ class Memory < ApplicationRecord
   has_many :media, as: :mediumable, dependent: :destroy
 
   accepts_nested_attributes_for :people_memories, allow_destroy: true
-  accepts_nested_attributes_for :address, reject_if: :address_exists?
+  accepts_nested_attributes_for :address, reject_if: proc { |attributes| attributes['input'].blank? || address_exists?(attributes) }
   accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }

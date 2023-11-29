@@ -1,20 +1,5 @@
 <div id="<%= dom_id person %>">
-
-  <% if person.media.present? %>
-    <img src="<%= person.media.first.url %>" alt="Photo of <%= person.firstlast_name %>">
-  <% end %>
-
-  <p>
-    <strong>Name:</strong>
-    <%= person.firstlast_name %>
-  </p>
-</div>
-
-<div>
-  <%= link_to "Edit this person", edit_person_path(@person) %> |
-  <%= link_to "Back to people", people_path %>
-
-  <%= button_to "Destroy this person", @person, method: :delete %>
+  <%= render 'people/card', person: person %>
 </div>
 
 <br>

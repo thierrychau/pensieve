@@ -2,8 +2,8 @@
   <h1 class="flex-grow-1">Dashboard</h1>
   <div class="m-2">
     <%= search_form_for @q, url: dashboard_path do |f| %>
-      <%= f.text_field :description_cont, :placeholder => "Search" %>
-      <%= f.submit :class => "btn btn-primary btn-block", hidden: true%>
+      <%= f.text_field :description_cont, placeholder: "Search", class: "form-control" %>
+      <%= f.submit class: "btn btn-primary btn-block", hidden: true %>
     <% end %>
   </div>
   <!-- Button trigger modal -->
@@ -20,6 +20,12 @@
     </div>
   </div>
 </div> 
+
+<div id="people">
+  <% @people.each do |person| %>
+    <%= link_to person.firstlast_name, person, class: "badge rounded-pill text-bg-secondary", style: "text-decoration: none;" %><br>
+  <% end %>
+</div>
 
 <div id='map' style='width: 100%; height: 100%;'></div>
 <script>

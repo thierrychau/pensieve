@@ -1,11 +1,12 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: %i[ show edit update destroy ]
+  before_action :new_person, only: %i[ index new ] # for create form
+  before_action :build_media, only: %i[ index new edit ] # for nested create form
   before_action { authorize(@person || Person) }
 
   # GET /people or /people.json
   def index
     @people = policy_scope(Person).all
-    @person = Person.new
   end
 
   # GET /people/1 or /people/1.json
@@ -15,7 +16,6 @@ class PeopleController < ApplicationController
 
   # GET /people/new
   def new
-    @person = Person.new
   end
 
   # GET /people/1/edit
@@ -67,8 +67,21 @@ class PeopleController < ApplicationController
       @person = Person.find(params[:id])
     end
 
+    def new_person
+      @person = Person.new
+    end
+
+    def build_media
+      @person.media.build unless @person.media.any?
+    end
+
     # Only allow a list of trusted parameters through.
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :user_id)
+      params.require(:person).permit(
+        :first_name, 
+        :last_name, 
+        :alternate_name, 
+        :date_of_birth,
+        media_attributes: [:url])
     end
 end

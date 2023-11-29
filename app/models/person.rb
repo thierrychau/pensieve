@@ -31,6 +31,8 @@ class Person < ApplicationRecord
   has_many :people_memories
   has_many :memories, through: :people_memories
   has_many :media, as: :mediumable, dependent: :destroy
+
+  accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
   
   before_save :titleize_name
   

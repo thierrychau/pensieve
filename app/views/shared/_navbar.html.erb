@@ -19,7 +19,7 @@
         </ul>
       <% end %>
       <hr/>
-      <ul class="navbar-nav">
+      <ul class="navbar-nav ms-auto">
       <% if user_signed_in? %>
           <li class="nav-item d-flex">
             <%= link_to "Signed in as #{current_user.email}", edit_user_registration_path, class: "nav-link" %>

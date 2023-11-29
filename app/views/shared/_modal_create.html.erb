@@ -6,7 +6,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%= render "#{model.pluralize}/form", model.to_sym => instance_variable_get("@#{model}") %>
+        <%= render partial: "#{model.pluralize}/form", locals: {model.to_sym => instance_variable_get("@#{model}")}
+        .merge(defined?(model2) ? {model2.to_sym => instance_variable_get("@#{model2}")} : {}) %>
       </div>
     </div>
   </div>

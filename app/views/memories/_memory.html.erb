@@ -12,6 +12,7 @@
       <% end %>
     </div>
   </div>
+  
   <div class="row g-0">
     <div class="col-md-6 d-flex flex-column">
       <% if memory.media.present? %>
@@ -33,6 +34,7 @@
       </div>
     </div>
   </div>
+
   <div class="card-footer d-flex">
     <p class="card-text small">Created by <%= memory.author.email %> at <%= memory.created_at.strftime("%H:%M · %x") %></p>
     <div class="ms-auto">

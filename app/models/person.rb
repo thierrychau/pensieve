@@ -30,6 +30,7 @@ class Person < ApplicationRecord
   
   has_many :people_memories
   has_many :memories, through: :people_memories
+  has_many :media, as: :mediumable, dependent: :destroy
   
   before_save :titleize_name
   

@@ -63,7 +63,7 @@
     "editor.formatOnSave": false
   },
   "[erb]": {
-    "editor.defaultFormatter": "aliariff.vscode-erb-beautify",
+    "editor.defaultFormatter": "elia.erb-formatter",
     "editor.formatOnSave": false
   },
   "files.associations": {

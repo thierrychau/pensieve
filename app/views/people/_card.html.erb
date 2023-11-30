@@ -1,24 +1,24 @@
-<div class="card p-0 m-2" style="width: 16rem;" id="<%= dom_id person %>">
+<div class="card p-0 m-3" style="width: 16rem;" id="<%= dom_id person %>">
   <div class="ratio ratio-1x1">
   <% if person.media.present? %>
-      <img src="<%= person.media.first.url %>" class="card-img-top img-fluid" style="object-fit: cover;" alt="Photo of <%= person.firstlast_name %>">
+    <img src="<%= person.media.first.url %>" class="card-img-top img-fluid" style="object-fit: cover;" alt="Photo of <%= person.firstlast_name %>">
   <% else %>
     <div class="bg-light"></div>
   <% end %>
   </div>
   <div class="card-body">
-    <h5 class="card-title"><%= person.firstlast_name %></h5>
+    <h5 class="card-title text-center"><%= person.firstlast_name %></h5>
     <p class="card-text">
       <%= person.alternate_name %> <br>
       <%= person.date_of_birth.strftime("%x") if person.date_of_birth.present? %>
     </p>
-    <div class="d-flex justify-content-between align-items-end ">
-      <%= link_to edit_person_path(person) do %>
-        <i class="fa-regular fa-pen-to-square"></i>
-      <% end %>
-      <%= link_to person_path(person), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "text-danger" do %>
-        <i class="fa-solid fa-trash"></i>
-      <% end %>
-    </div>
+  </div>
+  <div class="card-footer d-flex align-items-center justify-content-between">
+    <%= link_to edit_person_path(person) do %>
+      <i class="fa-regular fa-pen-to-square"></i>
+    <% end %>
+    <%= link_to person_path(person), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "text-danger" do %>
+      <i class="fa-solid fa-trash"></i>
+    <% end %>
   </div>
 </div>

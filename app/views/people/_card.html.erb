@@ -3,7 +3,7 @@
   <% if person.media.present? %>
     <img src="<%= person.media.first.url %>" class="card-img-top img-fluid" style="object-fit: cover;" alt="Photo of <%= person.firstlast_name %>">
   <% else %>
-    <div class="bg-light"></div>
+    <div class="bg-light rounded"></div>
   <% end %>
   </div>
   <div class="card-body">

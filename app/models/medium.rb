@@ -2,25 +2,22 @@
 #
 # Table name: media
 #
-#  id         :bigint           not null, primary key
-#  type       :string
-#  url        :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  memory_id  :bigint           not null
+#  id              :bigint           not null, primary key
+#  mediumable_type :string
+#  type            :string
+#  url             :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  mediumable_id   :bigint
 #
 # Indexes
 #
-#  index_media_on_memory_id  (memory_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (memory_id => memories.id)
+#  index_media_on_mediumable  (mediumable_type,mediumable_id)
 #
 class Medium < ApplicationRecord
   validates :url, presence: true, if: :new_record?
 
-  belongs_to :memory, inverse_of: :media
+  belongs_to :mediumable, polymorphic: true
   
   mount_uploader :url, ImageUploader
 end

@@ -30,10 +30,10 @@ class Memory < ApplicationRecord
 
   has_many :people_memories, inverse_of: :memory, dependent: :destroy
   has_many :people, through: :people_memories
-  has_many :media, inverse_of: :memory, dependent: :destroy
+  has_many :media, as: :mediumable, dependent: :destroy
 
   accepts_nested_attributes_for :people_memories, allow_destroy: true
-  accepts_nested_attributes_for :address, reject_if: :address_exists?
+  accepts_nested_attributes_for :address, reject_if: ->(attributes) { attributes['input'].blank? }#|| Address.exists?(input: attributes['input']) }
   accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }
@@ -41,7 +41,6 @@ class Memory < ApplicationRecord
   before_save :set_title
 
   private
-
     def set_title
       if self.title.blank? && !ENV['OPENAI_KEY'].nil?
         system_message = "You are a multilingual assistant. You will respond to the user's message with a title consisting of 7 to 25 words, ideally 20 words. Your response should be in the same language as the user's message."
@@ -50,23 +49,10 @@ class Memory < ApplicationRecord
     end    
 
     def self.ransackable_attributes(auth_object = nil)
-      [
-        "description", "date",
-      ]
+      [ "description", "date", "title" ]
     end
 
     def self.ransackable_associations(auth_object = nil)
-      [
-        "author", "address"
-      ]
-    end
-
-    def address_exists?(attributes)
-      address_name = attributes['input'].titleize
-      return false if address_name.blank?
-
-      address = Address.find_or_create_by(input: address_name)
-      update(address_id: address.id)
-      true
+      [ "author", "address" ]
     end
 end

@@ -2,12 +2,14 @@
 #
 # Table name: people
 #
-#  id         :bigint           not null, primary key
-#  first_name :string           not null
-#  last_name  :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint
+#  id             :bigint           not null, primary key
+#  alternate_name :string
+#  date_of_birth  :date
+#  first_name     :string           not null
+#  last_name      :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  user_id        :bigint
 #
 # Indexes
 #
@@ -28,6 +30,9 @@ class Person < ApplicationRecord
   
   has_many :people_memories
   has_many :memories, through: :people_memories
+  has_many :media, as: :mediumable, dependent: :destroy
+
+  accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
   
   before_save :titleize_name
   

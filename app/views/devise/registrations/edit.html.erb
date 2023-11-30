@@ -11,25 +11,36 @@
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
 
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Default setting for AI generated titles</label>
+    </div>
+
     <hr>
+
+    <div class="mb-3">
+    <h5>Change your password</h3>
+    <p>Your password must be at least <%= @minimum_password_length %> characters and should include a combination of numbers, uppercase and lowercase letters, and special characters (!@#$%^&*).</p>
+    </div>
+
+    <div class="form-floating mb-3">
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+      <%= f.label :current_password, "Current Password", class: "form-label" %>
+    </div>
+
 
     <div class="form-floating mb-3">
       <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-      <%= f.label :password, "New Password (leave blank if you don't want to change it)", class: "form-label" %>
+      <%= f.label :password, "New password", class: "form-label " %>
     </div>
 
     <div class="form-floating mb-3">
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-      <%= f.label :password_confirmation, "New Password confirmation", class: "form-label" %>
+      <%= f.label :password_confirmation, "Re-type new password", class: "form-label" %>
     </div>
 
-    <hr>
-
-    <div class="form-floating mb-3">
-      <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
-      <%= f.label :current_password, "Enter current Password to confirm your changes", class: "form-label" %>
-    </div>
-
+     <br />
+     
     <div class="d-grid gap-2 mb-3">
       <%= f.submit "Update", :class => "btn btn-outline-primary" %>
     </div>

@@ -1,19 +1,19 @@
 class MemoriesController < ApplicationController
   before_action :set_memory, only: %i[ show edit update destroy ]
   before_action :set_people, only: %i[ index new edit create update ]
-  before_action :set_memories, only: %i[ index ]
+  before_action :new_memory, only: %i[ index new ] # for create form
+  before_action :new_person, only: %i[ index ] # for nested create form
+  before_action :build_address, only: %i[ index new edit ] # for nested create form
+  before_action :build_media, only: %i[ index new edit ] # for nested create form
   before_action { authorize (@memory || Memory) }
   
   def index
-    if params[:person_id]
-      @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
-    end
-    @q = policy_scope(@user_memories).ransack(params[:q])
+    # if params[:person_id]
+    #   @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
+    # end
+    @q = policy_scope(Memory).ransack(params[:q])
     @q.sorts = ['date desc', 'address_input asc'] if @q.sorts.empty?
     @memories = @q.result
-    @memory = Memory.new # for nested form
-    @person = Person.new # for nested form
-    @memory.build_address # for nested form
     authorize :dashboard, :show?
   end
 
@@ -23,8 +23,6 @@ class MemoriesController < ApplicationController
   
   # GET /memories/new
   def new
-    @memory = Memory.new
-    @memory.build_address
   end
   
   # GET /memories/1/edit
@@ -81,13 +79,25 @@ class MemoriesController < ApplicationController
     def set_memory
       @memory = Memory.find(params[:id])
     end
-
-    def set_memories
-      @user_memories = current_user.memories.all
-    end
     
     def set_people
       @people = current_user.people.all
+    end
+
+    def new_memory
+      @memory = Memory.new
+    end
+
+    def new_person
+      @person = Person.new
+    end
+
+    def build_address
+      @memory.build_address unless @memory.address
+    end
+
+    def build_media
+      @memory.media.build unless @memory.media.any?
     end
 
     # Only allow a list of trusted parameters through.

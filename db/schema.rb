@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_22_181659) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_162803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -33,10 +33,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_181659) do
   create_table "media", force: :cascade do |t|
     t.string "url"
     t.string "type"
-    t.bigint "memory_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["memory_id"], name: "index_media_on_memory_id"
+    t.string "mediumable_type"
+    t.bigint "mediumable_id"
+    t.index ["mediumable_type", "mediumable_id"], name: "index_media_on_mediumable"
   end
 
   create_table "memories", force: :cascade do |t|
@@ -57,6 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_181659) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date_of_birth"
+    t.string "alternate_name"
     t.index ["first_name", "last_name"], name: "index_people_on_first_name_and_last_name", unique: true
     t.index ["user_id"], name: "index_people_on_user_id"
   end
@@ -94,7 +97,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_181659) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "media", "memories"
   add_foreign_key "memories", "addresses"
   add_foreign_key "memories", "users", column: "author_id"
   add_foreign_key "people", "users"

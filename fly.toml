@@ -10,7 +10,8 @@ console_command = "/rails/bin/rails console"
 [build]
 
 [deploy]
-  release_command = "./bin/rails db:prepare assets:precompile"
+  release_command = "./bin/rails db:prepare"
+  release_command = "./bin/rails assets:precompile"
 
 [http_service]
   internal_port = 3000

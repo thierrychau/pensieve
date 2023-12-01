@@ -17,7 +17,8 @@ unless Rails.env.production?
       "dev:add_addresses",
       "dev:add_memories",
       "dev:add_people",
-      "dev:add_people_memories"] do
+      "dev:add_people_memories",
+      "dev:add_images"] do
       puts "done"
     end
 
@@ -27,7 +28,7 @@ unless Rails.env.production?
       names.each do |name|
         u = User.create(
           email: "#{name}@example.com",
-          password: "Password123!"
+          password: "Password123!",
         )
         puts u.email
       end 
@@ -35,7 +36,7 @@ unless Rails.env.production?
 
     task add_addresses: :environment do 
       puts "adding addresses..."
-      25.times do
+      50.times do
         Address.create(
         input: Faker::Address.city,
         )
@@ -44,10 +45,11 @@ unless Rails.env.production?
 
     task add_memories: :environment do 
       puts "adding memories..."
-      25.times do
+      50.times do
         Memory.create(
           author_id: User.all.sample.id,
           date: Faker::Date.backward(days: 40*365),
+          title: Faker::Quote.most_interesting_man_in_the_world,
           description: Faker::TvShows::Spongebob.quote,
           address_id: Address.all.sample.id,
         )
@@ -56,10 +58,12 @@ unless Rails.env.production?
 
     task add_people: :environment do
       puts "adding people..."
-      25.times do
+      50.times do
         Person.create(
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
+          alternate_name: Faker::Name.middle_name,
+          date_of_birth: Faker::Date.backward(days: 40*365),
           user_id: User.all.sample.id
         )
       end 
@@ -68,12 +72,31 @@ unless Rails.env.production?
     task add_people_memories: :environment do
       puts "adding people_memories..."
       Memory.all.each do |memory|
-        pm = PeopleMemory.create(
-          memory_id: memory.id,
-          person_id: memory.author.people.sample.id,
-        )
+        rand(1..3).times do
+          pm = PeopleMemory.create(
+            memory_id: memory.id,
+            person_id: memory.author.people.sample.id,
+          )
+        end
       end 
     end
 
+    task add_images: :environment do 
+      puts "adding images..."
+      Memory.all.each do |memory|
+        new = Medium.create(
+          url: "https://robohash.org/#{rand(9999)}",
+          mediumable_type: 'Memory',
+          mediumable_id: memory.id,
+        )
+      end
+      Person.all.each do |person|
+        new = Medium.create(
+          url: "https://robohash.org/#{rand(9999)}",
+          mediumable_type: 'Person',
+          mediumable_id: person.id,
+        )
+      end
+    end
   end
 end

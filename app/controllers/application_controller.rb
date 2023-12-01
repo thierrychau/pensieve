@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   after_action :verify_policy_scoped, only: :index, unless: :devise_controller?
 
   include Pundit::Authorization
+  include Devisable
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   

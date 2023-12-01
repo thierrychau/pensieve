@@ -10,6 +10,9 @@
   </div>
 <% end %>
 
+<div class="row">
+  <div class="col">
+ 
 <%= form_with(model: memory, multipart: true) do |form| %>
 
   <div class="row g-2 mb-3">
@@ -64,3 +67,42 @@
     <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
+  
+</div>
+  <div class="col">
+  
+
+<div id='map_form' style='width: 100%; height: 100%; overflow: visible'></div>
+
+<!-- Script for Mapbox -->
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+ 
+ 
+<script>
+  mapboxgl.accessToken = '<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>';
+  var map_form = new mapboxgl.Map({
+      container: 'map_form', // container ID
+      style: 'mapbox://styles/mapbox/satellite-v9', // style URL
+      center: [-87.637505, 41.879138], // starting position [lng, lat]
+      zoom: 9, // starting zoom
+  });
+ 
+// Add the control to the map_form.
+
+var geocoder = new MapboxGeocoder({
+  accessToken: mapboxgl.accessToken,
+  mapboxgl: mapboxgl
+});
+
+geocoder.on('result', function(e) {
+  document.getElementById('memory_address_attributes_input').value = e.result.place_name;
+});
+
+map_form.addControl(geocoder);
+
+
+</script>
+</div>
+
+</div>

@@ -42,7 +42,8 @@ class User < ApplicationRecord
   has_many :people, dependent: :destroy
 
   # TODO: deliver_later after setting up job processing
-  after_create { UsersMailer.welcome(self).deliver_now }
+  # Not working
+  # after_create { UsersMailer.welcome(self).deliver_now  unless: Rails.env.development? }
 
   private
     def password_complexity

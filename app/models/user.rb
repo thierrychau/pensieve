@@ -4,6 +4,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  admin                  :boolean          default(FALSE), not null
+#  ai_generated_content   :boolean          default(FALSE), not null
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -37,8 +38,8 @@ class User < ApplicationRecord
 
   validate :password_complexity, :if => :password
 
-  has_many :memories, foreign_key: "author_id", counter_cache: true
-  has_many :people, counter_cache: true
+  has_many :memories, foreign_key: "author_id",  dependent: :destroy
+  has_many :people, dependent: :destroy
 
   # TODO: deliver_later after setting up job processing
   after_create { UsersMailer.welcome(self).deliver_now }

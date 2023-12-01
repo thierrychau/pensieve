@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   end
 
   root "dashboards#show"
-  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { registrations: 'users/registrations' }
 
   resources :people
   resources :memories

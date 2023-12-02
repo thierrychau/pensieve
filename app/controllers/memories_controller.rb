@@ -3,7 +3,6 @@ class MemoriesController < ApplicationController
   before_action :set_people, only: %i[ index new edit create update ]
   before_action :new_memory, only: %i[ index new ] # for create form
   before_action :new_person, only: %i[ index ] # for nested create form
-  before_action :build_address, only: %i[ index new edit ] # for nested create form
   before_action :build_media, only: %i[ index new edit ] # for nested create form
   before_action { authorize (@memory || Memory) }
   
@@ -12,7 +11,7 @@ class MemoriesController < ApplicationController
     #   @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
     # end
     @q = policy_scope(Memory).ransack(params[:q])
-    @q.sorts = ['date desc', 'address_input asc'] if @q.sorts.empty?
+    @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
     @memories = @q.result
     authorize :dashboard, :show?
   end
@@ -90,10 +89,6 @@ class MemoriesController < ApplicationController
 
     def new_person
       @person = Person.new
-    end
-
-    def build_address
-      @memory.build_address unless @memory.address
     end
 
     def build_media

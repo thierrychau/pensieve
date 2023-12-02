@@ -40,8 +40,8 @@
   var map = new mapboxgl.Map({
       container: 'map', // container ID
       style: 'mapbox://styles/mapbox/satellite-v9', // style URL
-      <% if @memories.first.address.lng.present? && @memories.first.address.lat.present? %>
-        center: [<%= @memories.first.address.lng %>, <%= @memories.first.address.lat %>], // starting position [lng, lat]
+      <% if @memories.first.lng.present? && @memories.first.lat.present? %>
+        center: [<%= @memories.first.lng %>, <%= @memories.first.lat %>], // starting position [lng, lat]
       <% else %>
         center: [-87.637505, 41.879138], // starting position [lng, lat]
       <% end %>

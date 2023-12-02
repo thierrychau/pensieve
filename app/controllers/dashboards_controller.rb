@@ -13,7 +13,6 @@ class DashboardsController < ApplicationController
     @memories = @q.result
     @memory = Memory.new # for nested form
     @person = Person.new # for nested form
-    @memory.build_address # for nested form
   end
 
   private

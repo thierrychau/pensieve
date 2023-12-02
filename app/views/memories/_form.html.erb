@@ -10,26 +10,16 @@
   </div>
 <% end %>
 
-<div class="row">
-  <div class="col-6">
- 
+<div class="d-flex flex-column flex-lg-row">
+  <div class="col-12 col-lg-6 order-2 order-md-1">
     <%= form_with(model: memory, multipart: true) do |form| %>
-
-      <div class="form-floating mb-3">
-        <% if memory.new_record? %>
-          <%= form.date_field :date, class: "form-control" %>
-        <% else %>
-          <%= form.date_field :date, class: "form-control" %>
-        <% end %>
-        <%= form.label :date, class: "form-label" %>
-      </div>
-
-      <div class="mb-3">
-        <%= form.fields_for :address do |address_fields| %>
-          <%= address_fields.text_field :input, class: "form-control", hidden: false, placeholder: "Enter a location" %>
-        <% end %>
-      </div>
       <div class="row g-2">
+        <div class="col-md">
+          <div class="form-floating mb-3">
+            <%= form.date_field :date, class: "form-control", value: memory.new_record? ? Date.today : memory.date %>
+            <%= form.label :date, class: "form-label" %>
+          </div>
+        </div>
         <div class="col-md">
           <div class="form-floating mb-3">
             <%= form.text_field :address_attributes_lng, id: "memory_address_attributes_lng", class: "form-control", disabled: true %>
@@ -44,6 +34,12 @@
         </div>
       </div>
       <div class="row g-2">
+        <div class="col-md">
+          <div class="form-floating  mb-3">
+            <%= form.text_field :address_attributes_location, class: "form-control", placeholder: "Enter a location" %>
+            <%= form.label :address_attributes_location, class: "form-label" %>
+          </div>
+        </div>
         <div class="col-md">
           <div class="form-floating mb-3">
             <%= form.text_field :address_attributes_place, id: "memory_address_attributes_place", class: "form-control" %>
@@ -91,8 +87,9 @@
     <% end %>
   </div>
 
-  <div class="col-6">
-    <div id="menu">
+  <div class="col-12 col-lg-6 order-1 order-md-2 min-vh-50 m-1">
+    <div id='map_form' class="min-vh-50" style='width: 100%; height: 95%; min-height: 300px;'></div>
+    <div id="menu" class="text-end">
       <!-- See a list of Mapbox-hosted public styles at -->
       <!-- https://docs.mapbox.com/api/maps/styles/#mapbox-styles -->
       <input id="streets-v12" type="radio" name="rtoggle" value="streets" checked="checked">
@@ -100,8 +97,6 @@
       <input id="satellite-streets-v12" type="radio" name="rtoggle" value="satellite">
       <label for="satellite-streets-v12">satellite streets</label>
     </div>
-    
-    <div id='map_form' style='width: 100%; height: 100%'></div>
     <!--<pre id="coordinates" class="coordinates"></pre>-->
   </div>
 </div>
@@ -177,7 +172,7 @@
     
   // Copy the address to the hidden input
   geocoder.on('result', function(e) {
-    document.getElementById('memory_address_attributes_input').value = e.result.place_name;
+    document.getElementById('memory_address_attributes_location').value = e.result.text;
     document.getElementById('memory_address_attributes_lng').value = e.result.geometry.coordinates[0];
     document.getElementById('memory_address_attributes_lat').value = e.result.geometry.coordinates[1];
     const placeObject = e.result.context.find(c => c.id.startsWith('place'));

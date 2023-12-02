@@ -48,5 +48,9 @@
       zoom: 9, // starting zoom
   });
 
+
+$('#addMemoryModal').on('shown.bs.modal', function () {
+  map_form.resize();
+});
  
 </script>

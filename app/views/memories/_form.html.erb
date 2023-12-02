@@ -22,28 +22,28 @@
         </div>
         <div class="col-md">
           <div class="form-floating mb-3">
-            <%= form.text_field :address_attributes_lng, id: "memory_address_attributes_lng", class: "form-control", disabled: true %>
-            <%= form.label :address_attributes_lng, class: "form-label" %>
+            <%= form.text_field :lng, class: "form-control", disabled: true %>
+            <%= form.label :lng, class: "form-label" %>
           </div>
         </div>
         <div class="col-md">
           <div class="form-floating mb-3">
-            <%= form.text_field :address_attributes_lat, id: "memory_address_attributes_lat", class: "form-control", disabled: true %>
-            <%= form.label :address_attributes_lat, class: "form-label" %>
+            <%= form.text_field :lat, class: "form-control", disabled: true %>
+            <%= form.label :lat, class: "form-label" %>
           </div>
         </div>
       </div>
       <div class="row g-2">
         <div class="col-md">
           <div class="form-floating  mb-3">
-            <%= form.text_field :address_attributes_location, class: "form-control", placeholder: "Enter a location" %>
-            <%= form.label :address_attributes_location, class: "form-label" %>
+            <%= form.text_field :location, class: "form-control", placeholder: "Enter a location" %>
+            <%= form.label :location, class: "form-label" %>
           </div>
         </div>
         <div class="col-md">
           <div class="form-floating mb-3">
-            <%= form.text_field :address_attributes_place, id: "memory_address_attributes_place", class: "form-control" %>
-            <%= form.label :address_attributes_place, class: "form-label" %>
+            <%= form.text_field :place, id: "place", class: "form-control" %>
+            <%= form.label :place, class: "form-label" %>
           </div>
         </div>
         <div class="col-md">
@@ -148,8 +148,8 @@
       marker.on('dragend', function() {
         const newLngLat = marker.getLngLat();
         console.log('Marker coordinates:', newLngLat);
-        document.getElementById('memory_address_attributes_lng').value = newLngLat.lng;
-        document.getElementById('memory_address_attributes_lat').value = newLngLat.lat;
+        document.getElementById('lng').value = newLngLat.lng;
+        document.getElementById('lat').value = newLngLat.lat;
         // coordinates.style.display = 'block';
         // coordinates.innerHTML = `Longitude: ${newLngLat.lng}<br />Latitude: ${newLngLat.lat}`;
       });
@@ -172,12 +172,12 @@
     
   // Copy the address to the hidden input
   geocoder.on('result', function(e) {
-    document.getElementById('memory_address_attributes_location').value = e.result.text;
-    document.getElementById('memory_address_attributes_lng').value = e.result.geometry.coordinates[0];
-    document.getElementById('memory_address_attributes_lat').value = e.result.geometry.coordinates[1];
+    document.getElementById('location').value = e.result.text;
+    document.getElementById('lng').value = e.result.geometry.coordinates[0];
+    document.getElementById('lat').value = e.result.geometry.coordinates[1];
     const placeObject = e.result.context.find(c => c.id.startsWith('place'));
     const placeName = placeObject?.text || e.result.text || '';
-    document.getElementById('memory_address_attributes_place').value = placeName;
+    document.getElementById('place').value = placeName;
     const countryObject = e.result.context.find(c => c.id.startsWith('country'));
     const countryName = countryObject?.text || '';
     document.getElementById('memory_address_attributes_country').value = countryName;

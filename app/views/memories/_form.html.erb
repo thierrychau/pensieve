@@ -42,14 +42,14 @@
         </div>
         <div class="col-md">
           <div class="form-floating mb-3">
-            <%= form.text_field :place, id: "place", class: "form-control" %>
+            <%= form.text_field :place, class: "form-control" %>
             <%= form.label :place, class: "form-label" %>
           </div>
         </div>
         <div class="col-md">
           <div class="form-floating mb-3">
-            <%= form.text_field :address_attributes_country, id: "memory_address_attributes_country", class: "form-control" %>
-            <%= form.label :address_attributes_country, class: "form-label" %>
+            <%= form.text_field :country, class: "form-control" %>
+            <%= form.label :country, class: "form-label" %>
           </div>
         </div>
       </div>
@@ -148,8 +148,8 @@
       marker.on('dragend', function() {
         const newLngLat = marker.getLngLat();
         console.log('Marker coordinates:', newLngLat);
-        document.getElementById('lng').value = newLngLat.lng;
-        document.getElementById('lat').value = newLngLat.lat;
+        document.getElementById('memory_lng').value = newLngLat.lng.trunc();
+        document.getElementById('memory_lat').value = newLngLat.lat;
         // coordinates.style.display = 'block';
         // coordinates.innerHTML = `Longitude: ${newLngLat.lng}<br />Latitude: ${newLngLat.lat}`;
       });
@@ -172,14 +172,14 @@
     
   // Copy the address to the hidden input
   geocoder.on('result', function(e) {
-    document.getElementById('location').value = e.result.text;
-    document.getElementById('lng').value = e.result.geometry.coordinates[0];
-    document.getElementById('lat').value = e.result.geometry.coordinates[1];
+    document.getElementById('memory_location').value = e.result.text;
+    document.getElementById('memory_lng').value = e.result.geometry.coordinates[0];
+    document.getElementById('memory_lat').value = e.result.geometry.coordinates[1];
     const placeObject = e.result.context.find(c => c.id.startsWith('place'));
     const placeName = placeObject?.text || e.result.text || '';
-    document.getElementById('place').value = placeName;
+    document.getElementById('memory_place').value = placeName;
     const countryObject = e.result.context.find(c => c.id.startsWith('country'));
     const countryName = countryObject?.text || '';
-    document.getElementById('memory_address_attributes_country').value = countryName;
+    document.getElementById('memory_country').value = countryName;
   });
 </script>

@@ -24,10 +24,38 @@
         <%= form.label :date, class: "form-label" %>
       </div>
 
-      <div class="mb-3" id="geocoder-container">
+      <div class="mb-3">
         <%= form.fields_for :address do |address_fields| %>
-          <%= address_fields.text_field :input, class: "form-control", hidden: true, placeholder: "Enter a location" %>
+          <%= address_fields.text_field :input, class: "form-control", hidden: false, placeholder: "Enter a location" %>
         <% end %>
+      </div>
+      <div class="row g-2">
+        <div class="col-md">
+          <div class="form-floating mb-3">
+            <%= form.text_field :address_attributes_lng, id: "memory_address_attributes_lng", class: "form-control", disabled: true %>
+            <%= form.label :address_attributes_lng, class: "form-label" %>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-floating mb-3">
+            <%= form.text_field :address_attributes_lat, id: "memory_address_attributes_lat", class: "form-control", disabled: true %>
+            <%= form.label :address_attributes_lat, class: "form-label" %>
+          </div>
+        </div>
+      </div>
+      <div class="row g-2">
+        <div class="col-md">
+          <div class="form-floating mb-3">
+            <%= form.text_field :address_attributes_place, id: "memory_address_attributes_place", class: "form-control" %>
+            <%= form.label :address_attributes_place, class: "form-label" %>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-floating mb-3">
+            <%= form.text_field :address_attributes_country, id: "memory_address_attributes_country", class: "form-control" %>
+            <%= form.label :address_attributes_country, class: "form-label" %>
+          </div>
+        </div>
       </div>
 
       <div class="form-floating mb-3">
@@ -90,62 +118,75 @@
       zoom: 9, // starting zoom
   });
   // Add controls to the map.
-  // Add the search box to the map_form.
-  var geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    marker: {
-    color: 'orange', 
-    //draggable: true
-    },
-    mapboxgl: mapboxgl,
-  });
-  map_form.addControl(geocoder);
-  // Add navigation and geolocation
-  map_form.addControl(new mapboxgl.NavigationControl());
-  map_form.addControl(new mapboxgl.GeolocateControl());
-  // Add a scale to the map
-  map_form.addControl(new mapboxgl.ScaleControl());
-  // Add style controls to the map_form.
-  const layerList = document.getElementById('menu');
-  const inputs = layerList.getElementsByTagName('input');
-  for (const input of inputs) {
-  input.onclick = (layer) => {
-  const layerId = layer.target.id;
-  map_form.setStyle('mapbox://styles/mapbox/' + layerId);
-  };
-  }
+    // Add the search box to the map_form.
+    var geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      marker: false, //{
+      //color: 'orange', 
+      //draggable: true
+      //},
+      mapboxgl: mapboxgl,
+    });
+    map_form.addControl(geocoder);
+    // Add navigation and geolocation
+    map_form.addControl(new mapboxgl.NavigationControl());
+    map_form.addControl(new mapboxgl.GeolocateControl());
+    // Add a scale to the map
+    map_form.addControl(new mapboxgl.ScaleControl());
+    // Add style controls to the map_form.
+    const layerList = document.getElementById('menu');
+    const inputs = layerList.getElementsByTagName('input');
+    for (const input of inputs) {
+    input.onclick = (layer) => {
+    const layerId = layer.target.id;
+    map_form.setStyle('mapbox://styles/mapbox/' + layerId);
+    };
+    }
 
+  // Function to create a draggable marker
+    function createDraggableMarker(lngLat, map) {
+      const marker = new mapboxgl.Marker({
+        draggable: true
+      })
+      .setLngLat(lngLat)
+      .addTo(map);
+      marker.on('dragend', function() {
+        const newLngLat = marker.getLngLat();
+        console.log('Marker coordinates:', newLngLat);
+        document.getElementById('memory_address_attributes_lng').value = newLngLat.lng;
+        document.getElementById('memory_address_attributes_lat').value = newLngLat.lat;
+        coordinates.style.display = 'block';
+        coordinates.innerHTML = `Longitude: ${newLngLat.lng}<br />Latitude: ${newLngLat.lat}`;
+      });
+      return marker;
+    }
+    // Allowing users to drag the marker to a more precise location
+    let marker = null;
+    // When a result is selected from the geocoder
+    geocoder.on('result', function(e) {
+       // Save the JSON response
+      geocoderResult = e.result;
+      console.log(geocoderResult);
+      // If a marker already exists, remove it
+      if (marker) {
+        marker.remove();
+      }
+      // Create a new marker at the result location
+      marker = createDraggableMarker(e.result.geometry.coordinates, map_form);
+    });
+    
   // Copy the address to the hidden input
   geocoder.on('result', function(e) {
     document.getElementById('memory_address_attributes_input').value = e.result.place_name;
+    document.getElementById('memory_address_attributes_lng').value = e.result.geometry.coordinates[0];
+    document.getElementById('memory_address_attributes_lat').value = e.result.geometry.coordinates[1];
+    const placeObject = e.result.context.find(c => c.id.startsWith('place'));
+    const placeName = placeObject?.text || e.result.text || '';
+    document.getElementById('memory_address_attributes_place').value = placeName;
+    const countryObject = e.result.context.find(c => c.id.startsWith('country'));
+    const countryName = countryObject?.text || '';
+    document.getElementById('memory_address_attributes_country').value = countryName;
   });
-
-  // Allowing users to drag the marker to a more precise location
-  // Create a marker that will be used to mark the geocoder result
-  let marker = null;
-  // When a result is selected from the geocoder
-  geocoder.on('result', function(e) {
-    // If a marker already exists, remove it
-    if (marker) {
-      marker.remove();
-    }
-    // Create a new marker at the result location
-    marker = new mapboxgl.Marker({
-      draggable: true
-    })
-    .setLngLat(e.result.geometry.coordinates)
-    .addTo(map_form);
-    // When the marker is dragged, log the new coordinates
-    marker.on('dragend', function() {
-      const lngLat = marker.getLngLat();
-      console.log('Marker coordinates:', lngLat);
-      coordinates.style.display = 'block';
-      coordinates.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
-    });
-  });
-
-
-
 </script>
 
 <!--// Create a new marker.

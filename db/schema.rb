@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_01_001810) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_02_192642) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -48,6 +48,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_001810) do
     t.bigint "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "lat", precision: 12, scale: 8
+    t.decimal "lng", precision: 12, scale: 8
+    t.string "place"
+    t.string "country"
+    t.string "location"
     t.index ["address_id"], name: "index_memories_on_address_id"
     t.index ["author_id"], name: "index_memories_on_author_id"
   end

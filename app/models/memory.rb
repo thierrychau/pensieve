@@ -3,8 +3,13 @@
 # Table name: memories
 #
 #  id          :bigint           not null, primary key
+#  country     :string
 #  date        :date
 #  description :text
+#  lat         :decimal(12, 8)
+#  lng         :decimal(12, 8)
+#  location    :string
+#  place       :string
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

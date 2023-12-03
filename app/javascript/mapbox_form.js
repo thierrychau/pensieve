@@ -1,15 +1,15 @@
 mapboxgl.accessToken = document.querySelector('body').getAttribute('data-mapbox-token');
 
-// Initialize the map.
+// Initialize the mapbox_form.
 // const coordinates = document.getElementById('coordinates');
-var map = new mapboxgl.Map({
+var mapbox_form = new mapboxgl.Map({
     container: 'mapbox_form', // container ID
     style: 'mapbox://styles/mapbox/streets-v12', // style URL
     center: [-87.637505, 41.879138], // starting position [lng, lat]
     zoom: 9, // starting zoom
 });
-// Add controls to the map.
-  // Add the search box to the map.
+// Add controls to the mapbox_form.
+  // Add the search box to the mapbox_form.
   var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     marker: false, //{
@@ -18,29 +18,29 @@ var map = new mapboxgl.Map({
     //},
     mapboxgl: mapboxgl,
   });
-  map.addControl(geocoder);
+  mapbox_form.addControl(geocoder);
   // Add navigation and geolocation
-  map.addControl(new mapboxgl.NavigationControl());
-  map.addControl(new mapboxgl.GeolocateControl());
-  // Add a scale to the map
-  map.addControl(new mapboxgl.ScaleControl());
-  // Add style controls to the map.
+  mapbox_form.addControl(new mapboxgl.NavigationControl());
+  mapbox_form.addControl(new mapboxgl.GeolocateControl());
+  // Add a scale to the mapbox_form
+  mapbox_form.addControl(new mapboxgl.ScaleControl());
+  // Add style controls to the mapbox_form.
   var layerList = document.getElementById('menu');
   var inputs = layerList.getElementsByTagName('input');
   for (const input of inputs) {
   input.onclick = (layer) => {
   const layerId = layer.target.id;
-  map.setStyle('mapbox://styles/mapbox/' + layerId);
+  mapbox_form.setStyle('mapbox://styles/mapbox/' + layerId);
   };
   }
 
 // Function to create a draggable marker
-  function createDraggableMarker(lngLat, map) {
+  function createDraggableMarker(lngLat, mapbox_form) {
     var marker = new mapboxgl.Marker({
       draggable: true
     })
     .setLngLat(lngLat)
-    .addTo(map);
+    .addTo(mapbox_form);
     marker.on('dragend', function() {
       const newLngLat = marker.getLngLat();
       console.log('Marker coordinates:', newLngLat);
@@ -63,16 +63,16 @@ var map = new mapboxgl.Map({
       marker.remove();
     }
     // Create a new marker at the result location
-    marker = createDraggableMarker(e.result.geometry.coordinates, map);
+    marker = createDraggableMarker(e.result.geometry.coordinates, mapbox_form);
   });
 
-// If there are coordinates, add a marker to the map
+// If there are coordinates, add a marker to the mapbox_form
 var lngInput = document.querySelector('input[data-lng]');
 var latInput = document.querySelector('input[data-lat]');
 var lng = lngInput ? lngInput.getAttribute('data-lng') : null;
 var lat = latInput ? latInput.getAttribute('data-lat') : null;
 if (lat && lng) {
-  marker = createDraggableMarker([lng, lat], map);
+  marker = createDraggableMarker([lng, lat], mapbox_form);
 }
   
 // Copy the address to the hidden input

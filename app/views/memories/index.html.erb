@@ -13,4 +13,10 @@
 
 <%= render 'memories/index_table', memories: @memories %>
 
-<%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-lg" } %>
+<%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
+
+<script>
+$('#addMemoryModal').on('shown.bs.modal', function () {
+  mapbox_form.resize();
+});
+</script>

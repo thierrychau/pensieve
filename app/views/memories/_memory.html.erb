@@ -27,7 +27,7 @@
           </span>
         </div>
         <div class="d-flex align-items-center justify-content-between mb-3">
-          <p class="card-text col-6 mb-0"><%= memory.address.input if memory.address.present? %></p>
+          <p class="card-text col-6 mb-0"><%= memory.place if memory.place.present? %></p>
           <div class="text-end col-6">
             <% memory.people.each do |person| %>
               <%= link_to person, style: "text-decoration: none;" do %>

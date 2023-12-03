@@ -10,25 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_01_001810) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_02_224054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
-
-  create_table "addresses", force: :cascade do |t|
-    t.string "input"
-    t.string "address"
-    t.string "full_address"
-    t.string "country"
-    t.string "country_code"
-    t.string "region"
-    t.string "postcode"
-    t.decimal "lat", precision: 12, scale: 8
-    t.decimal "lng", precision: 12, scale: 8
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "place"
-  end
 
   create_table "media", force: :cascade do |t|
     t.string "url"
@@ -44,11 +29,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_001810) do
     t.date "date"
     t.string "title"
     t.text "description"
-    t.bigint "address_id"
     t.bigint "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["address_id"], name: "index_memories_on_address_id"
+    t.decimal "lat", precision: 12, scale: 8
+    t.decimal "lng", precision: 12, scale: 8
+    t.string "place"
+    t.string "country"
+    t.string "location"
     t.index ["author_id"], name: "index_memories_on_author_id"
   end
 
@@ -99,7 +87,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_001810) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "memories", "addresses"
   add_foreign_key "memories", "users", column: "author_id"
   add_foreign_key "people", "users"
   add_foreign_key "people_memories", "memories"

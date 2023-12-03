@@ -3,22 +3,24 @@
 # Table name: memories
 #
 #  id          :bigint           not null, primary key
+#  country     :string
 #  date        :date
 #  description :text
+#  lat         :decimal(12, 8)
+#  lng         :decimal(12, 8)
+#  location    :string
+#  place       :string
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  address_id  :bigint
 #  author_id   :bigint           not null
 #
 # Indexes
 #
-#  index_memories_on_address_id  (address_id)
-#  index_memories_on_author_id   (author_id)
+#  index_memories_on_author_id  (author_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (address_id => addresses.id)
 #  fk_rails_...  (author_id => users.id)
 #
 class Memory < ApplicationRecord
@@ -26,14 +28,12 @@ class Memory < ApplicationRecord
   validates :description, presence: true
 
   belongs_to :author, class_name: "User"
-  belongs_to :address, optional: true
 
   has_many :people_memories, inverse_of: :memory, dependent: :destroy
   has_many :people, through: :people_memories
   has_many :media, as: :mediumable, dependent: :destroy
 
   accepts_nested_attributes_for :people_memories, allow_destroy: true
-  accepts_nested_attributes_for :address, reject_if: ->(attributes) { attributes['input'].blank? }#|| Address.exists?(input: attributes['input']) }
   accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }
@@ -49,10 +49,10 @@ class Memory < ApplicationRecord
     end    
 
     def self.ransackable_attributes(auth_object = nil)
-      [ "description", "date", "title" ]
+      [ "description", "date", "title", "place", "country", "location" ]
     end
 
     def self.ransackable_associations(auth_object = nil)
-      [ "author", "address" ]
+      [ "author" ]
     end
 end

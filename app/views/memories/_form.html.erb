@@ -22,13 +22,13 @@
         </div>
         <div class="col">
           <div class="form-floating mb-3">
-            <%= form.text_field :lng, class: "form-control", placeholder: true, data: { lng: memory.lng } %>
+            <%= form.text_field :lng, class: "form-control-plaintext", placeholder: true, data: { lng: memory.lng }, readonly:true %>
             <%= form.label :lng, class: "form-label" %>
           </div>
         </div>
         <div class="col">
           <div class="form-floating mb-3">
-            <%= form.text_field :lat, class: "form-control", placeholder: true, data: { lat: memory.lat } %>
+            <%= form.text_field :lat, class: "form-control-plaintext", placeholder: true, data: { lat: memory.lat }, readonly:true %>
             <%= form.label :lat, class: "form-label" %>
           </div>
         </div>

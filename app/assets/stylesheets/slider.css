@@ -1,0 +1,13 @@
+/* slider track */
+/******** Chrome, Safari, Opera and Edge Chromium styles ********/
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #C0C0C0;
+  border-radius: 0.5rem;
+  height: 0.5rem;
+}
+/* slider thumb */
+input[type="range"]::-moz-range-track {
+  background-color: #C0C0C0;
+  border-radius: 0.5rem;
+  height: 0.5rem;
+}

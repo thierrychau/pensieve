@@ -1,6 +1,9 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'slider' %>
+<% end %>
+
 <div class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
   <h1 class="flex-grow-1">Dashboard</h1>
-  <!-- Button trigger modal -->
   <div class="d-flex">
     <div>
       <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addPersonModal">
@@ -30,24 +33,6 @@
 
 <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
 <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
-
-<!-- Script for Mapbox --> 
-
-<style>
-/* slider track */
-/******** Chrome, Safari, Opera and Edge Chromium styles ********/
-input[type="range"]::-webkit-slider-runnable-track {
-  background-color: #C0C0C0;
-  border-radius: 0.5rem;
-  height: 0.5rem;
-}
-/* slider thumb */
-input[type="range"]::-moz-range-track {
-  background-color: #C0C0C0;
-  border-radius: 0.5rem;
-  height: 0.5rem;
-}
-</style>
 
 <body data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>">
 <%= javascript_include_tag 'mapbox_slider' %>

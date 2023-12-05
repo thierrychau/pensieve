@@ -6,7 +6,7 @@ var mapbox_form = new mapboxgl.Map({
     container: 'mapbox_form',
     style: 'mapbox://styles/mapbox/streets-v12',
     center: [-87.637505, 41.879138],
-    zoom:
+    zoom: 9,
 });
 
   // Add the search box to the mapbox_form.

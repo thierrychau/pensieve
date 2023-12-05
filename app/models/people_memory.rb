@@ -19,8 +19,14 @@
 #  fk_rails_...  (person_id => people.id)
 #
 class PeopleMemory < ApplicationRecord
+  # Represents a join table between people and memories.
+  # PeopleMemories have a person and a memory.
+  # PeopleMemories can be searched using their person or memory.
+ 
   validates :person_id, :presence => true
 
+  # associations
+  ## direct associations
   belongs_to :memory, inverse_of: :people_memories
   belongs_to :person
 end

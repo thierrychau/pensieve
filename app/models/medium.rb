@@ -15,9 +15,14 @@
 #  index_media_on_mediumable  (mediumable_type,mediumable_id)
 #
 class Medium < ApplicationRecord
+  # Represents a medium, such as an image or video, associated with another model.
+
   validates :url, presence: true, if: :new_record?
 
+  # associations
+  ## direct associations
   belongs_to :mediumable, polymorphic: true
   
-  mount_uploader :url, ImageUploader
+  # to do: add validations for image and video types
+  mount_uploader :url, ImageUploader # not needed? to remove later
 end

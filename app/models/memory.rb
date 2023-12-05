@@ -24,35 +24,28 @@
 #  fk_rails_...  (author_id => users.id)
 #
 class Memory < ApplicationRecord
+  # The Memory class represents a memory in the application.
+  # It is associated with an author, people, and media.
+  # Memories have attributes such as description, title, place, country, location, and date.
+  # The title of a memory is automatically set using a multilingual assistant if it is blank and the OPENAI_KEY environment variable is present.
+  # Memories can be searched using various attributes and associations.
+  include Ransackable, Openaiable
+
   validates :author_id, presence: true
   validates :description, presence: true
 
+  # associations
+  ## direct associations
   belongs_to :author, class_name: "User"
-
   has_many :people_memories, inverse_of: :memory, dependent: :destroy
-  has_many :people, through: :people_memories
   has_many :media, as: :mediumable, dependent: :destroy
 
+  ## indirect associations
+  has_many :people, through: :people_memories
+
+  # nested attributes
   accepts_nested_attributes_for :people_memories, allow_destroy: true
   accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }
-
-  before_save :set_title
-
-  private
-    def set_title
-      if self.title.blank? && !ENV['OPENAI_KEY'].nil?
-        system_message = "You are a multilingual assistant. You will respond to the user's message with a title consisting of 7 to 25 words, ideally 20 words. Your response should be in the same language as the user's message."
-        self.title = OpenAiService.new(self.description, system_message).call
-      end
-    end    
-
-    def self.ransackable_attributes(auth_object = nil)
-      [ "description", "title", "place", "country", "location", "date" ]
-    end
-
-    def self.ransackable_associations(auth_object = nil)
-      [ "author" ]
-    end
 end

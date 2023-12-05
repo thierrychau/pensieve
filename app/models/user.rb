@@ -31,6 +31,11 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
+  # Represents a user in the application.
+  # Users have many memories and people.
+  # Users can be searched using their email address.
+  include Ransackable
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -38,23 +43,19 @@ class User < ApplicationRecord
 
   validate :password_complexity, :if => :password
 
+  # associations
+  ## direct associations
   has_many :memories, foreign_key: "author_id",  dependent: :destroy
   has_many :people, dependent: :destroy
 
-  # TODO: deliver_later after setting up job processing
-  # Not working
+  # TODO: deliver welcome message later after setting up job processing
   # after_create { UsersMailer.welcome(self).deliver_now  unless: Rails.env.development? }
 
   private
-    def password_complexity
-      if password.present? and not password.match(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/x)
-        errors.add(:password, 'must include at least one lowercase letter, one uppercase letter, one digit, and one special character')
-      end
-    end
 
-    def self.ransackable_attributes(auth_object = nil)
-      [
-        "email"
-      ]
+  def password_complexity
+    if password.present? and not password.match(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/x)
+      errors.add(:password, 'must include at least one lowercase letter, one uppercase letter, one digit, and one special character')
     end
+  end
 end

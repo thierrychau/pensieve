@@ -6,17 +6,7 @@
         <%= f.submit class: "btn btn-primary btn-block", hidden: true %>
       <% end %>
     </div>
-    <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addMemoryModal">
-      Add a memory
-    </button>
+    <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
 </div> 
 
 <%= render 'memories/index_table', memories: @memories %>
-
-<%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
-
-<script>
-$('#addMemoryModal').on('shown.bs.modal', function () {
-  mapbox_form.resize();
-});
-</script>

@@ -1,8 +1,6 @@
 <div class="col-12 d-flex flex-column flex-md-row justify-content-around align-items-center mb-3">
   <h1 class="flex-grow-1">People</h1>
-  <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addPersonModal">
-    Add a person
-  </button>
+  <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
 </div> 
 
 <div class="justify-content-md-between justify-content-center row row-cols-1 row-cols-md-2 g-4">
@@ -10,5 +8,3 @@
     <%= render 'people/card', person: person %>
   <% end %>
 </div>
-
-<%= render partial: 'shared/modal_create', locals: { model: "person" } %>

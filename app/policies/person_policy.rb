@@ -32,6 +32,8 @@ class PersonPolicy < ApplicationPolicy
   private
   
   def owner?
+    return false unless record.is_a? Person
+
     record.user == user
   end
 end

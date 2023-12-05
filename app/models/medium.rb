@@ -3,9 +3,9 @@
 # Table name: media
 #
 #  id              :bigint           not null, primary key
+#  media_url       :string
 #  mediumable_type :string
 #  type            :string
-#  url             :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  mediumable_id   :bigint
@@ -17,12 +17,12 @@
 class Medium < ApplicationRecord
   # Represents a medium, such as an image or video, associated with another model.
 
-  validates :url, presence: true, if: :new_record?
+  validates :media_url, presence: true, if: :new_record?
 
   # associations
   ## direct associations
   belongs_to :mediumable, polymorphic: true
   
   # to do: add validations for image and video types
-  mount_uploader :url, ImageUploader # not needed? to remove later
+  mount_uploader :media_url, ImageUploader # not needed? to remove later
 end

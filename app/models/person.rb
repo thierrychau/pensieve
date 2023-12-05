@@ -32,7 +32,7 @@ class Person < ApplicationRecord
   # associations
   ## direct associations
   belongs_to :user
-  has_many :people_memories
+  has_many :people_memories, dependent: :destroy
   has_many :media, as: :mediumable, dependent: :destroy
   
   ## indirect associations

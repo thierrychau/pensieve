@@ -10,7 +10,6 @@ class MemoriesController < ApplicationController
     @q = policy_scope(Memory).ransack(params[:q])
     @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
     @memories = @q.result
-    authorize :dashboard, :show?
   end
 
   def show
@@ -98,7 +97,7 @@ class MemoriesController < ApplicationController
       :country,
       :location,
       people_memories_attributes: [:id, :person_id, :_destroy],
-      media_attributes: [:url]
+      media_attributes: [:media_url]
       )
   end
 end

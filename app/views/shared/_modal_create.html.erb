@@ -1,3 +1,7 @@
+<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#add<%= model.capitalize %>Modal">
+  Add a <%= model %>
+</button>
+
 <div class="modal fade" id="add<%= model.capitalize %>Modal" tabindex="-1" aria-labelledby="add<%= model.capitalize %>ModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered <%= defined?(size) ? size : '' %>">
     <div class="modal-content">

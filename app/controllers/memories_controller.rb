@@ -7,28 +7,21 @@ class MemoriesController < ApplicationController
   before_action { authorize (@memory || Memory) }
   
   def index
-    # if params[:person_id]
-    #   @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
-    # end
     @q = policy_scope(Memory).ransack(params[:q])
     @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
     @memories = @q.result
     authorize :dashboard, :show?
   end
 
-  # GET /memories/1 or /memories/1.json
   def show
   end
   
-  # GET /memories/new
   def new
   end
   
-  # GET /memories/1/edit
   def edit
   end
 
-  # POST /memories or /memories.json
   def create
     @memory = Memory.new(memory_params)
     @memory.author = current_user
@@ -44,7 +37,6 @@ class MemoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /memories/1 or /memories/1.json
   def update
     @memory.assign_attributes(memory_params)
     if @memory.valid?
@@ -63,7 +55,6 @@ class MemoriesController < ApplicationController
     end
   end
 
-  # DELETE /memories/1 or /memories/1.json
   def destroy
     @memory.destroy
 
@@ -74,40 +65,40 @@ class MemoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_memory
-      @memory = Memory.find(params[:id])
-    end
-    
-    def set_people
-      @people = current_user.people.all
-    end
+  
+  def set_memory
+    @memory = Memory.find(params[:id])
+  end
+  
+  def set_people
+    @people = current_user.people.all
+  end
 
-    def new_memory
-      @memory = Memory.new
-    end
+  def new_memory
+    @memory = Memory.new
+  end
 
-    def new_person
-      @person = Person.new
-    end
+  def new_person
+    @person = Person.new
+  end
 
-    def build_media
-      @memory.media.build unless @memory.media.any?
-    end
+  def build_media
+    @memory.media.build unless @memory.media.any?
+  end
 
-    # Only allow a list of trusted parameters through.
-    def memory_params
-      params.require(:memory).permit(
-        :title,
-        :description,
-        :date,
-        :lat,
-        :lng,
-        :place,
-        :country,
-        :location,
-        people_memories_attributes: [:id, :person_id, :_destroy],
-        media_attributes: [:url]
-        )
-    end
+  # Only allow a list of trusted parameters through.
+  def memory_params
+    params.require(:memory).permit(
+      :title,
+      :description,
+      :date,
+      :lat,
+      :lng,
+      :place,
+      :country,
+      :location,
+      people_memories_attributes: [:id, :person_id, :_destroy],
+      media_attributes: [:url]
+      )
+  end
 end

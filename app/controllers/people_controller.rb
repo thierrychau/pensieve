@@ -4,28 +4,23 @@ class PeopleController < ApplicationController
   before_action :build_media, only: %i[ index new edit ] # for nested create form
   before_action { authorize(@person || Person) }
 
-  # GET /people or /people.json
   def index
     @people = policy_scope(Person).all
   end
 
-  # GET /people/1 or /people/1.json
   def show
     @memories = policy_scope(@person.memories).by_date
   end
 
-  # GET /people/new
   def new
   end
 
-  # GET /people/1/edit
   def edit
   end
 
-  # POST /people or /people.json
   def create
     @person = Person.new(person_params)
-    @person.user = current_user # not the intended use but will do for now
+    @person.user = current_user # TO DO: create families and assign to a family
 
     respond_to do |format|
       if @person.save
@@ -38,7 +33,6 @@ class PeopleController < ApplicationController
     end
   end
 
-  # PATCH/PUT /people/1 or /people/1.json
   def update
     respond_to do |format|
       if @person.update(person_params)
@@ -51,7 +45,6 @@ class PeopleController < ApplicationController
     end
   end
 
-  # DELETE /people/1 or /people/1.json
   def destroy
     @person.destroy
 
@@ -62,7 +55,6 @@ class PeopleController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_person
       @person = Person.find(params[:id])
     end
@@ -75,7 +67,6 @@ class PeopleController < ApplicationController
       @person.media.build unless @person.media.any?
     end
 
-    # Only allow a list of trusted parameters through.
     def person_params
       params.require(:person).permit(
         :first_name, 

@@ -2,21 +2,11 @@
   <h1 class="flex-grow-1">Memories</h1>
     <div class="m-2">
       <%= search_form_for @q do |f| %>
-        <%= f.text_field :description_cont, :placeholder => "Search", class: "form-control" %>
-        <%= f.submit class: "btn btn-primary btn-block", hidden: true%>
+        <%= f.text_field :description_or_title_or_place_or_country_or_location_cont, placeholder: "Search", class: "form-control" %>
+        <%= f.submit class: "btn btn-primary btn-block", hidden: true %>
       <% end %>
     </div>
-    <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addMemoryModal">
-      Add a memory
-    </button>
+    <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
 </div> 
 
 <%= render 'memories/index_table', memories: @memories %>
-
-<%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
-
-<script>
-$('#addMemoryModal').on('shown.bs.modal', function () {
-  mapbox_form.resize();
-});
-</script>

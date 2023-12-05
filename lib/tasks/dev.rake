@@ -29,8 +29,8 @@ unless Rails.env.production?
           email: "#{name}@example.com",
           password: "Password123!",
         )
-        puts u.email
       end 
+      User.find_by(email: "thierry@example.com").update(admin: true)
     end
 
     task add_memories: :environment do 

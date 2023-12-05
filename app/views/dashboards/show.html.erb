@@ -1,54 +1,30 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'slider' %>
+<% end %>
+
 <div class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
   <h1 class="flex-grow-1">Dashboard</h1>
-  <div class="m-2">
-    <%= search_form_for @q, url: dashboard_path do |f| %>
-      <%= f.text_field :description_cont, placeholder: "Search", class: "form-control" %>
-      <%= f.submit class: "btn btn-primary btn-block", hidden: true %>
-    <% end %>
-  </div>
-  <!-- Button trigger modal -->
   <div class="d-flex">
     <div>
-      <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addPersonModal">
-        Add a person
-      </button>
+      <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
     </div>
     <div>
-      <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addMemoryModal">
-        Add a memory
-      </button>
+      <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
     </div>
       </div>
 </div> 
 
 <div class="d-flex flex-column flex-md-row justify-content-center">
   <div class="col">
-    <div id='map' style='width: 100%; height: 100%;'></div>
+      <% min_range = date_to_days_since_epoch(@user_memories.by_date.last.date) %>
+      <% max_range = date_to_days_since_epoch(@user_memories.by_date.first.date) %>
+      <div id="mapbox_slider" class="min-vh-50" style='width: 100%; height: 95%; min-height: 300px;'></div>
+      <input id="slider" type="range" min="<%= min_range %>" max="<%= max_range %>" step="1" value="<%= max_range %>" class="form-range">
+      <output id="slider-output"> <%= days_since_epoch_to_date(max_range) %> </output>
   </div>
   <div class="col">
-    <%= render "memories/card", memory: @memories.sample %>
+    <%= render "memories/card", memory: @memories.sample if @memories.present? %>
   </div>
 </div>
 
-<%= render partial: 'shared/modal_create', locals: { model: "person" } %>
-<%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
-
-<!-- Script for Mapbox --> 
-<script>
-
-  mapboxgl.accessToken = '<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>';
-  var map = new mapboxgl.Map({
-      container: 'map', // container ID
-      style: 'mapbox://styles/mapbox/satellite-v9', // style URL
-      <% if @memories.first.lng.present? && @memories.first.lat.present? %>
-        center: [<%= @memories.first.lng %>, <%= @memories.first.lat %>], // starting position [lng, lat]
-      <% else %>
-        center: [-87.637505, 41.879138], // starting position [lng, lat]
-      <% end %>
-      zoom: 9, // starting zoom
-  });
-
-$('#addMemoryModal').on('shown.bs.modal', function () {
-  mapbox_form.resize();
-});
-</script>
+<%= javascript_include_tag 'mapbox_slider' %>

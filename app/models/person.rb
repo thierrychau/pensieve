@@ -21,29 +21,36 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Person < ApplicationRecord
-  validates :first_name, :presence => true
-  validates :last_name, :presence => true
-  validates :first_name, uniqueness: { scope: :last_name }
-  validates :user_id, :presence => true
-
-  belongs_to :user
+  # Represents a person in the application.
+  # People have many memories and media.
+  # People have a unique first and last name.
   
-  has_many :people_memories
-  has_many :memories, through: :people_memories
-  has_many :media, as: :mediumable, dependent: :destroy
+  validates :first_name, :last_name, presence: true
+  validates :first_name, uniqueness: { scope: :last_name }
+  validates :user_id, presence: true
 
+  # associations
+  ## direct associations
+  belongs_to :user
+  has_many :people_memories
+  has_many :media, as: :mediumable, dependent: :destroy
+  
+  ## indirect associations
+  has_many :memories, through: :people_memories
+
+  # nested attributes
   accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
   
   before_save :titleize_name
   
   def firstlast_name
-    "#{self.first_name} #{last_name}" 
+    "#{self.first_name} #{self.last_name}" 
   end
   
   private
-    def titleize_name
-      self.first_name = self.first_name.titleize
-      self.last_name = self.last_name.titleize
-    end
 
+  def titleize_name
+    self.first_name = self.first_name.titleize
+    self.last_name = self.last_name.titleize
+  end
 end

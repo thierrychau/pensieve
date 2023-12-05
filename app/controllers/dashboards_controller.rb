@@ -5,22 +5,18 @@ class DashboardsController < ApplicationController
   before_action { authorize :dashboard, :show? }
 
   def show
-    if params[:person_id]
-      @user_memories = @user_memories.joins(:people_memories).where(people_memories: { person_id: params[:person_id] })
-    end
-    @q = @user_memories.ransack(params[:q])
-    @q.sorts = ['date desc', 'address_input asc'] if @q.sorts.empty?
-    @memories = @q.result
+    @memories = @user_memories
     @memory = Memory.new # for nested form
     @person = Person.new # for nested form
   end
 
   private
-    def set_memories
-      @user_memories = current_user.memories.all
-    end
-    
-    def set_people
-      @people = current_user.people.all
-    end
+
+  def set_memories
+    @user_memories = current_user.memories.all
+  end
+  
+  def set_people
+    @people = current_user.people.all
+  end
 end

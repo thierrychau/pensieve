@@ -7,7 +7,7 @@
   <div class="carousel-inner">
     <% memory.media.each_with_index do |medium, i| %>
       <div class="carousel-item <%= "active" if i==0 %>" id="carousel-item-<%= medium.id %>">
-        <img src="<%= medium.url %>" class="d-block img-fluid" alt="<%# medium.alt %>">
+        <img src="<%= medium.media_url %>" class="d-block img-fluid" alt="<%# medium.alt %>">
       </div>
     <% end %>
     <div class="d-flex flex-row-reverse ms-2">

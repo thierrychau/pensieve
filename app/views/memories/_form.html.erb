@@ -77,7 +77,7 @@
 
       <div class="mb-3">
         <%= form.fields_for :media, form.object.media.build do |medium_fields| %>
-          <%= medium_fields.file_field :url, { class: "form-control" } %>
+          <%= medium_fields.file_field :media_url, { class: "form-control" } %>
         <% end %>
       </div>
 

@@ -97,7 +97,7 @@ class MemoriesController < ApplicationController
       :country,
       :location,
       people_memories_attributes: [:id, :person_id, :_destroy],
-      media_attributes: [:url]
+      media_attributes: [:media_url]
       )
   end
 end

@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :authenticate_user!, except: %i[new create]
+  skip_before_action :authenticate_user!, only: %i[new create]
   before_action :set_resource, only: %i[edit_email update_email edit_password update_password]
 
   def update
@@ -47,13 +47,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def profile_params
     params.require(:user).permit(
-      # :about,
-      # :avatar,
-      # :first_name,
-      # :last_name,
       :ai_generated_content,
-      # :organization_name,
-      # :promotional_email_enabled
     )
   end
 

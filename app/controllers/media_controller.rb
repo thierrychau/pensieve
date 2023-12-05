@@ -2,8 +2,7 @@ class MediaController < ApplicationController
   before_action :set_medium, only: %i[ destroy ]
   before_action { authorize (@medium || Medium) }
 
-   # DELETE /media/1 or /media/1.json
-   def destroy
+  def destroy
     @medium.destroy
 
     respond_to do |format|
@@ -13,7 +12,8 @@ class MediaController < ApplicationController
   end
 
   private
-    def set_medium
-      @medium = Medium.find(params[:id])
-    end
+  
+  def set_medium
+    @medium = Medium.find(params[:id])
+  end
 end

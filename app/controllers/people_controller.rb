@@ -73,6 +73,6 @@ class PeopleController < ApplicationController
         :last_name, 
         :alternate_name, 
         :date_of_birth,
-        media_attributes: [:media_url])
+        :avatar)
     end
 end

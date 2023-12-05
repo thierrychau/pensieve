@@ -34,6 +34,7 @@ class Person < ApplicationRecord
   belongs_to :user
   has_many :people_memories, dependent: :destroy
   has_many :media, as: :mediumable, dependent: :destroy
+  has_one_attached :avatar, service: :cloudinary
   
   ## indirect associations
   has_many :memories, through: :people_memories

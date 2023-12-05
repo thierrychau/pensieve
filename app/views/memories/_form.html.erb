@@ -76,9 +76,7 @@
       </div>
 
       <div class="mb-3">
-        <%= form.fields_for :media, form.object.media.build do |medium_fields| %>
-          <%= medium_fields.file_field :media_url, { class: "form-control" } %>
-        <% end %>
+        <%= form.file_field :images, multiple: true, class: "form-control" %>
       </div>
 
       <div class="d-grid gap-2 mb-3">

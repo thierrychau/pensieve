@@ -39,6 +39,7 @@ class Memory < ApplicationRecord
   belongs_to :author, class_name: "User"
   has_many :people_memories, inverse_of: :memory, dependent: :destroy
   has_many :media, as: :mediumable, dependent: :destroy
+  has_many_attached :images, service: :cloudinary
 
   ## indirect associations
   has_many :people, through: :people_memories

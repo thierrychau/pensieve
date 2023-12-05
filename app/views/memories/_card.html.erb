@@ -1,8 +1,8 @@
 <div class="card p-0 m-2" style="width: 16rem;" id="<%= dom_id memory %>">
   <h5 class="card-header text-center"><%= memory.title.truncate(15, separator: /\s/) if memory.title.present? %></h5>
   <div class="ratio ratio-1x1">
-    <% if memory.media.present? %>
-      <img src="<%= memory.media.first.url %>" class="card-img-top img-fluid" style="object-fit: cover;" alt="">
+    <% if memory.images.present? %>
+      <%= render "/media/carousel", memory: memory %>
     <% else %>
       <div class="bg-light rounded"></div>
     <% end %>

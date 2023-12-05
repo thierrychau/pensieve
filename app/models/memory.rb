@@ -48,4 +48,8 @@ class Memory < ApplicationRecord
   accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }
+
+  def to_param
+    "#{id}-#{title.parameterize}"
+  end
 end

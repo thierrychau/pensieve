@@ -1,3 +1,3 @@
 class ApplicationController < ActionController::Base
-  include Devisable, Punditable
+  include Devisable, Punditable, Trackable
 end

@@ -3,8 +3,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
+gem "ahoy_matey"
 gem "appdev_support"
 gem "awesome_print"
+gem "blazer"
 gem "bootsnap", require: false
 gem "carrierwave"
 gem "cloudinary"

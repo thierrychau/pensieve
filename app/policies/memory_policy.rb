@@ -32,6 +32,8 @@ class MemoryPolicy < ApplicationPolicy
   private
 
   def owner?
+    return false unless record.is_a? Memory
+
     record.author == user
   end
 end

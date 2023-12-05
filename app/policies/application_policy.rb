@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
+  include RailsAdminable
+
   attr_reader :user, :record
 
   def initialize(user, record)

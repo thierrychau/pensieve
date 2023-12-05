@@ -10,7 +10,6 @@ class MemoriesController < ApplicationController
     @q = policy_scope(Memory).ransack(params[:q])
     @q.sorts = ['date desc', 'location asc'] if @q.sorts.empty?
     @memories = @q.result
-    authorize :dashboard, :show?
   end
 
   def show

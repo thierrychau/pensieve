@@ -25,10 +25,9 @@ class Person < ApplicationRecord
   # People have many memories and media.
   # People have a unique first and last name.
   
-  validates :first_name, :presence => true
-  validates :last_name, :presence => true
+  validates :first_name, :last_name, presence: true
   validates :first_name, uniqueness: { scope: :last_name }
-  validates :user_id, :presence => true
+  validates :user_id, presence: true
 
   # associations
   ## direct associations
@@ -45,7 +44,7 @@ class Person < ApplicationRecord
   before_save :titleize_name
   
   def firstlast_name
-    "#{self.first_name} #{last_name}" 
+    "#{self.first_name} #{self.last_name}" 
   end
   
   private
@@ -54,5 +53,4 @@ class Person < ApplicationRecord
     self.first_name = self.first_name.titleize
     self.last_name = self.last_name.titleize
   end
-
 end

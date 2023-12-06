@@ -38,7 +38,6 @@ class Memory < ApplicationRecord
   ## direct associations
   belongs_to :author, class_name: "User"
   has_many :people_memories, inverse_of: :memory, dependent: :destroy
-  has_many :media, as: :mediumable, dependent: :destroy
   has_many_attached :images, service: :cloudinary
 
   ## indirect associations
@@ -46,7 +45,6 @@ class Memory < ApplicationRecord
 
   # nested attributes
   accepts_nested_attributes_for :people_memories, allow_destroy: true
-  accepts_nested_attributes_for :media, reject_if: :all_blank, allow_destroy: true
 
   scope :by_date, -> { order(date: :desc) }
 

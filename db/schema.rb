@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_05_212804) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_06_024618) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -140,16 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_05_212804) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
-  end
-
-  create_table "media", force: :cascade do |t|
-    t.string "media_url"
-    t.string "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "mediumable_type"
-    t.bigint "mediumable_id"
-    t.index ["mediumable_type", "mediumable_id"], name: "index_media_on_mediumable"
   end
 
   create_table "memories", force: :cascade do |t|

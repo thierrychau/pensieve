@@ -55,6 +55,25 @@ mapbox.on('click', 'circle', (e) => {
 mapbox.flyTo({
 center: e.features[0].geometry.coordinates
 });
+
+// Copy coordinates array.
+const coordinates = e.features[0].geometry.coordinates.slice();
+const description = e.features[0].properties.description;
+const title = e.features[0].properties.title;
+const date = e.features[0].properties.date;
+ 
+// Ensure that if the mapbox is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+}
+ 
+new mapboxgl.Popup()
+.setLngLat(coordinates)
+.setHTML(`<h5>${title}</h5><p>${date}</p><p>${description}</p>`)
+.addTo(mapbox);
+
 });
  
 // Change the cursor to a pointer when the it enters a feature in the 'circle' layer.

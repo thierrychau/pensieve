@@ -1,10 +1,8 @@
 <div class="card p-0 m-3" style="width: 16rem;" id="<%= dom_id person %>">
   <h5 class="card-header text-center"><%= person.firstlast_name %></h5>
   <div class="ratio ratio-1x1">
-  <% if person.media.present? %>
-    <img src="<%= person.media.first.media_url %>" class="card-img-top img-fluid" style="object-fit: cover;" alt="Photo of <%= person.firstlast_name %>">
-  <% elsif person.avatar.persisted? %>image:    
-      <%= cl_image_tag  person.avatar.key, :width=>150, :crop=>"fill" %>
+  <% if person.avatar.persisted? %>
+    <%= cl_image_tag person.avatar.key, class: "card-img-top img-fluid", style: "object-fit: cover;", alt:"Photo of #{person.firstlast_name}" %>
   <% else %>
     <div class="bg-light rounded"></div>
   <% end %>

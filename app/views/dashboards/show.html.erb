@@ -16,15 +16,8 @@
 
 <div class="d-flex flex-column flex-md-row justify-content-center">
   <div class="col">
-      <% min_range = date_to_days_since_epoch(@user_memories.by_date.last.date) %>
-      <% max_range = date_to_days_since_epoch(@user_memories.by_date.first.date) %>
-      <div id="mapbox_slider" class="min-vh-50" style='width: 100%; height: 95%; min-height: 300px;'></div>
-      <input id="slider" type="range" min="<%= min_range %>" max="<%= max_range %>" step="1" value="<%= max_range %>" class="form-range">
-      <output id="slider-output"> <%= days_since_epoch_to_date(max_range) %> </output>
-  </div>
-  <div class="col">
-    <%= render "memories/card", memory: @memories.sample if @memories.present? %>
+    <div id="mapbox" class="min-vh-50" style='width: 100%; height: 95%; min-height: 600px;'></div>
   </div>
 </div>
 
-<%= javascript_include_tag 'mapbox_slider' %>
+<%= javascript_include_tag 'mapbox' %>

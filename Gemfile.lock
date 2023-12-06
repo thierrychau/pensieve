@@ -109,13 +109,6 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    carrierwave (3.0.4)
-      activemodel (>= 6.0.0)
-      activesupport (>= 6.0.0)
-      addressable (~> 2.6)
-      image_processing (~> 1.1)
-      marcel (~> 1.0.0)
-      ssrf_filter (~> 1.0)
     chartkick (5.0.4)
     choice (0.2.0)
     cloudinary (1.28.0)
@@ -424,10 +417,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.2-aarch64-linux)
-    sqlite3 (1.6.2-arm64-darwin)
-    sqlite3 (1.6.2-x86_64-linux)
-    ssrf_filter (1.1.2)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     table_print (1.5.7)
@@ -497,7 +486,6 @@ DEPENDENCIES
   blazer
   bootsnap
   capybara
-  carrierwave
   cloudinary
   debug
   devise
@@ -509,6 +497,7 @@ DEPENDENCIES
   grade_runner
   htmlbeautifier
   http
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
   letter_opener
@@ -532,7 +521,6 @@ DEPENDENCIES
   sentry-ruby (~> 5.13)
   specs_to_readme
   sprockets-rails
-  sqlite3 (~> 1.4)
   stimulus-rails
   table_print
   turbo-rails

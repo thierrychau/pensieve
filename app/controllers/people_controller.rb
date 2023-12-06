@@ -1,7 +1,6 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: %i[ show edit update destroy ]
   before_action :new_person, only: %i[ index new ] # for create form
-  before_action :build_media, only: %i[ index new edit ] # for nested create form
   before_action { authorize(@person || Person) }
 
   def index
@@ -61,10 +60,6 @@ class PeopleController < ApplicationController
 
     def new_person
       @person = Person.new
-    end
-
-    def build_media
-      @person.media.build unless @person.media.any?
     end
 
     def person_params

@@ -14,76 +14,20 @@
       </div>
 </div> 
 
+<% map_container_id = "mapbox" %>
 <div class="d-flex flex-column flex-md-row justify-content-center">
   <div class="col">
-    <div id="mapbox" class="min-vh-50" style='width: 100%; height: 95%; min-height: 600px;'></div>
+    <div id="<%= map_container_id %>" style="min-height: 80vh; width: 100%;"></div>
   </div>
 </div>
 
-<body data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" data-map-id="mapbox">
+<body 
+  data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" 
+  data-map-id="<%= map_container_id %>" 
+  data-geojson='<%= @geojson.to_json %>'>
+
+<%= javascript_include_tag 'mapbox' %>
 
 <script>
-
-var mapbox = new mapboxgl.Map({
-container: 'mapbox',
-// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-style: 'mapbox://styles/mapbox/light-v11',
-center: [-90.96, -0.47],
-zoom: 7.2
-});
- 
-mapbox.on('load', () => {
-mapbox.addSource('points', {
-'type': 'geojson',
-  'data': <%= raw @geojson.to_json %>
-  });
-// Add a circle layer
-mapbox.addLayer({
-'id': 'circle',
-'type': 'circle',
-'source': 'points',
-'paint': {
-'circle-color': '#4264fb',
-'circle-radius': 8,
-'circle-stroke-width': 2,
-'circle-stroke-color': '#ffffff'
-}
-});
- 
-// Center the mapbox on the coordinates of any clicked circle from the 'circle' layer.
-mapbox.on('click', 'circle', (e) => {
-mapbox.flyTo({
-center: e.features[0].geometry.coordinates
-});
-
-// Copy coordinates array.
-const coordinates = e.features[0].geometry.coordinates.slice();
-const description = e.features[0].properties.description;
-const title = e.features[0].properties.title;
-const date = e.features[0].properties.date;
- 
-// Ensure that if the mapbox is zoomed out such that multiple
-// copies of the feature are visible, the popup appears
-// over the copy being pointed to.
-while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-}
- 
-new mapboxgl.Popup()
-.setLngLat(coordinates)
-.setHTML(`<h5>${title}</h5><p>${date}</p><p>${description}</p>`)
-.addTo(mapbox);
-
-});
- 
-// Change the cursor to a pointer when the it enters a feature in the 'circle' layer.
-mapbox.on('mouseenter', 'circle', () => {
-mapbox.getCanvas().style.cursor = 'pointer';
-});
- 
-// Change it back to a pointer when it leaves.
-mapbox.on('mouseleave', 'circle', () => {
-mapbox.getCanvas().style.cursor = '';
-});
-});
+  initializeMapAll("map-id", [-87.637505, 41.879138]);
 </script>

@@ -1,4 +1,4 @@
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height: 20em;">
   <div class="carousel-indicators">
     <% memory.images.each_with_index do |image, i| %>
       <button type="button" data-bs-target="#carouselExampleIndicators" class="<%= "active" if i==0 %>" aria-current="<%= "true" if i==0 %>" data-bs-slide-to="<%= i %>" aria-label="Slide <%= i+1 %>"></button>
@@ -7,7 +7,7 @@
   <div class="carousel-inner">
     <% memory.images.each_with_index do |image, i| %>
       <div class="carousel-item <%= "active" if i==0 %>" id="carousel-item-<%= i %>">
-        <%= cl_image_tag image.key, crop: "fill" %>
+        <%= cl_image_tag(image.key, aspect_ratio: "4:3", crop: "fill", class: "img-fluid") %>
       </div>
     <% end %>
   </div>
@@ -20,3 +20,21 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+
+<script>
+
+  $(document).ready(function() {
+    // Get the height of the text element
+    var textHeight = $('#text-element').height();
+
+    // Calculate the aspect ratio based on the text height
+    var aspectRatio = textHeight / $('#carouselExampleIndicators').width();
+
+    // Iterate over each image in the carousel
+    $('.carousel-item img').each(function() {
+      // Update the aspect ratio of the image
+      $(this).css('aspect-ratio', aspectRatio);
+    });
+  });
+
+</script>

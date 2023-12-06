@@ -5,15 +5,15 @@ class DashboardsController < ApplicationController
   before_action { authorize :dashboard, :show? }
 
   def show
-    @memories = @user_memories
     @memory = Memory.new # for nested form
     @person = Person.new # for nested form
+    @geojson = Memory.to_geojson(@memories)
   end
 
   private
 
   def set_memories
-    @user_memories = current_user.memories.all
+    @memories = current_user.memories.all
   end
   
   def set_people

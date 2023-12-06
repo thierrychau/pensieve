@@ -20,4 +20,51 @@
   </div>
 </div>
 
-<%= javascript_include_tag 'mapbox' %>
+<body data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" data-map-id="mapbox">
+
+<script>
+
+var mapbox = new mapboxgl.Map({
+container: 'mapbox',
+// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+style: 'mapbox://styles/mapbox/light-v11',
+center: [-90.96, -0.47],
+zoom: 7.2
+});
+ 
+mapbox.on('load', () => {
+mapbox.addSource('points', {
+'type': 'geojson',
+  'data': <%= raw @geojson.to_json %>
+  });
+// Add a circle layer
+mapbox.addLayer({
+'id': 'circle',
+'type': 'circle',
+'source': 'points',
+'paint': {
+'circle-color': '#4264fb',
+'circle-radius': 8,
+'circle-stroke-width': 2,
+'circle-stroke-color': '#ffffff'
+}
+});
+ 
+// Center the mapbox on the coordinates of any clicked circle from the 'circle' layer.
+mapbox.on('click', 'circle', (e) => {
+mapbox.flyTo({
+center: e.features[0].geometry.coordinates
+});
+});
+ 
+// Change the cursor to a pointer when the it enters a feature in the 'circle' layer.
+mapbox.on('mouseenter', 'circle', () => {
+mapbox.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+mapbox.on('mouseleave', 'circle', () => {
+mapbox.getCanvas().style.cursor = '';
+});
+});
+</script>

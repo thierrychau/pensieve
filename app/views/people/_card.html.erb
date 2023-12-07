@@ -1,25 +1,20 @@
-<div class="card p-0 m-3" style="width: 16rem;" id="<%= dom_id person %>">
-  <h5 class="card-header text-center"><%= person.firstlast_name %></h5>
-  <div class="ratio ratio-1x1">
-  <% if person.avatar.persisted? %>
-    <%= cl_image_tag person.avatar.key, class: "card-img-top img-fluid", style: "object-fit: cover;", alt:"Photo of #{person.firstlast_name}" %>
-  <% else %>
-    <div class="bg-light rounded"></div>
+<div class="p-0 m-3" style="width: 16rem;" id="<%= dom_id person %>">
+  <%= link_to edit_person_path(person) do %>
+    <div class="ratio ratio-1x1 d-flex align-items-center justify-content-center mb-3">
+      <% if person.avatar.persisted? %>
+        <%= cl_image_tag person.avatar.key, class: "card-img-top img-fluid rounded-circle", style: "object-fit: cover;", alt:"Photo of #{person.firstlast_name}" %>
+      <% else %>
+        <div class="bg-dark-subtle rounded-circle"></div>
+      <% end %>
+    </div>
   <% end %>
+
+  <div class="text-center">
+    <div>
+      <h4 class="text-wrap"><%= person.firstlast_name %> (<%= person.alternate_name %>)</h4>
+    </div>
+    <div>
+      <p class="small"><%= person.date_of_birth.strftime("%x") if person.date_of_birth.present? %></p>
+    </div>
   </div>
-  <div class="card-body">
-    <p class="card-text text-center">
-      <%= person.alternate_name %> <br>
-      <%= person.date_of_birth.strftime("%x") if person.date_of_birth.present? %>
-    </p>
-  </div>
-  <div class="card-footer d-flex align-items-center justify-content-between z-2">
-    <%= link_to edit_person_path(person) do %>
-      <i class="fa-regular fa-pen-to-square"></i>
-    <% end %>
-    <%= link_to person_path(person), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "text-danger" do %>
-      <i class="fa-solid fa-trash"></i>
-    <% end %>
-  </div>
-  <%= link_to "", person, class: "stretched-link" %>
 </div>

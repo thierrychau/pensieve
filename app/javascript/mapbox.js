@@ -14,9 +14,9 @@ function getDataFromHtml(data_label) {
   return $('body').data(data_label);
 };
 
-function mapConfig(coordinates) {
+function mapConfig(coordinates, layerStyle) {
   return {
-    style: 'mapbox://styles/mapbox/streets-v12',
+    style: `mapbox://styles/mapbox/${layerStyle}`,
     center: coordinates,
     zoom: 9,
   };

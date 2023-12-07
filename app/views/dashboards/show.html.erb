@@ -12,11 +12,23 @@
   </div>
 </div> 
 
-<div id="<%= menu_id = "menu_dashboard" %>" class="text-left">
-  <input id="streets-v12" type="radio" name="rtoggle" value="streets" checked="checked">
-  <label for="streets-v12">streets</label>
-  <input id="satellite-streets-v12" type="radio" name="rtoggle" value="satellite">
-  <label for="satellite-streets-v12">satellite streets</label>
+<div id="<%= menu_id = "menu_dashboard" %>" class="d-flex align-items-center justify-content-center">
+  <div class="form-check form-check-inline">
+    <input id="outdoors-v12" type="radio" name="rtoggle" value="outdoors" class="form-check-input">
+    <label for="outdoors-v12" class="form-check-label">street</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input id="light-v11" type="radio" name="rtoggle" value="light" checked="checked" class="form-check-input">
+    <label for="light-v11" class="form-check-label">light</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input id="dark-v11" type="radio" name="rtoggle" value="dark" class="form-check-input">
+    <label for="dark-v11" class="form-check-label">dark</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" class="form-check-input">
+    <label for="satellite-v9" class="form-check-label">satellite</label>
+  </div>
 </div>
 <div class="d-flex flex-column flex-md-row justify-content-center">
   <div class="col">
@@ -36,12 +48,14 @@
   <% last_created_coordinates = [@memories.last.lng, @memories.last.lat] %>
 
   function initializeMapAll(data_map, coordinates, data_menu) {
-    let map = initializeMap(getDataFromHtml(data_map), mapConfig(coordinates));
+    let map = initializeMap(getDataFromHtml(data_map), mapConfig(coordinates, 'light-v11'));
     map.on('load', function () {
-      addSourceAndLayer(map);
       addMapClickListener(map, handleMapClick);
-      addControls(map);
       addLayerSwitcher(map, data_menu);
+      addControls(map);
+    })
+    map.on('styledata', function () {
+      addSourceAndLayer(map);    
     });
   };
 

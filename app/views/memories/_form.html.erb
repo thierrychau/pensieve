@@ -105,7 +105,7 @@
 
 <script>
   function initializeMapSearch(data_label, coordinates, data_menu) {
-    let map = initializeMap(getDataFromHtml(data_label), mapConfig(coordinates));
+    let map = initializeMap(getDataFromHtml(data_label), mapConfig(coordinates, 'streets-v11'));
     let geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,

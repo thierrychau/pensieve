@@ -3,7 +3,7 @@
   <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
 </div> 
 
-<div class="justify-content-md-between justify-content-center row row-cols-1 row-cols-md-2 g-4">
+<div class="d-flex flex-wrap justify-content-center">
   <% @people.each do |person| %>
     <%= render 'people/card', person: person %>
   <% end %>

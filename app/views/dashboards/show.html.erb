@@ -14,10 +14,22 @@
       </div>
 </div> 
 
+<% map_container_id = "mapbox" %>
 <div class="d-flex flex-column flex-md-row justify-content-center">
   <div class="col">
-    <div id="mapbox" class="min-vh-50" style='width: 100%; height: 95%; min-height: 600px;'></div>
+    <div id="<%= map_container_id %>" style="min-height: 80vh; width: 100%;"></div>
   </div>
 </div>
 
+<body 
+  data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" 
+  data-map-id="<%= map_container_id %>" 
+  data-geojson='<%= @geojson.to_json %>'>
+
 <%= javascript_include_tag 'mapbox' %>
+
+
+<script>
+  <% last_created_coordinates = [@memories.last.lng, @memories.last.lat] %>
+  initializeMapAll("map-id", <%= last_created_coordinates %>);
+</script>

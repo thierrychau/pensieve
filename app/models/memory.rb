@@ -29,7 +29,7 @@ class Memory < ApplicationRecord
   # Memories have attributes such as description, title, place, country, location, and date.
   # The title of a memory is automatically set using a multilingual assistant if it is blank and the OPENAI_KEY environment variable is present.
   # Memories can be searched using various attributes and associations.
-  include Ransackable, Openaiable
+  include Ransackable, Openaiable, Geojsonable
 
   validates :author_id, presence: true
   validates :description, presence: true

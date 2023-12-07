@@ -103,9 +103,9 @@
   data-map-search-id="<%= map_search_container_id %>">
 
 <%= javascript_include_tag 'mapbox' %>
-<%= javascript_include_tag 'mapbox_form' %>
 
 <script>
-  initializeMapSearch("map-search-id", [-87.637505, 41.879138]);
+  <% memory_coordinates = @memory&.lng && @memory&.lat ? [@memory.lng, @memory.lat] : [-87.637505, 41.879138] %>
+  initializeMapSearch("map-search-id", <%= memory_coordinates %>);
   resizeMap("map-search-id");
 </script>

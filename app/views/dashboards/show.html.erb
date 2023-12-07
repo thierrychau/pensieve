@@ -28,6 +28,8 @@
 
 <%= javascript_include_tag 'mapbox' %>
 
+
 <script>
-  initializeMapAll("map-id", [-87.637505, 41.879138]);
+  <% last_created_coordinates = [@memories.last.lng, @memories.last.lat] %>
+  initializeMapAll("map-id", <%= last_created_coordinates %>);
 </script>

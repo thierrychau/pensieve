@@ -1,7 +1,5 @@
 // initializeMap, getMapContainerId, and mapConfig are all functions to set up the map.
-
 function initializeMap(containerId, config) {
-  // Getting the token from the body data attributes
   const token = document.querySelector('body').getAttribute('data-mapbox-token');
   mapboxgl.accessToken = token;
   return new mapboxgl.Map({
@@ -10,7 +8,7 @@ function initializeMap(containerId, config) {
     center: config.center,
     zoom: config.zoom,
   });
-}
+};
 
 function getMapContainerId(mapId) {
   return $('body').data(mapId);
@@ -22,10 +20,9 @@ function mapConfig(coordinates) {
     center: coordinates,
     zoom: 9,
   };
-}
+};
 
 // Add a source and layer to a map
-
 function addSourceAndLayer(map) {
   const geojsonData = JSON.parse(document.querySelector('body').getAttribute('data-geojson'));
 
@@ -49,7 +46,7 @@ function addSourceAndLayer(map) {
       }
     });
   }
-}
+};
 
 // Add a click listener to the map and call the handler function
 
@@ -88,7 +85,6 @@ function handleMapClick(e, map) {
 };
 
 // Initialize the map and add the source, layer, and click listener for all memories
-
 function initializeMapAll(mapId, coordinates) {
   let map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
   map.on('load', function () {
@@ -97,12 +93,14 @@ function initializeMapAll(mapId, coordinates) {
   });
 };
 
+// Adding typical map controls
 function addControls(map) {
   map.addControl(new mapboxgl.NavigationControl());
   map.addControl(new mapboxgl.GeolocateControl());
   map.addControl(new mapboxgl.ScaleControl());
-}
+};
 
+// Adding a layer switcher
 function addLayerSwitcher(map) {
   let layerList = document.getElementById('menu');
   let inputs = layerList.getElementsByTagName('input');
@@ -112,7 +110,9 @@ function addLayerSwitcher(map) {
       map.setStyle('mapbox://styles/mapbox/' + layerId);
     };
   }
-}
+};
+
+// Updating form fields from geocoder response
 
 function updateFormFields(e) {
   document.getElementById('memory_location').value = e.result.place_name;
@@ -124,8 +124,9 @@ function updateFormFields(e) {
   const countryObject = e.result.context.find(c => c.id.startsWith('country'));
   const countryName = countryObject?.text || '';
   document.getElementById('memory_country').value = countryName;
-}
+};
 
+// Initialize the map and add the geocoder for memory form
 function initializeMapSearch(mapId, coordinates) {
   let map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
   let geocoder = new MapboxGeocoder({
@@ -138,14 +139,17 @@ function initializeMapSearch(mapId, coordinates) {
     addControls(map);
     addLayerSwitcher(map);
   });
-  console.log("before");
 
+  let marker = null;
   geocoder.on('result', function (e) {
-    console.log("hello");
     updateFormFields(e);
+    marker = handleGeocoderResult(e, marker, map);
   });
+  let coordinates_input = getCoordinatesFromInput();
+  marker = createMarkerIfCoordinatesExist(coordinates_input, map);
 };
 
+// Resize upon modal show
 function resizeMap(mapId) {
   $("[id^='add']").on('shown.bs.modal', function () {
     let target_map = window[mapId];
@@ -155,4 +159,50 @@ function resizeMap(mapId) {
       console.log('Map not found or resize is not a function');
     }
   });
+};
+
+// Creates a draggable marker at the geocoder result location
+function handleGeocoderResult(e, marker, mapbox) {
+  // Save the JSON response
+  geocoderResult = e.result;
+  console.log(geocoderResult);
+  // If a marker already exists, remove it
+  if (marker) {
+    marker.remove();
+  }
+  // Create a new marker at the result location
+  return createDraggableMarker(e.result.geometry.coordinates, mapbox);
+};
+
+// Creates a draggable marker at the given coordinates
+function createDraggableMarker(lngLat, mapbox) {
+  let marker = new mapboxgl.Marker({
+    draggable: true
+  })
+  .setLngLat(lngLat)
+  .addTo(mapbox);
+  marker.on('dragend', function() {
+    const newLngLat = marker.getLngLat();
+    // console.log('Marker coordinates:', newLngLat); // log coordinates to console on dragend
+    document.getElementById('memory_lng').value = parseFloat(newLngLat.lng.toFixed(8));
+    document.getElementById('memory_lat').value = parseFloat(newLngLat.lat.toFixed(8));
+  });
+  return marker;
+};
+
+// Get coordinates from form fields
+function getCoordinatesFromInput() {
+  var lngInput = document.querySelector('input[data-lng]');
+  var latInput = document.querySelector('input[data-lat]');
+  var lng = lngInput ? lngInput.getAttribute('data-lng') : null;
+  var lat = latInput ? latInput.getAttribute('data-lat') : null;
+  return { lng, lat };
+};
+
+// Create a marker if coordinates exist
+function createMarkerIfCoordinatesExist(coordinates, mapbox_form) {
+  if (coordinates.lat && coordinates.lng) {
+    return createDraggableMarker([coordinates.lng, coordinates.lat], mapbox_form);
+  }
+  return null;
 };

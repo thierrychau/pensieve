@@ -85,27 +85,48 @@
     <% end %>
   </div>
 
-<% map_search_container_id = "mapbox_form" %>
-
   <div class="col-12 col-lg-6 order-1 order-lg-2 min-vh-50 m-1">
-    <div id='<%= map_search_container_id %>' class="min-vh-50" style='width: 100%; height: 95%; min-height: 300px;'></div>
-    <div id="menu" class="text-end">
-      <input id="streets-v12" type="radio" name="rtoggle" value="streets" checked="checked">
-      <label for="streets-v12">streets</label>
-      <input id="satellite-streets-v12" type="radio" name="rtoggle" value="satellite">
-      <label for="satellite-streets-v12">satellite streets</label>
+    <div id='<%= map_search_id = "mapbox_form" %>' class="min-vh-50" style='width: 100%; height: 95%; min-height: 300px;'></div>
+    <div id="<%= menu_search_id = "menu_form" %>" class="text-end">
+      <input id="streets-v11" type="radio" name="rtoggle" value="streets" checked="checked">
+      <label for="streets-v11">streets</label>
+      <input id="satellite-streets-v11" type="radio" name="rtoggle" value="satellite">
+      <label for="satellite-streets-v11">satellite streets</label>
     </div>
   </div>
 </div>
 
 <body 
   data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" 
-  data-map-search-id="<%= map_search_container_id %>">
+  data-map-search-id="<%= map_search_id %>"
+  data-menu-search-id="<%= menu_search_id %>">
 
 <%= javascript_include_tag 'mapbox' %>
 
 <script>
+  function initializeMapSearch(data_label, coordinates, data_menu) {
+    let map = initializeMap(getDataFromHtml(data_label), mapConfig(coordinates));
+    let geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl,
+    });
+    map.addControl(geocoder);
+    window[data_label] = map;
+    map.on('load', function () {
+      addControls(map);
+      addLayerSwitcher(map, data_menu);
+    });
+
+    let marker = null;
+    geocoder.on('result', function (e) {
+      updateFormFields(e);
+      marker = handleGeocoderResult(e, marker, map);
+    });
+    let coordinates_input = getCoordinatesFromInput();
+    marker = createMarkerIfCoordinatesExist(coordinates_input, map);
+  };
+
   <% memory_coordinates = @memory&.lng && @memory&.lat ? [@memory.lng, @memory.lat] : [-87.637505, 41.879138] %>
-  initializeMapSearch("map-search-id", <%= memory_coordinates %>);
+  initializeMapSearch("map-search-id", <%= memory_coordinates %>, "menu-search-id");
   resizeMap("map-search-id");
 </script>

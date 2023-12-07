@@ -1,4 +1,4 @@
-// initializeMap, getMapContainerId, and mapConfig are all functions to set up the map.
+// initializeMap, getDataFromHtml, and mapConfig are all functions to set up the map.
 function initializeMap(containerId, config) {
   const token = document.querySelector('body').getAttribute('data-mapbox-token');
   mapboxgl.accessToken = token;
@@ -10,8 +10,8 @@ function initializeMap(containerId, config) {
   });
 };
 
-function getMapContainerId(mapId) {
-  return $('body').data(mapId);
+function getDataFromHtml(data_label) {
+  return $('body').data(data_label);
 };
 
 function mapConfig(coordinates) {
@@ -49,16 +49,25 @@ function addSourceAndLayer(map) {
 };
 
 // Add a click listener to the map and call the handler function
-
 function addMapClickListener(map, handler) {
   map.on('click', 'circle', (e) => handler(e, map));
   map.on('mouseenter', 'circle', () => {
     map.getCanvas().style.cursor = 'pointer';
+    // showPopup(lngLat, map, title, date, description); // to do: add popup on hover
     });
   map.on('mouseleave', 'circle', () => {
     map.getCanvas().style.cursor = '';
     });
 };
+
+
+// Show a pop up with the memory details
+function showPopup(lngLat, map, title, date, description) {
+  new mapboxgl.Popup()
+    .setLngLat(lngLat)
+    .setHTML(`<h6>${title}</h6><p>${date}</p><p>${description}</p>`)
+    .addTo(map);
+}
 
 // Center the map on the coordinates of any clicked circle from the 'circle' layer.
 function handleMapClick(e, map) {
@@ -76,21 +85,9 @@ function handleMapClick(e, map) {
   // over the copy being pointed to.
   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-  }
+  };
 
-  new mapboxgl.Popup()
-    .setLngLat(coordinates)
-    .setHTML(`<h5>${title}</h5><p>${date}</p><p>${description}</p>`)
-    .addTo(map);
-};
-
-// Initialize the map and add the source, layer, and click listener for all memories
-function initializeMapAll(mapId, coordinates) {
-  let map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
-  map.on('load', function () {
-    addSourceAndLayer(map);
-    addMapClickListener(map, handleMapClick);
-  });
+  showPopup(coordinates, map, title, date, description);
 };
 
 // Adding typical map controls
@@ -101,8 +98,8 @@ function addControls(map) {
 };
 
 // Adding a layer switcher
-function addLayerSwitcher(map) {
-  let layerList = document.getElementById('menu');
+function addLayerSwitcher(map, data_menu) {
+  let layerList = document.getElementById(getDataFromHtml(data_menu));
   let inputs = layerList.getElementsByTagName('input');
   for (const input of inputs) {
     input.onclick = (layer) => {
@@ -113,7 +110,6 @@ function addLayerSwitcher(map) {
 };
 
 // Updating form fields from geocoder response
-
 function updateFormFields(e) {
   document.getElementById('memory_location').value = e.result.place_name;
   document.getElementById('memory_lng').value = e.result.geometry.coordinates[0];
@@ -126,33 +122,10 @@ function updateFormFields(e) {
   document.getElementById('memory_country').value = countryName;
 };
 
-// Initialize the map and add the geocoder for memory form
-function initializeMapSearch(mapId, coordinates) {
-  let map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
-  let geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-  });
-  map.addControl(geocoder);
-  window[mapId] = map;
-  map.on('load', function () {
-    addControls(map);
-    addLayerSwitcher(map);
-  });
-
-  let marker = null;
-  geocoder.on('result', function (e) {
-    updateFormFields(e);
-    marker = handleGeocoderResult(e, marker, map);
-  });
-  let coordinates_input = getCoordinatesFromInput();
-  marker = createMarkerIfCoordinatesExist(coordinates_input, map);
-};
-
 // Resize upon modal show
-function resizeMap(mapId) {
+function resizeMap(data_label) {
   $("[id^='add']").on('shown.bs.modal', function () {
-    let target_map = window[mapId];
+    let target_map = window[data_label];
     if (target_map && typeof target_map.resize === 'function') {
       target_map.resize();
     } else {

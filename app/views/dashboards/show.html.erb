@@ -7,29 +7,43 @@
   <div class="d-flex">
     <div>
       <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
-    </div>
-    <div>
       <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
     </div>
-      </div>
+  </div>
 </div> 
 
-<% map_container_id = "mapbox" %>
+<div id="<%= menu_id = "menu_dashboard" %>" class="text-left">
+  <input id="streets-v12" type="radio" name="rtoggle" value="streets" checked="checked">
+  <label for="streets-v12">streets</label>
+  <input id="satellite-streets-v12" type="radio" name="rtoggle" value="satellite">
+  <label for="satellite-streets-v12">satellite streets</label>
+</div>
 <div class="d-flex flex-column flex-md-row justify-content-center">
   <div class="col">
-    <div id="<%= map_container_id %>" style="min-height: 80vh; width: 100%;"></div>
+    <div id="<%= map_id = "mapbox_dashboard" %>" style="min-height: 80vh; width: 100%;"></div>
   </div>
 </div>
 
 <body 
   data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" 
-  data-map-id="<%= map_container_id %>" 
+  data-map-id="<%= map_id %>" 
+  data-menu-id="<%= menu_id %>" 
   data-geojson='<%= @geojson.to_json %>'>
 
 <%= javascript_include_tag 'mapbox' %>
 
-
 <script>
   <% last_created_coordinates = [@memories.last.lng, @memories.last.lat] %>
-  initializeMapAll("map-id", <%= last_created_coordinates %>);
+
+  function initializeMapAll(data_map, coordinates, data_menu) {
+    let map = initializeMap(getDataFromHtml(data_map), mapConfig(coordinates));
+    map.on('load', function () {
+      addSourceAndLayer(map);
+      addMapClickListener(map, handleMapClick);
+      addControls(map);
+      addLayerSwitcher(map, data_menu);
+    });
+  };
+
+  initializeMapAll("map-id", <%= last_created_coordinates %>, "menu-id");
 </script>

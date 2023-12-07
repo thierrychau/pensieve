@@ -4,7 +4,6 @@ function initializeMap(containerId, config) {
   // Getting the token from the body data attributes
   const token = document.querySelector('body').getAttribute('data-mapbox-token');
   mapboxgl.accessToken = token;
-
   return new mapboxgl.Map({
     container: containerId,
     style: config.style,
@@ -91,17 +90,69 @@ function handleMapClick(e, map) {
 // Initialize the map and add the source, layer, and click listener for all memories
 
 function initializeMapAll(mapId, coordinates) {
-  map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
+  let map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
   map.on('load', function () {
     addSourceAndLayer(map);
     addMapClickListener(map, handleMapClick);
   });
 };
 
+function addControls(map) {
+  map.addControl(new mapboxgl.NavigationControl());
+  map.addControl(new mapboxgl.GeolocateControl());
+  map.addControl(new mapboxgl.ScaleControl());
+}
+
+function addLayerSwitcher(map) {
+  let layerList = document.getElementById('menu');
+  let inputs = layerList.getElementsByTagName('input');
+  for (const input of inputs) {
+    input.onclick = (layer) => {
+      const layerId = layer.target.id;
+      map.setStyle('mapbox://styles/mapbox/' + layerId);
+    };
+  }
+}
+
+function updateFormFields(e) {
+  document.getElementById('memory_location').value = e.result.place_name;
+  document.getElementById('memory_lng').value = e.result.geometry.coordinates[0];
+  document.getElementById('memory_lat').value = e.result.geometry.coordinates[1];
+  const placeObject = e.result.context.find(c => c.id.startsWith('place'));
+  const placeName = placeObject?.text || e.result.text || '';
+  document.getElementById('memory_place').value = placeName;
+  const countryObject = e.result.context.find(c => c.id.startsWith('country'));
+  const countryName = countryObject?.text || '';
+  document.getElementById('memory_country').value = countryName;
+}
+
 function initializeMapSearch(mapId, coordinates) {
-  map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
+  let map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
+  let geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+  });
+  map.addControl(geocoder);
+  window[mapId] = map;
   map.on('load', function () {
-    addSourceAndLayer(map);
-    addMapClickListener(map, handleMapClick);
+    addControls(map);
+    addLayerSwitcher(map);
+  });
+  console.log("before");
+
+  geocoder.on('result', function (e) {
+    console.log("hello");
+    updateFormFields(e);
+  });
+};
+
+function resizeMap(mapId) {
+  $("[id^='add']").on('shown.bs.modal', function () {
+    let target_map = window[mapId];
+    if (target_map && typeof target_map.resize === 'function') {
+      target_map.resize();
+    } else {
+      console.log('Map not found or resize is not a function');
+    }
   });
 };

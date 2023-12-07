@@ -85,8 +85,10 @@
     <% end %>
   </div>
 
+<% map_search_container_id = "mapbox_form" %>
+
   <div class="col-12 col-lg-6 order-1 order-lg-2 min-vh-50 m-1">
-    <div id='mapbox_form' class="min-vh-50" style='width: 100%; height: 95%; min-height: 300px;'></div>
+    <div id='<%= map_search_container_id %>' class="min-vh-50" style='width: 100%; height: 95%; min-height: 300px;'></div>
     <div id="menu" class="text-end">
       <input id="streets-v12" type="radio" name="rtoggle" value="streets" checked="checked">
       <label for="streets-v12">streets</label>
@@ -96,6 +98,14 @@
   </div>
 </div>
 
-<body data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" data-map-id="mapbox_form">
+<body 
+  data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" 
+  data-map-search-id="<%= map_search_container_id %>">
+
+<%= javascript_include_tag 'mapbox' %>
 <%= javascript_include_tag 'mapbox_form' %>
-<%= javascript_include_tag 'mapbox_resize' %>
+
+<script>
+  initializeMapSearch("map-search-id", [-87.637505, 41.879138]);
+  resizeMap("map-search-id");
+</script>

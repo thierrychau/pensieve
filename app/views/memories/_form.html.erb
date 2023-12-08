@@ -126,7 +126,7 @@
     marker = createMarkerIfCoordinatesExist(coordinates_input, map);
   };
 
-  <% memory_coordinates = @memory&.lng && @memory&.lat ? [@memory.lng, @memory.lat] : [-87.637505, 41.879138] %>
+  <% memory_coordinates = @memory&.lng && @memory&.lat ? [@memory.lng, @memory.lat] : [2.350423, 48.85298] %>
   initializeMapSearch("map-search-id", <%= memory_coordinates %>, "menu-search-id");
   resizeMap("map-search-id");
 </script>

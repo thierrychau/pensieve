@@ -1,10 +1,10 @@
-<div class="col-12 d-flex flex-column flex-md-row justify-content-around align-items-center mb-3">
+<section class="col-12 d-flex flex-column flex-md-row justify-content-around align-items-center mb-3">
   <h1 class="flex-grow-1">People</h1>
   <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
-</div> 
+</section> 
 
-<div class="d-flex flex-wrap justify-content-center">
+<section class="d-flex flex-wrap justify-content-center">
   <% @people.each do |person| %>
     <%= render 'people/card', person: person %>
   <% end %>
-</div>
+</section>

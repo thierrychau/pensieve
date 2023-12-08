@@ -1,4 +1,4 @@
-<div class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
+<section class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
   <h1 class="flex-grow-1">Memories</h1>
     <div class="m-2">
       <%= search_form_for @q do |f| %>
@@ -7,6 +7,7 @@
       <% end %>
     </div>
     <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
-</div> 
-
-<%= render 'memories/index_table', memories: @memories %>
+</section> 
+<section>
+  <%= render 'memories/index_table', memories: @memories %>
+</section>

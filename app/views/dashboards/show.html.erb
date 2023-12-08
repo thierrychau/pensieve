@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag 'slider' %>
 <% end %>
 
-<div class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
+<section class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
   <h1 class="flex-grow-1">Dashboard</h1>
   <div class="d-flex">
     <div>
@@ -10,9 +10,9 @@
       <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
     </div>
   </div>
-</div> 
+</section> 
 
-<div id="<%= menu_id = "menu_dashboard" %>" class="d-flex align-items-center justify-content-center">
+<section id="<%= menu_id = "menu_dashboard" %>" class="d-flex align-items-center justify-content-center">
   <div class="form-check form-check-inline">
     <input id="outdoors-v12" type="radio" name="rtoggle" value="outdoors" class="form-check-input">
     <label for="outdoors-v12" class="form-check-label">street</label>
@@ -34,7 +34,7 @@
   <div class="col">
     <div id="<%= map_id = "mapbox_dashboard" %>" style="min-height: 80vh; width: 100%;"></div>
   </div>
-</div>
+</section>
 
 <body 
   data-mapbox-token="<%= ENV['MAPBOX_PUBLIC_TOKEN'] %>" 

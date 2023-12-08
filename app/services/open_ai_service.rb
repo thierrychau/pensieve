@@ -1,7 +1,7 @@
 class OpenAiService
   BASE_HEADER = {
-    "Authorization" => "Bearer #{ENV["OPENAI_KEY"]}",
-    "content-type" => "application/json"
+    "Authorization": "Bearer #{ENV["OPENAI_KEY"]}",
+    "content-type": "application/json"
   }
   BASE_URL = "https://api.openai.com/v1/chat/completions".freeze
 
@@ -28,7 +28,7 @@ class OpenAiService
   end
 
   def make_request
-    request_body_json = JSON.generate({ "model" => @model, "messages" => @messages })
+    request_body_json = JSON.generate({ "model": @model, "messages": @messages })
     raw_response = HTTP.headers(BASE_HEADER).post(BASE_URL, body: request_body_json)
     JSON.parse(raw_response)
   end

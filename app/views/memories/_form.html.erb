@@ -67,11 +67,11 @@
 
       <div class="mb-3">
         <% people.each do |person| %>
-          <% people_memory = memory.people_memories.where({ :person_id => person.id }).at(0) || memory.people_memories.build({ :person_id => person.id }) %>
+          <% people_memory = memory.people_memories.where({ person_id: person.id }).at(0) || memory.people_memories.build({ person_id: person.id }) %>
           <%= form.fields_for :people_memories, people_memory do |people_memory_fields| %>
-            <%= people_memory_fields.hidden_field :person_id, { :value => person.id } %>
-            <%= people_memory_fields.check_box :_destroy, { :class => "btn-check", :checked => people_memory.persisted? }, "0", "1" %>
-            <%= people_memory_fields.label :_destroy, person.firstlast_name, { :class => "btn btn-outline-secondary sm", :id => "btn-check-2-outlined", style: "--bs-btn-padding-y: .35em; --bs-btn-padding-x: .65em; --bs-btn-font-size: .75em; --bs-btn-font-weight: 700 ; border-radius: 1rem ; line-height: 1" } %>
+            <%= people_memory_fields.hidden_field :person_id, { value: person.id } %>
+            <%= people_memory_fields.check_box :_destroy, { class: "btn-check", checked: people_memory.persisted? }, "0", "1" %>
+            <%= people_memory_fields.label :_destroy, person.firstlast_name, { class: "btn btn-outline-secondary sm", id: "btn-check-2-outlined", style: "--bs-btn-padding-y: .35em; --bs-btn-padding-x: .65em; --bs-btn-font-size: .75em; --bs-btn-font-weight: 700 ; border-radius: 1rem ; line-height: 1" } %>
           <% end %>
         <% end %>
       </div>

@@ -7,7 +7,7 @@
   <div class="carousel-inner">
     <% memory.images.each_with_index do |image, i| %>
       <div class="carousel-item <%= "active" if i==0 %>" id="carousel-item-<%= i %>">
-        <%= cl_image_tag(image.key, aspect_ratio: "4:3", crop: "fill", class: "img-fluid", alt: "photo \##{i+1} for memory of #{memory.title}") %>
+        <%= cl_image_tag(image.key, aspect_ratio: "4:3", gravity:"auto", crop:"fill", class: "img-fluid", alt: "photo \##{i+1} for memory of #{memory.title}") %>
       </div>
     <% end %>
   </div>

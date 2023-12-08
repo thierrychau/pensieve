@@ -40,7 +40,7 @@ class MemoriesController < ApplicationController
     if @memory.valid?
       # Delete unchecked people_memories
       to_destroy_ids = params.fetch("memory").fetch("people_memories_attributes").values.select { |attributes| attributes.fetch("_destroy") == "1" }.map { |attributes| attributes.fetch("person_id") }
-      @memory.people_memories.where({ :id => to_destroy_ids }).each(&:destroy) 
+      @memory.people_memories.where({ id: to_destroy_ids }).each(&:destroy) 
     end
     respond_to do |format|
       if @memory.save

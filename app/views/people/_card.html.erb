@@ -2,7 +2,7 @@
   <%= link_to edit_person_path(person) do %>
     <div class="ratio ratio-1x1 d-flex align-items-center justify-content-center mb-3">
       <% if person.avatar.persisted? %>
-        <%= cl_image_tag person.avatar.key, class: "card-img-top img-fluid rounded-circle", style: "object-fit: cover;", alt:"Photo of #{person.firstlast_name}" %>
+        <%= cl_image_tag person.avatar.key, gravity:"auto", crop:"fill", class: "card-img-top img-fluid rounded-circle", style: "object-fit: cover;", alt:"Photo of #{person.firstlast_name}" %>
       <% else %>
         <div class="bg-dark-subtle rounded-circle"></div>
       <% end %>

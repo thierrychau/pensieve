@@ -104,17 +104,17 @@
 <%= javascript_include_tag 'mapbox' %>
 
 <script>
-  function initializeMapSearch(data_label, coordinates, data_menu) {
-    let map = initializeMap(getDataFromHtml(data_label), mapConfig(coordinates, 'streets-v11'));
+  function initializeMapSearch(dataLabel, coordinates, dataMenu) {
+    let map = initializeMap(getDataFromHtml(dataLabel), mapConfig(coordinates, 'streets-v11'));
     let geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
     });
     map.addControl(geocoder);
-    window[data_label] = map;
+    window[dataLabel] = map;
     map.on('load', function () {
       addControls(map);
-      addLayerSwitcher(map, data_menu);
+      addLayerSwitcher(map, dataMenu);
     });
 
     let marker = null;

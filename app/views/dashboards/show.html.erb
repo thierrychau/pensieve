@@ -47,11 +47,11 @@
 <script>
   <% last_created_coordinates = @memories.last&.lng && @memories.last&.lat ? [@memories.last.lng, @memories.last.lat] : [2.350423, 48.85298] %>
 
-  function initializeMapAll(data_map, coordinates, data_menu) {
-    let map = initializeMap(getDataFromHtml(data_map), mapConfig(coordinates, 'light-v11'));
+  function initializeMapAll(dataMap, coordinates, dataMenu) {
+    let map = initializeMap(getDataFromHtml(dataMap), mapConfig(coordinates, 'light-v11'));
     map.on('load', function () {
       addMapClickListener(map, handleMapClick);
-      addLayerSwitcher(map, data_menu);
+      addLayerSwitcher(map, dataMenu);
       addControls(map);
     })
     map.on('styledata', function () {

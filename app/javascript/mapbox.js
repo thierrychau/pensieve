@@ -1,6 +1,6 @@
 // initializeMap, getDataFromHtml, and mapConfig are all functions to set up the map.
 function initializeMap(containerId, config) {
-  const token = document.querySelector('body').getAttribute('data-mapbox-token');
+  const token = getDataFromHtml('mapbox-token');
   mapboxgl.accessToken = token;
   return new mapboxgl.Map({
     container: containerId,
@@ -10,8 +10,8 @@ function initializeMap(containerId, config) {
   });
 };
 
-function getDataFromHtml(data_label) {
-  return $('body').data(data_label);
+function getDataFromHtml(dataLabel) {
+  return $('body').data(dataLabel);
 };
 
 function mapConfig(coordinates, layerStyle) {
@@ -98,8 +98,8 @@ function addControls(map) {
 };
 
 // Adding a layer switcher
-function addLayerSwitcher(map, data_menu) {
-  let layerList = document.getElementById(getDataFromHtml(data_menu));
+function addLayerSwitcher(map, dataMenu) {
+  let layerList = document.getElementById(getDataFromHtml(dataMenu));
   let inputs = layerList.getElementsByTagName('input');
   for (const input of inputs) {
     input.onclick = (layer) => {
@@ -123,11 +123,11 @@ function updateFormFields(e) {
 };
 
 // Resize upon modal show
-function resizeMap(data_label) {
+function resizeMap(dataLabel) {
   $("[id^='add']").on('shown.bs.modal', function () {
-    let target_map = window[data_label];
-    if (target_map && typeof target_map.resize === 'function') {
-      target_map.resize();
+    let targetMap = window[dataLabel];
+    if (targetMap && typeof targetMap.resize === 'function') {
+      targetMap.resize();
     } else {
       console.log('Map not found or resize is not a function');
     }
@@ -135,7 +135,7 @@ function resizeMap(data_label) {
 };
 
 // Creates a draggable marker at the geocoder result location
-function handleGeocoderResult(e, marker, mapbox) {
+function handleGeocoderResult(e, marker, map) {
   // Save the JSON response
   geocoderResult = e.result;
   console.log(geocoderResult);
@@ -144,16 +144,16 @@ function handleGeocoderResult(e, marker, mapbox) {
     marker.remove();
   }
   // Create a new marker at the result location
-  return createDraggableMarker(e.result.geometry.coordinates, mapbox);
+  return createDraggableMarker(e.result.geometry.coordinates, map);
 };
 
 // Creates a draggable marker at the given coordinates
-function createDraggableMarker(lngLat, mapbox) {
+function createDraggableMarker(lngLat, map) {
   let marker = new mapboxgl.Marker({
     draggable: true
   })
   .setLngLat(lngLat)
-  .addTo(mapbox);
+  .addTo(map);
   marker.on('dragend', function() {
     const newLngLat = marker.getLngLat();
     // console.log('Marker coordinates:', newLngLat); // log coordinates to console on dragend
@@ -173,9 +173,9 @@ function getCoordinatesFromInput() {
 };
 
 // Create a marker if coordinates exist
-function createMarkerIfCoordinatesExist(coordinates, mapbox_form) {
+function createMarkerIfCoordinatesExist(coordinates, map) {
   if (coordinates.lat && coordinates.lng) {
-    return createDraggableMarker([coordinates.lng, coordinates.lat], mapbox_form);
+    return createDraggableMarker([coordinates.lng, coordinates.lat], map);
   }
   return null;
 };

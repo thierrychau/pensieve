@@ -1,38 +1,36 @@
-<% content_for :head do %>
-  <%= stylesheet_link_tag 'slider' %>
-<% end %>
+<section>
+  <div class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
+    <h1 class="flex-grow-1">Dashboard</h1>
+    <div class="d-flex">
+      <div>
+        <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
+        <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
+      </div>
+    </div>
+  </div> 
 
-<section class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
-  <h1 class="flex-grow-1">Dashboard</h1>
-  <div class="d-flex">
-    <div>
-      <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
-      <%= render partial: 'shared/modal_create', locals: { model: "memory", model2: "people", size: "modal-xl" } %>
+  <div id="<%= menu_id = "menu_dashboard" %>" class="d-flex align-items-center justify-content-center">
+    <div class="form-check form-check-inline">
+      <input id="outdoors-v12" type="radio" name="rtoggle" value="outdoors" class="form-check-input">
+      <label for="outdoors-v12" class="form-check-label">street</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input id="light-v11" type="radio" name="rtoggle" value="light" checked="checked" class="form-check-input">
+      <label for="light-v11" class="form-check-label">light</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input id="dark-v11" type="radio" name="rtoggle" value="dark" class="form-check-input">
+      <label for="dark-v11" class="form-check-label">dark</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" class="form-check-input">
+      <label for="satellite-v9" class="form-check-label">satellite</label>
     </div>
   </div>
-</section> 
-
-<section id="<%= menu_id = "menu_dashboard" %>" class="d-flex align-items-center justify-content-center">
-  <div class="form-check form-check-inline">
-    <input id="outdoors-v12" type="radio" name="rtoggle" value="outdoors" class="form-check-input">
-    <label for="outdoors-v12" class="form-check-label">street</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input id="light-v11" type="radio" name="rtoggle" value="light" checked="checked" class="form-check-input">
-    <label for="light-v11" class="form-check-label">light</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input id="dark-v11" type="radio" name="rtoggle" value="dark" class="form-check-input">
-    <label for="dark-v11" class="form-check-label">dark</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" class="form-check-input">
-    <label for="satellite-v9" class="form-check-label">satellite</label>
-  </div>
-</div>
-<div class="d-flex flex-column flex-md-row justify-content-center">
-  <div class="col">
-    <div id="<%= map_id = "mapbox_dashboard" %>" style="min-height: 80vh; width: 100%;"></div>
+  <div class="d-flex flex-column flex-md-row justify-content-center">
+    <div class="col">
+      <div id="<%= map_id = "mapbox_dashboard" %>" style="min-height: 80vh; width: 100%;"></div>
+    </div>
   </div>
 </section>
 

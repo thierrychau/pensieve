@@ -20,7 +20,7 @@ module Geojsonable
           id: memory.id,
           title: memory.title,
           description: memory.description,
-          date: memory.date.strftime("%d/%m/%Y"),
+          date: memory.date.strftime("%A, %B %-d, %Y"),
           people: people_to_properties(memory.people_memories)
         }
       }

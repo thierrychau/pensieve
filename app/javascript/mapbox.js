@@ -1,6 +1,6 @@
-// initializeMap, getMapContainerId, and mapConfig are all functions to set up the map.
+// initializeMap, getDataFromHtml, and mapConfig are all functions to set up the map.
 function initializeMap(containerId, config) {
-  const token = document.querySelector('body').getAttribute('data-mapbox-token');
+  const token = getDataFromHtml('mapbox-token');
   mapboxgl.accessToken = token;
   return new mapboxgl.Map({
     container: containerId,
@@ -10,13 +10,13 @@ function initializeMap(containerId, config) {
   });
 };
 
-function getMapContainerId(mapId) {
-  return $('body').data(mapId);
+function getDataFromHtml(dataLabel) {
+  return $('body').data(dataLabel);
 };
 
-function mapConfig(coordinates) {
+function mapConfig(coordinates, layerStyle) {
   return {
-    style: 'mapbox://styles/mapbox/streets-v12',
+    style: `mapbox://styles/mapbox/${layerStyle}`,
     center: coordinates,
     zoom: 9,
   };
@@ -49,16 +49,25 @@ function addSourceAndLayer(map) {
 };
 
 // Add a click listener to the map and call the handler function
-
 function addMapClickListener(map, handler) {
   map.on('click', 'circle', (e) => handler(e, map));
   map.on('mouseenter', 'circle', () => {
     map.getCanvas().style.cursor = 'pointer';
+    // showPopup(lngLat, map, title, date, description); // to do: add popup on hover
     });
   map.on('mouseleave', 'circle', () => {
     map.getCanvas().style.cursor = '';
     });
 };
+
+
+// Show a pop up with the memory details
+function showPopup(lngLat, map, title, date, description) {
+  new mapboxgl.Popup()
+    .setLngLat(lngLat)
+    .setHTML(`<h6>${title}</h6><p>${date}</p><p>${description}</p>`)
+    .addTo(map);
+}
 
 // Center the map on the coordinates of any clicked circle from the 'circle' layer.
 function handleMapClick(e, map) {
@@ -76,21 +85,9 @@ function handleMapClick(e, map) {
   // over the copy being pointed to.
   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-  }
+  };
 
-  new mapboxgl.Popup()
-    .setLngLat(coordinates)
-    .setHTML(`<h5>${title}</h5><p>${date}</p><p>${description}</p>`)
-    .addTo(map);
-};
-
-// Initialize the map and add the source, layer, and click listener for all memories
-function initializeMapAll(mapId, coordinates) {
-  let map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
-  map.on('load', function () {
-    addSourceAndLayer(map);
-    addMapClickListener(map, handleMapClick);
-  });
+  showPopup(coordinates, map, title, date, description);
 };
 
 // Adding typical map controls
@@ -101,8 +98,8 @@ function addControls(map) {
 };
 
 // Adding a layer switcher
-function addLayerSwitcher(map) {
-  let layerList = document.getElementById('menu');
+function addLayerSwitcher(map, dataMenu) {
+  let layerList = document.getElementById(getDataFromHtml(dataMenu));
   let inputs = layerList.getElementsByTagName('input');
   for (const input of inputs) {
     input.onclick = (layer) => {
@@ -113,7 +110,6 @@ function addLayerSwitcher(map) {
 };
 
 // Updating form fields from geocoder response
-
 function updateFormFields(e) {
   document.getElementById('memory_location').value = e.result.place_name;
   document.getElementById('memory_lng').value = e.result.geometry.coordinates[0];
@@ -126,35 +122,12 @@ function updateFormFields(e) {
   document.getElementById('memory_country').value = countryName;
 };
 
-// Initialize the map and add the geocoder for memory form
-function initializeMapSearch(mapId, coordinates) {
-  let map = initializeMap(getMapContainerId(mapId), mapConfig(coordinates));
-  let geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-  });
-  map.addControl(geocoder);
-  window[mapId] = map;
-  map.on('load', function () {
-    addControls(map);
-    addLayerSwitcher(map);
-  });
-
-  let marker = null;
-  geocoder.on('result', function (e) {
-    updateFormFields(e);
-    marker = handleGeocoderResult(e, marker, map);
-  });
-  let coordinates_input = getCoordinatesFromInput();
-  marker = createMarkerIfCoordinatesExist(coordinates_input, map);
-};
-
 // Resize upon modal show
-function resizeMap(mapId) {
+function resizeMap(dataLabel) {
   $("[id^='add']").on('shown.bs.modal', function () {
-    let target_map = window[mapId];
-    if (target_map && typeof target_map.resize === 'function') {
-      target_map.resize();
+    let targetMap = window[dataLabel];
+    if (targetMap && typeof targetMap.resize === 'function') {
+      targetMap.resize();
     } else {
       console.log('Map not found or resize is not a function');
     }
@@ -162,7 +135,7 @@ function resizeMap(mapId) {
 };
 
 // Creates a draggable marker at the geocoder result location
-function handleGeocoderResult(e, marker, mapbox) {
+function handleGeocoderResult(e, marker, map) {
   // Save the JSON response
   geocoderResult = e.result;
   console.log(geocoderResult);
@@ -171,16 +144,16 @@ function handleGeocoderResult(e, marker, mapbox) {
     marker.remove();
   }
   // Create a new marker at the result location
-  return createDraggableMarker(e.result.geometry.coordinates, mapbox);
+  return createDraggableMarker(e.result.geometry.coordinates, map);
 };
 
 // Creates a draggable marker at the given coordinates
-function createDraggableMarker(lngLat, mapbox) {
+function createDraggableMarker(lngLat, map) {
   let marker = new mapboxgl.Marker({
     draggable: true
   })
   .setLngLat(lngLat)
-  .addTo(mapbox);
+  .addTo(map);
   marker.on('dragend', function() {
     const newLngLat = marker.getLngLat();
     // console.log('Marker coordinates:', newLngLat); // log coordinates to console on dragend
@@ -200,9 +173,9 @@ function getCoordinatesFromInput() {
 };
 
 // Create a marker if coordinates exist
-function createMarkerIfCoordinatesExist(coordinates, mapbox_form) {
+function createMarkerIfCoordinatesExist(coordinates, map) {
   if (coordinates.lat && coordinates.lng) {
-    return createDraggableMarker([coordinates.lng, coordinates.lat], mapbox_form);
+    return createDraggableMarker([coordinates.lng, coordinates.lat], map);
   }
   return null;
 };

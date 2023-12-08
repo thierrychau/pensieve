@@ -7,7 +7,7 @@
       <%= f.label :email, class: "form-label" %>
     </div>
 
-     <br />
+    <br />
      
     <div class="d-grid gap-2 mb-3">
       <%= f.submit "Resend confirmation instructions", class: "btn btn-outline-primary" %>
@@ -15,4 +15,4 @@
   <% end %>
 <% end %>
 
-<%= render "devise/shared/card_structure", title: "Resend confirmation instructions" %>
+<%= render "devise/shared/card_new", title: "Didn't receive confirmation instructions?" %>

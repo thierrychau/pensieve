@@ -23,7 +23,7 @@ class PeopleMemory < ApplicationRecord
   # PeopleMemories have a person and a memory.
   # PeopleMemories can be searched using their person or memory.
  
-  validates :person_id, :presence => true
+  validates :person_id, presence: true
 
   # associations
   ## direct associations

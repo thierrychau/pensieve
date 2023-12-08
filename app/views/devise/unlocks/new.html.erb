@@ -1,4 +1,4 @@
-<% content_for :card_content do %>
+<% content_for :card_new do %>
   <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -13,4 +13,4 @@
   <% end %>
 <% end %>
 
-<%= render "devise/shared/card_structure", title: "Resend unlock instructions" %>
+<%= render "devise/shared/card_new", title: "Resend unlock instructions" %>

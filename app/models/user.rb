@@ -41,7 +41,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  validate :password_complexity, :if => :password
+  validate :password_complexity, if: :password
 
   # associations
   ## direct associations

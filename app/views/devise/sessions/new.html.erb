@@ -20,9 +20,16 @@
     <br />
 
     <div class="d-grid gap-2 mb-3">
-      <%= f.submit "Log in", :class => "btn btn-outline-primary"%>
+      <%= f.submit "Log in", class: "btn btn-outline-primary"%>
+    </div>
+    <div>
+      <div class="d-flex justify-content-center mb-5">
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+            <%= link_to "Forgot your password?", new_password_path(resource_name), class:"text-muted text-decoration-none" %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 <% end %>
 
-<%= render "devise/shared/card_structure", title: "Sign in to Your Account" %>
+<%= render "devise/shared/card_new", title: "Log into your account" %>

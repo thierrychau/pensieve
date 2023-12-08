@@ -7,14 +7,12 @@
       <%= f.label :email, class: "form-label"%>
     </div>
 
-    <hr>
-
-     <p>Your password must be at least <%= @minimum_password_length %> characters and should include a combination of numbers, lowercase and uppercase letters, and special characters (!@#$%^&*).</p>
-
     <div class="form-floating mb-3">
       <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
       <%= f.label :password, class: "form-label" %>
     </div>
+
+     <p class="small text-muted">Your password must be at least <%= @minimum_password_length %> characters and should include a combination of numbers, lowercase and uppercase letters, and special characters (!@#$%^&*).</p>
     
     <div class="form-floating mb-3">
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
@@ -24,9 +22,9 @@
       <br />
 
     <div class="d-grid gap-2 mb-3">
-      <%= f.submit "Sign up", :class => "btn btn-outline-primary" %>
+      <%= f.submit "Sign up", class: "btn btn-outline-primary" %>
     </div>
   <% end %>
 <% end %>
 
-<%= render "devise/shared/card_structure", title: "Sign up for an Account" %>
+<%= render "devise/shared/card_new", title: "Create an account" %>

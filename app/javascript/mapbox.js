@@ -62,10 +62,13 @@ function addMapClickListener(map, handler) {
 
 
 // Show a pop up with the memory details
-function showPopup(lngLat, map, title, date, description) {
+function showPopup(lngLat, map, title, date, description, people) {
+  const peopleArray = people.split(', ');
+  const formattedPeople = peopleArray.map(person => `<span class="badge rounded-pill text-bg-secondary">${person}</span>`);
+
   new mapboxgl.Popup()
     .setLngLat(lngLat)
-    .setHTML(`<h6>${title}</h6><p>${date}</p><p>${description}</p>`)
+    .setHTML(`<h6>${title}</h6><p>${date}</p><p>${description}</p><p class="fs-6">${formattedPeople.join(' ')}</p>`)
     .addTo(map);
 }
 
@@ -79,7 +82,7 @@ function handleMapClick(e, map) {
   const description = e.features[0].properties.description;
   const title = e.features[0].properties.title;
   const date = e.features[0].properties.date;
-
+  const people = e.features[0].properties.people;
   // Ensure that if the map is zoomed out such that multiple
   // copies of the feature are visible, the popup appears
   // over the copy being pointed to.
@@ -87,7 +90,7 @@ function handleMapClick(e, map) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
   };
 
-  showPopup(coordinates, map, title, date, description);
+  showPopup(coordinates, map, title, date, description, people);
 };
 
 // Adding typical map controls

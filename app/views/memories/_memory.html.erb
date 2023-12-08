@@ -7,7 +7,7 @@
     <div class="col-md-6 d-flex flex-column">
       <% if memory.images.present? %>
         <div class="d-flex flex-column">
-          <%= render "/media/carousel", memory: memory %>
+          <%= render "/shared/carousel", memory: memory %>
         </div>
       <% end %>
     </div>
@@ -34,9 +34,9 @@
                 <span class="badge rounded-pill text-bg-secondary">
                   <%= person.first_name %>
                   <span aria-label="<%= person.last_name %>">
-                    <span aria-hidden="true">
-                      <%= person.last_name[0] %><span class="d-none d-xxl-inline"><%= person.last_name[1..] %></span>
-                    </span>
+                  <span aria-hidden="true">
+                    <%= person.last_name[0] %><span class="d-none d-xxl-inline"><%= person.last_name[1..] %></span>
+                  </span>
                   </span>
                 </span>
               <% end %>

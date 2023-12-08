@@ -16,7 +16,8 @@
   </head>
 
   <body class="bg-light ">
-      <%= render partial: "shared/navbar" %>
+    <%= render partial: "shared/navbar" %>
+    
     <div class="container-fluid">
       <% if notice.present? %>
         <%= render partial: "shared/flash", locals: { message: notice, css_class: "success" } %>
@@ -26,7 +27,7 @@
       <% end %>
       <%= yield %>
     </div>
-  
+
     <%= render "shared/footer" %>
   </body>
 </html>

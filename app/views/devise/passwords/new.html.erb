@@ -7,13 +7,13 @@
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
       <%= f.label :email, "Your Email", class: "form-label" %>
     </div>
-
-    <br />
     
+    <br>
+
     <div class="d-grid gap-2 mb-3">
       <%= f.submit "Send Reset Instructions", :class => "btn btn-outline-primary" %>
     </div>
   <% end %>
 <% end %>
 
-<%= render "devise/shared/card_structure", title: "Reset Your Password" %>
+<%= render "devise/shared/card_new", title: "Reset Your Password" %>

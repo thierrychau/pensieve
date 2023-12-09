@@ -1,20 +1,20 @@
-<div id="<%= dom_id memory %>" class="card mb-3">
+<div id="<%= dom_id memory %>" class="card mb-3 col-12 col-xxl-10">
   <div class="card-header">
     <h5 class="card-text text-center"><%= memory.title %></h5>
   </div>
   
   <div class="row g-0">
-    <div class="col-md-6 d-flex flex-column">
+    <div class="col-12 col-lg-6">
       <% if memory.images.present? %>
         <div class="d-flex flex-column">
           <%= render "/shared/carousel", memory: memory %>
         </div>
       <% end %>
     </div>
-    <div class="col-md-6">
+    <div class="col-12 col-lg-6">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <p class="card-text"><%= memory.date.strftime("%A, %B %-d, %Y") if memory.date.present? %></p>
+          <p class="card-text text-muted"><%= "🗓️ " + memory.date.strftime("%A, %B %-d, %Y") if memory.date.present? %></p>
           <span>
             <% if policy(memory).edit? %>
               <%= link_to edit_memory_path(memory), class: "me-3" do %><i class="fa-regular fa-pen-to-square"></i><% end %>
@@ -27,23 +27,29 @@
           </span>
         </div>
         <div class="d-flex align-items-center justify-content-between mb-3">
-          <p class="card-text col-6 mb-0"><%= memory.place if memory.place.present? %></p>
-          <div class="text-end col-6">
-            <% memory.people.each do |person| %>
-              <%= link_to person, style: "text-decoration: none;" do %>
-                <span class="badge rounded-pill text-bg-secondary">
-                  <%= person.first_name %>
-                  <span aria-label="<%= person.last_name %>">
-                  <span aria-hidden="true">
-                    <%= person.last_name[0] %><span class="d-none d-xxl-inline"><%= person.last_name[1..] %></span>
-                  </span>
-                  </span>
-                </span>
-              <% end %>
+          <div class="card-text mb-0 text-muted">
+            <% if memory.place.present? || memory.country.present? %>
+              <p>📍 <%= [memory.place, memory.country].compact.join(', ') %></p>
             <% end %>
           </div>
         </div>
-        <p class="card-text"><%= memory.description %></p>
+        <div class="card-text">
+          <p><%= memory.description %></p>
+        </div>
+        <div class="card-text">
+          <% memory.people.each do |person| %>
+            <%= link_to person, style: "text-decoration: none;" do %>
+              <span class="badge rounded-pill text-bg-secondary">
+                <%= person.first_name %>
+                <span aria-label="<%= person.last_name %>">
+                <span aria-hidden="true">
+                  <%= person.last_name[0] %><span class="d-none d-md-inline"><%= person.last_name[1..] %></span>
+                </span>
+                </span>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

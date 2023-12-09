@@ -1,4 +1,4 @@
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height: 20em;">
+<div id="carouselExampleIndicators" class="carousel slide">
   <div class="carousel-indicators">
     <% memory.images.each_with_index do |image, i| %>
       <button type="button" data-bs-target="#carouselExampleIndicators" class="<%= "active" if i==0 %>" aria-current="<%= "true" if i==0 %>" data-bs-slide-to="<%= i %>" aria-label="Slide <%= i+1 %>"></button>

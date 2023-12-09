@@ -62,13 +62,13 @@ function addMapClickListener(map, handler) {
 
 
 // Show a pop up with the memory details
-function showPopup(lngLat, map, title, date, description, people) {
+function showPopup(id, lngLat, map, title, date, description, people) {
   const peopleArray = people.split(', ');
   const formattedPeople = peopleArray.map(person => `<span class="badge rounded-pill text-bg-secondary">${person}</span>`);
-
+  const url = `/memories/${id}`
   new mapboxgl.Popup()
     .setLngLat(lngLat)
-    .setHTML(`<h6>${title}</h6><p>${date}</p><p>${description}</p><p class="fs-6">${formattedPeople.join(' ')}</p>`)
+    .setHTML(`<h6>${title}</h6><p>${date}</p><p>${description}</p><p class="fs-6">${formattedPeople.join(' ')}</p><a href="${url}">View Memory</a>`)
     .addTo(map);
 }
 
@@ -78,8 +78,9 @@ function handleMapClick(e, map) {
     center: e.features[0].geometry.coordinates
   });
 
+  const memory_id = e.features[0].properties.id;
   const coordinates = e.features[0].geometry.coordinates.slice();
-  const description = e.features[0].properties.description;
+  const description = e.features[0].properties.description.substring(0, 200) + "...";
   const title = e.features[0].properties.title;
   const date = e.features[0].properties.date;
   const people = e.features[0].properties.people;
@@ -90,7 +91,7 @@ function handleMapClick(e, map) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
   };
 
-  showPopup(coordinates, map, title, date, description, people);
+  showPopup(memory_id, coordinates, map, title, date, description, people);
 };
 
 // Adding typical map controls

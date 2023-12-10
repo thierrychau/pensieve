@@ -11,11 +11,11 @@
 
   <div id="<%= menu_id = "menu_dashboard" %>" class="d-flex align-items-center justify-content-center">
     <div class="form-check form-check-inline">
-      <input id="outdoors-v12" type="radio" name="rtoggle" value="outdoors" class="form-check-input">
-      <label for="outdoors-v12" class="form-check-label">street</label>
+      <input id="standard" type="radio" name="rtoggle" value="standard" class="form-check-input" checked="checked">
+      <label for="standard" class="form-check-label">standard</label>
     </div>
     <div class="form-check form-check-inline">
-      <input id="light-v11" type="radio" name="rtoggle" value="light" checked="checked" class="form-check-input">
+      <input id="light-v11" type="radio" name="rtoggle" value="light" class="form-check-input">
       <label for="light-v11" class="form-check-label">light</label>
     </div>
     <div class="form-check form-check-inline">
@@ -46,7 +46,7 @@
   <% last_created_coordinates = @memories.last&.lng && @memories.last&.lat ? [@memories.last.lng, @memories.last.lat] : [2.350423, 48.85298] %>
 
   function initializeMapAll(dataMap, coordinates, dataMenu) {
-    let map = initializeMap(getDataFromHtml(dataMap), mapConfig(coordinates, 'light-v11'));
+    let map = initializeMap(getDataFromHtml(dataMap), mapConfig(coordinates, 'standard'));
     map.on('load', function () {
       addMapClickListener(map, handleMapClick);
       addLayerSwitcher(map, dataMenu);

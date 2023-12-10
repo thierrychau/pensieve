@@ -3,7 +3,7 @@
   <%= render partial: 'shared/modal_create', locals: { model: "person" } %>
 </section> 
 
-<section class="d-flex flex-wrap justify-content-center" style="min-height: 66vh">
+<section class="d-flex flex-wrap justify-content-center" style="min-height: 70vh">
   <% @people.each do |person| %>
     <%= render 'people/card', person: person %>
   <% end %>

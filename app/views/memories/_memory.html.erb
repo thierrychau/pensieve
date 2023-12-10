@@ -1,4 +1,4 @@
-<div id="<%= dom_id memory %>" class="card mb-3 col-12 col-xxl-10">
+<div id="<%= dom_id memory %>" class="card">
   <div class="card-header">
     <h5 class="card-text text-center"><%= memory.title %></h5>
   </div>
@@ -28,9 +28,11 @@
         </div>
         <div class="d-flex align-items-center justify-content-between mb-3">
           <div class="card-text mb-0 text-muted">
-            <% if memory.place.present? || memory.country.present? %>
-              <p>📍 <%= [memory.place, memory.country].compact.join(', ') %></p>
-            <% end %>
+            <p>📍 
+              <% if memory.address.present? %>
+                <%= memory.address %>
+              <% end %>
+            </p>
           </div>
         </div>
         <div class="card-text">
@@ -53,7 +55,6 @@
       </div>
     </div>
   </div>
-
   <div class="card-footer d-flex align-items-center justify-content-between">
     <p class="card-text small text-start mb-0">Created <%= memory.created_at.strftime("%H:%M · %x") %></p>
     <p class="card-text small text-end">Updated <%= memory.updated_at.strftime("%H:%M · %x") %></p>

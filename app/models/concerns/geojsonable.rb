@@ -21,15 +21,13 @@ module Geojsonable
           title: memory.title,
           description: memory.description,
           date: memory.date.strftime("%B %-d, %Y"),
-          people: people_to_properties(memory.people_memories)
+          people: people_to_properties(memory.people)
         }
       }
     end
 
-    def people_to_properties(people_memories)
-      person_ids = people_memories.pluck(:id)
-      people = Person.where(id: person_ids).index_by(&:id)
-      people.values.map(&:firstlast_name).join(', ')
+    def people_to_properties(people)
+      people.map(&:firstlast_name).join(', ')
     end
   end
 end

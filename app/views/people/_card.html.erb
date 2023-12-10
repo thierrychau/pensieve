@@ -11,7 +11,11 @@
 
   <div class="text-center">
     <div>
-      <h4 class="text-wrap"><%= person.firstlast_name %> (<%= person.alternate_name %>)</h4>
+      <h4 class="text-wrap"><%= person.firstlast_name %>
+        <% if person.alternate_name.present? %>
+          (<%= person.alternate_name %>)
+        <% end %>
+      </h4>
     </div>
     <div>
       <p class="small"><%= person.date_of_birth.strftime("%B %-d, %Y") if person.date_of_birth.present? %></p>

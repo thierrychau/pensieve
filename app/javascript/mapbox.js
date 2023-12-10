@@ -25,7 +25,7 @@ function mapConfig(coordinates, layerStyle) {
 // Add a source and layer to a map
 function addSourceAndLayer(map) {
   const geojsonData = JSON.parse(document.querySelector('body').getAttribute('data-geojson'));
-
+  geojsonData.features = geojsonData.features.filter(feature => feature.geometry.coordinates[0] !== null && feature.geometry.coordinates[1] !== null);
   if (!map.getSource('points')) {
     map.addSource('points', {
       'type': 'geojson',

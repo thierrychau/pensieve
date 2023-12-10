@@ -51,4 +51,13 @@ class Memory < ApplicationRecord
   def to_param
     "#{id}-#{title.truncate(50).parameterize}"
   end
+
+  def address
+    if !location.nil?
+      address = location.strip.split(/\s*,\s*/).reject { |item| item == country || item == place }.at(0)
+    else
+      address = ""
+    end
+    [address, place, country].reject{ |item| item.nil? || item.empty? }.join(", ")
+  end
 end

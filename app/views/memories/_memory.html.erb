@@ -28,9 +28,11 @@
         </div>
         <div class="d-flex align-items-center justify-content-between mb-3">
           <div class="card-text mb-0 text-muted">
-            <% if memory.place.present? || memory.country.present? %>
-              <p>📍 <%= [memory.place, memory.country].compact.join(', ') %></p>
-            <% end %>
+            <p>📍 
+              <% if memory.address.present? %>
+                <%= memory.address %>
+              <% end %>
+            </p>
           </div>
         </div>
         <div class="card-text">

@@ -3,7 +3,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :set_resource, only: %i[edit_email update_email edit_password update_password]
 
   def update
-    if current_user.update_without_password(profile_params)
+    if current_user.update_with_password(profile_params)
       flash[:notice] = "Successfully updated user"
     else
       flash[:alert] = "There was an error updating the user."
@@ -11,6 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     redirect_to edit_user_registration_path
   end
 
+  #TO DO: allow edits to email and settings without current password
   def edit_password
     render :edit_password
   end
@@ -48,6 +49,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def profile_params
     params.require(:user).permit(
       :ai_generated_content,
+      :current_password, 
+      :password, 
+      :password_confirmation
     )
   end
 

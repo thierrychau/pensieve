@@ -1,6 +1,6 @@
 # Pensieve 
 ## Overview
-Pensieve is a web application designed to help users record, organize, and revisit personal and family memories. It offers a user-friendly interface to manage memories, locations, associated individuals, and more. [Full Functional Specification](https://gist.github.com/thierrychau/0d558373c7605ed4459f21a80ea86112)
+Pensieve is a web application designed to help users preserve, organize, and revisit personal and family memories. It offers a user-friendly interface to simply show and manage memories, associated individuals, and more. [Full Functional Specification](https://gist.github.com/thierrychau/0d558373c7605ed4459f21a80ea86112)
 
 ## Features
 - **Dashboard with Map View**: Visual representation of logged memories on an interactive map.
@@ -33,6 +33,9 @@ For resetting the development database:
 ```bash
 rails dev:reset
 ```
+
+Before deployment, you may want to update `config.mailer_sender` in `devise.rb`, `config.action_mailer.default_url_options` in `production.rb`, `database.yml`, `application_mailer.rb`.
+
 ### Dependencies
 Pensieve is based on Ruby on Rails. The required gems are listed in the Gemfile. Additionally, accounts and API keys are needed for services like Cloudinary, OpenAI, MapBox, and PostMark.
 
@@ -42,6 +45,9 @@ Update the mailers as required.
 
 ### Demo
 [Pensieve.cc](https://pensieve.cc)
+![Dashboard](https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.19.58_PM_ntr5tf)
+![Adding a memory](https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.22.19_PM_brskjo)
+![People index](https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.22.33_PM_okfq86)
 
 ### Entity Relationship Diagram
 ![ERD](erd.png)

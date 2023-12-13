@@ -73,7 +73,7 @@ class MemoriesController < ApplicationController
   end
 
   def new_memory
-    @memory = Memory.new
+    @memory = Memory.new(generate_title: current_user.ai_generated_content)
   end
 
   def new_person
@@ -91,6 +91,7 @@ class MemoriesController < ApplicationController
       :place,
       :country,
       :location,
+      :generate_title,
       people_memories_attributes: [:id, :person_id, :_destroy],
       images: []
       )

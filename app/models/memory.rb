@@ -46,6 +46,8 @@ class Memory < ApplicationRecord
   # nested attributes
   accepts_nested_attributes_for :people_memories, allow_destroy: true
 
+  attr_accessor :generate_title
+
   scope :by_date, -> { order(date: :desc) }
 
   def to_param

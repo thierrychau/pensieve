@@ -55,9 +55,19 @@
         </div>
       </div>
 
-      <div class="form-floating mb-3">
-        <%= form.text_field :title, class: "form-control", placeholder: true %>
-        <%= form.label :title, class: "form-label" %>
+      <div class="row justify-content-between ">
+        <div class="col-md-8">
+          <div class="form-floating mb-3">
+            <%= form.text_field :title, class: "form-control", placeholder: true %>
+            <%= form.label :title, class: "form-label" %>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex align-items-center justify-content-between">
+          <div class="form-check form-switch">
+            <%= form.check_box :generate_title, class: "form-check-input", role: "switch", id: "aiGeneratedContentSwitch" %>
+            <%= form.label :generate_title, "Generate title", class: "form-check-label", for: "aiGeneratedContentSwitch" %>
+          </div>
+        </div>
       </div>
       
       <div class="form-floating mb-3">

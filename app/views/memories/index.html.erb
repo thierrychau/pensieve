@@ -2,7 +2,8 @@
   <h1 class="flex-grow-1">Memories</h1>
     <div class="m-2">
       <%= search_form_for @q do |f| %>
-        <%= f.text_field :description_or_title_or_place_or_country_or_location_cont, placeholder: "Search", class: "form-control" %>
+        <%= f.text_field :description_or_title_or_place_or_country_or_location_cont, 
+          placeholder: "Search", class: "form-control", "aria-label": "Search memories" %>
         <%= f.submit class: "btn btn-primary btn-block", hidden: true %>
       <% end %>
     </div>

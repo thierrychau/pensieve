@@ -16,19 +16,22 @@
       <div class="row g-2">
         <div class="col">
           <div class="form-floating mb-3">
-            <%= form.date_field :date, class: "form-control", value: memory.new_record? ? Date.today : memory.date %>
+            <%= form.date_field :date, class: "form-control", 
+              value: memory.new_record? ? Date.today : memory.date %>
             <%= form.label :date, class: "form-label" %>
           </div>
         </div>
         <div class="col">
           <div class="form-floating mb-3">
-            <%= form.text_field :lng, class: "form-control-plaintext", placeholder: true, data: { lng: memory.lng }, readonly:true %>
+            <%= form.text_field :lng, class: "form-control-plaintext", 
+              placeholder: true, data: { lng: memory.lng }, readonly:true %>
             <%= form.label :lng, class: "form-label" %>
           </div>
         </div>
         <div class="col">
           <div class="form-floating mb-3">
-            <%= form.text_field :lat, class: "form-control-plaintext", placeholder: true, data: { lat: memory.lat }, readonly:true %>
+            <%= form.text_field :lat, class: "form-control-plaintext", 
+              placeholder: true, data: { lat: memory.lat }, readonly:true %>
             <%= form.label :lat, class: "form-label" %>
           </div>
         </div>
@@ -64,14 +67,17 @@
         </div>
         <div class="col-md-4 d-flex align-items-center justify-content-between">
           <div class="form-check form-switch">
-            <%= form.check_box :generate_title, class: "form-check-input", role: "switch", id: "aiGeneratedContentSwitch" %>
-            <%= form.label :generate_title, "Generate title", class: "form-check-label", for: "aiGeneratedContentSwitch" %>
+            <%= form.check_box :generate_title, class: "form-check-input", 
+              role: "switch", id: "aiGeneratedContentSwitch" %>
+            <%= form.label :generate_title, "Generate title", 
+              class: "form-check-label", for: "aiGeneratedContentSwitch" %>
           </div>
         </div>
       </div>
       
       <div class="form-floating mb-3">
-        <%= form.text_area :description, class: "form-control", style: "height: 10rem;",placeholder: true %>
+        <%= form.text_area :description, class: "form-control", 
+          style: "height: 10rem;",placeholder: true %>
         <%= form.label :description, class: "form-label" %>
       </div>
 
@@ -81,7 +87,10 @@
           <%= form.fields_for :people_memories, people_memory do |people_memory_fields| %>
             <%= people_memory_fields.hidden_field :person_id, { value: person.id } %>
             <%= people_memory_fields.check_box :_destroy, { class: "btn-check", checked: people_memory.persisted? }, "0", "1" %>
-            <%= people_memory_fields.label :_destroy, person.firstlast_name, { class: "btn btn-outline-secondary sm", id: "btn-check-2-outlined", style: "--bs-btn-padding-y: .35em; --bs-btn-padding-x: .65em; --bs-btn-font-size: .75em; --bs-btn-font-weight: 700 ; border-radius: 1rem ; line-height: 1" } %>
+            <%= people_memory_fields.label :_destroy, person.firstlast_name, 
+              { class: "btn btn-outline-secondary sm", id: "btn-check-2-outlined", 
+              style: "--bs-btn-padding-y: .35em; --bs-btn-padding-x: .65em; --bs-btn-font-size: .75em; 
+              --bs-btn-font-weight: 700 ; border-radius: 1rem ; line-height: 1" } %>
           <% end %>
         <% end %>
       </div>

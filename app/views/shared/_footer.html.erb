@@ -2,16 +2,24 @@
     <hr>
     <div class="d-flex flex-md-row justify-content-between align-items-center my-lg-3 my-2">
       <div class="d-flex justify-content-start align-items-center ms-2">
-          <%= link_to 'mailto:thierry.chau@gmail.com?subject=[Pensieve]%20Question', class:"text-black text-decoration-none", target: "_blank" do %>
+          <%= link_to 'mailto:thierry.chau@gmail.com?subject=[Pensieve]%20Question', 
+            class:"text-black text-decoration-none", target: "_blank", 
+            "aria-label": "Link to Thierry's email" do %>
             <i class="fa-solid fa-envelope fa-2xl me-md-3 me-2"></i>
           <% end %>
-          <%= link_to 'https://www.linkedin.com/in/thierrychau/', class:"text-black text-decoration-none", target: "_blank" do %>
+          <%= link_to 'https://www.linkedin.com/in/thierrychau/', 
+            class:"text-black text-decoration-none", target: "_blank",
+            "aria-label": "Link to Thierry's LinkedIn" do %>
             <i class="fa-brands fa-linkedin fa-2xl me-md-3 me-2"></i>
           <% end %>
-          <%= link_to 'https://github.com/thierrychau', class:"text-black text-decoration-none", target: "_blank" do %>
+          <%= link_to 'https://github.com/thierrychau', 
+            class:"text-black text-decoration-none", target: "_blank",
+            "aria-label": "Link to Thierry's GitHub" do %>
             <i class="fa-brands fa-github fa-2xl me-md-3 me-2"></i>
           <% end %>
-          <%= link_to 'https://github.com/thierrychau/pensieve', class:"text-black text-decoration-none", target: "_blank" do %>
+          <%= link_to 'https://github.com/thierrychau/pensieve', 
+            class:"text-black text-decoration-none", target: "_blank", 
+            "aria-label": "Link to Pensieve's GitHub Repository" do %>
             <i class="fa-solid fa-code-branch fa-2xl me-md-3 me-2"></i>
           <% end %>
       </div>

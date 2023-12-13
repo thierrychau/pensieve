@@ -7,8 +7,9 @@
             <div class="col-lg-6">
               <div class="card-body p-md-5 mx-md-4 ">
                 <div class="text-center">
-                  <p>Get started now!</p>
-                  <h1 class="mt-1 mb-3 pb-1", style= "font-family: 'Arial';"><%= title %></h1>
+                  <h1 style= "font-family: Permanent Marker;">Your Time Capsule</h1>
+                  <p class="mb-5">Get started now!</p>
+                  <h2 class="mt-1 mb-3 pb-1", style= "font-family: 'Arial';"><%= title %></h2>
                 </div>
                 <div>
                   <%= yield :card_content %>
@@ -18,13 +19,11 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 d-flex align-items-center rounded bg-black">
+            <div class="col-lg-6 d-flex align-items-center rounded" style="background-color: #241251;">
               <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center">
-                <p class="fs-1" style= "font-family: Permanent Marker;">Your Time Capsule</p>
                 <%= image_tag 'pensieve_logo.png', alt: 'Pensieve logo', class:"img-fluid" %>
-                <p class="fs-3" style= "font-family: Permanent Marker;">
-                  Family Memories<br>
-                  Effortlessly Preserved
+                <p class="fs-3" style= "font-family: Josefin Sans; font-weight: bold; text-transform: uppercase;">
+                  A simple yet powerful app to preserve <span style="color:#83f8f8;">your</span> memories
                 </p>
               </div>
             </div>

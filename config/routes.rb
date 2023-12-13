@@ -6,6 +6,10 @@ Rails.application.routes.draw do
 
   root "dashboards#show"
   devise_for :users, controllers: { registrations: 'users/registrations' }
+  devise_scope :user do
+    put '/update_email', to: 'users/registrations#update_email', as: :update_email_registration
+    put '/update_password', to: 'users/registrations#update_password', as: :update_password_registration
+  end
 
   resources :people
   resources :memories

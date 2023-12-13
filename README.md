@@ -45,12 +45,12 @@ Update the mailers as required.
 
 ### Demo
 [Pensieve.cc](https://pensieve.cc)
-![Dashboard](https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.19.58_PM_ntr5tf)
-![Adding a memory](https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.22.19_PM_brskjo)
-![People index](https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.22.33_PM_okfq86)
 
-### Entity Relationship Diagram
-![ERD](erd.png)
+<img src="https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.19.58_PM_ntr5tf" alt="Screenshot demo dashboard" width="50%" height="auto">
+
+<img src="https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.22.19_PM_brskjo" alt="Screenshot demo adding a memory" width="50%" height="auto">
+
+<img src="https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/Screenshot_2023-12-12_at_3.22.19_PM_brskjo" alt="Screenshot demo people index" width="50%" height="auto">
 
 ### Contributing:
 #### Issue Reporting

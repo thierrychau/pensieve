@@ -1,0 +1,17 @@
+<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#update<%= setting.capitalize %>Modal">
+  Change
+</button>
+
+<div class="modal fade" id="update<%= setting.capitalize %>Modal" tabindex="-1" aria-labelledby="update<%= setting.capitalize %>ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered <%= defined?(size) ? size : '' %>">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="update<%= setting.capitalize %>ModalLabel">Update your <%= setting %></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render partial: "devise/registrations/edit_#{setting}" %>
+      </div>
+    </div>
+  </div>
+</div>

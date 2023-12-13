@@ -55,7 +55,11 @@ Update the mailers as required.
 ### Contributing:
 #### Issue Reporting
 
-To report issues or bugs, either open a GitHub issue or contact me directly via email at [thierry.chau@gmail.com](mailto:thierry.chau@gmail.com?subject=[GitHub/Pensieve]%20Bugs).
+1. Fork the repository
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create new Pull Request and assign it to @thierrychau
 
 #### Providing Details
 

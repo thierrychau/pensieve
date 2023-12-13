@@ -2,11 +2,11 @@ module ApplicationHelper
   def default_meta_tags
     {
       site: "Pensieve",
-      image: image_url('https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/k2slzpdzzqgz7ihfsppi'),
+      image: image_url('https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/brhgh2nilwty4ccvnsak'),
       description: "A simple yet powerful app to preserve your memories",
       og: {
         title: "Pensieve",
-        image: image_url('https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/k2slzpdzzqgz7ihfsppi'),
+        image: image_url('https://res.cloudinary.com/dvtzwb5ue/image/upload/f_auto,q_auto/brhgh2nilwty4ccvnsak'),
         description: "A simple yet powerful app to preserve your memories",
         site_name: "Pensieve"
       }

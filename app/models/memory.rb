@@ -50,6 +50,7 @@ class Memory < ApplicationRecord
 
   scope :by_date, -> { order(date: :desc) }
 
+  # nice 😎
   def to_param
     "#{id}-#{title.truncate(50).parameterize}"
   end

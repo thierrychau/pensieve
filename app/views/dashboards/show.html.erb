@@ -36,6 +36,7 @@
   data-menu-id="<%= menu_id %>" 
   data-geojson='<%= @geojson.to_json %>'>
 
+<%# nice abstraction %>
 <%= javascript_include_tag 'mapbox' %>
 
 <script>

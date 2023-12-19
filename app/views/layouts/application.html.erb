@@ -13,6 +13,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
+    <%# cool. are you using this anywhere? %>
     <%= yield :head %>
   </head>
 
@@ -20,6 +21,7 @@
     <%= render partial: "shared/navbar" %>
     
     <main class="container-fluid pb-3">
+      <%# this is a bit inverted. could probably put the conditional in _flash partial %>
       <% if notice.present? %>
         <%= render partial: "shared/flash", locals: { message: notice, css_class: "success" } %>
       <% end %>

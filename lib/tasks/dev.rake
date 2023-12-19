@@ -77,6 +77,7 @@ unless Rails.env.production?
     task add_images: :environment do 
       puts "adding images..."
       Memory.all.each do |memory|
+        # This is broken: NameError: uninitialized constant Medium
         new = Medium.create(
           url: "https://robohash.org/#{rand(9999)}",
           mediumable_type: 'Memory',
